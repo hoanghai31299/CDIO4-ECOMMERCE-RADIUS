@@ -1,9 +1,7 @@
 import "./App.css";
 import React from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import Signin from "./Components/Signin/Signin";
-import Signup from "./Components/Signup/Signup";
-import router from "./router.js";
+import routers from "./router.js";
 function App() {
   return (
     <Router>
@@ -16,13 +14,17 @@ function App() {
             <Link to="/signup">Signup</Link>
           </li>
         </ul>
+
         <Switch>
-          <Route path={router.signin.path} exact={router.signin.exact}>
-            <Signin />
-          </Route>
-          <Route path={router.signup.path} exact={router.signup.exact}>
-            <Signup />
-          </Route>
+          {routers.map((route) => {
+            return (
+              <Route
+                path={route.path}
+                exact={route.exact}
+                component={route.component}
+              ></Route>
+            );
+          })}
         </Switch>
       </div>
     </Router>
