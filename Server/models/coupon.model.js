@@ -4,27 +4,27 @@ const { mongoose } = require(".");
 const couponShemma = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: [true, 'title coupon is required']
     },
     description: {
         type: String,
-        required: true
+        required: [true, 'description coupon is required']
     },
     code: {
         type: String,
-        required: true
+        required: [true, 'code coupon is required']
     },
     begin: {
         type: Date,
-        required: true
+        required: [true, 'begin date coupon is required']
     },
     end: {
         type: Date,
-        required: true
+        required: [true, 'end date coupon is required']
     },
     discount: {
         type: mongoose.Decimal128,
-        required: true
+        required: [true, 'discount coupon is required']
     },
     products: {
         type: [{
@@ -38,4 +38,4 @@ const couponShemma = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-export default mongoose.model("Coupon", couponShemma, "coupons");
+module.exports = mongoose.model("Coupon", couponShemma, "coupons");
