@@ -1,31 +1,25 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import routers from "./router.js";
+import Header from "./Components/Header/Header";
+import Footer from "./Components/Footer/Footer";
 function App() {
   return (
     <Router>
       <div className="main">
-        <ul>
-          <li>
-            <Link to="/signin">Signin</Link>
-          </li>
-          <li>
-            <Link to="/signup">Signup</Link>
-          </li>
-        </ul>
-
+        <Header />
         <Switch>
           {routers.map((route) => {
             return (
               <Route
                 path={route.path}
                 exact={route.exact}
-                component={route.component}
-              ></Route>
+                component={route.component}></Route>
             );
           })}
         </Switch>
+        <Footer />
       </div>
     </Router>
   );
