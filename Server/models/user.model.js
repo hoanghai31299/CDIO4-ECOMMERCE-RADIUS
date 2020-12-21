@@ -5,16 +5,16 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, " name user is required"],
         trim: true,
         maxlength: 30
     },
     email: {
         type: String,
-        required: true,
+        required: [true, "email user is required"],
         lowercase: true,
         trim: true,
-        unique: true
+        unique: [true, "email is unique"]
     },
     phone: {
         type: String,
@@ -33,7 +33,7 @@ const userSchema = new Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: [true, ' password user is required'],
 
     },
     wishList: {
@@ -58,14 +58,16 @@ const userSchema = new Schema({
     }
 }, { timestamps: true })
 
-userSchema.pre("save", () => {
-    const salt = bcrypt.genSaltSync(10);
-    this.password = bcrypt.hashSync(this.password, salt);
-})
-userSchema.methods = {
-    authenticate: function(plainText) {
-        return bcrypt.compareSync(plainText, this.password);
-    }
-};
+// userSchema.pre("save", () => {
+//     const salt = bcrypt.genSaltSync(10);
+//     console.log(this);
+//     this.password = bcrypt.hashSync(this.password, salt);
 
-export default mongoose.model("User", userSchema, "users");
+// })
+// userSchema.methods = {
+//     authenticate: function(plainText) {
+//         return bcrypt.compareSync(plainText, this.password);
+//     }
+// };
+
+module.exports = mongoose.model("User", userSchema, "users");
