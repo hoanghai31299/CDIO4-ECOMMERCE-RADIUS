@@ -4,16 +4,16 @@ const { mongoose } = require(".")
 const orderSchema = new mongoose.Schema({
     address: {
         type: String,
-        required: true
+        required: [true, 'address is required']
     },
     name: {
         type: String,
-        required: true,
+        required: [true, ' name is required'],
         trim: true
     },
     phone: {
         type: String,
-        required: true,
+        required: [true, 'phone is required'],
         maxlength: 10,
         minlength: 10
     },
@@ -46,13 +46,14 @@ const orderSchema = new mongoose.Schema({
     total: {
         type: Number
     },
-    lassTotal: {
+    lastTotal: {
         type: Number
     },
     deleteAt: {
         type: Date
     }
 
+
 }, { timestamps: true });
 
-export default mongoose.model("Order", orderSchema, "orders")
+module.exports = mongoose.model("Order", orderSchema, "orders")

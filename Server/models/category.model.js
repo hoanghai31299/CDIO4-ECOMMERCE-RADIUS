@@ -3,7 +3,7 @@ const { mongoose } = require(".")
 const categorySchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
+        required: [true, "Category name is required"],
         trim: true
     },
     deleteAt: {
@@ -11,4 +11,4 @@ const categorySchema = new mongoose.Schema({
     }
 }, { timestamps: true })
 
-export default mongoose.model("Category", categorySchema, "categories");
+module.exports = mongoose.model("Category", categorySchema, "categories");
