@@ -1,72 +1,71 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./Signin.css";
+import { Link } from "react-router-dom";
 function Signin() {
-  const [emailInput, setEmailInput] = useState("");
-  const [passwordInput, setPasswordInput] = useState("");
-  const [error, setError] = useState({ email: false, password: false });
-
-  useEffect(() => {}, [emailInput, passwordInput]);
-  const validateEmail = () => {
-    const reg = /^[a-z][a-z0-9_\.]{5,32}@[a-z0-9]{2,}(\.[a-z0-9]{2,4}){1,2}$/;
-    if (!emailInput.match(reg)) setError({ ...error, email: true });
-    else setError({ ...error, email: false });
-  };
-  const validatePassword = () => {
-    if (passwordInput.length <= 6) setError({ ...error, password: true });
-    else setError({ ...error, password: false });
+  const [info, setInfo] = useState({
+    email: "",
+    password: "",
+  });
+  const hanleInputChange = (e) => {
+    setInfo({ ...info, [e.target.id]: e.target.value });
   };
   return (
-    <div>
-      <form action="" method="POST" className="form" id="form-2">
-        <h3 className="heading">Đăng nhập</h3>
-
-        <div className="spacer"></div>
-
-        <div className="form-group">
-          <label for="email" className="form-label">
-            Email
-          </label>
-          <input
-            onFocus={(e) => setError({ ...error, email: false })}
-            onChange={(e) => setEmailInput(e.target.value)}
-            onBlur={validateEmail}
-            id="email"
-            name="email"
-            type="text"
-            placeholder="VD: email@domain.com"
-            className="form-control"
-          />
-
-          {error.email && (
-            <span className="form-message">Email is invalid</span>
-          )}
+    <div className="container-login">
+      <div className="login-form-container">
+        <div className="login-title">
+          <span>Login</span>
+          <p>Returning Customer? Sign in to your account.</p>
         </div>
-
-        <div className="form-group">
-          <label for="password" className="form-label">
-            Mật khẩu
-          </label>
-          <input
-            onFocus={(e) => setError({ ...error, password: false })}
-            onChange={(e) => {
-              setPasswordInput(e.target.value);
-            }}
-            onBlur={validatePassword}
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Nhập mật khẩu"
-            className="form-control"
-          />
-          {error.password && (
-            <span className="form-message">
-              Password is more than 6 characters
-            </span>
-          )}
+        <div className="login-form">
+          <div class="input-box">
+            <p class="input-label">Email</p>
+            <input
+              type="email"
+              maxLength={100}
+              id="email"
+              required
+              value={info.email}
+              onChange={hanleInputChange}
+              maxlength="100"
+            />
+          </div>
+          <div class="input-box">
+            <p class="input-label">Password</p>
+            <input
+              type="password"
+              maxLength={100}
+              id="password"
+              required
+              value={info.password}
+              onChange={hanleInputChange}
+              maxlength="50"
+            />
+          </div>
+          <div className="find-pw">
+            <Link to="/find-password">Find My Password</Link>
+          </div>
+          <div className="btns">
+            <button className="login_bt black">LOGIN</button>
+          </div>
         </div>
-
-        <button className="form-submit">Đăng nhập</button>
-      </form>
+      </div>
+      <div className="register-wrapper">
+        <div className="register-title">
+          <span>CREATE AN ACCOUNT</span>
+          <p>
+            By creating an account with Gentle Monster, you will be able to
+            check your orders, edit and save shipping preferences, and create
+            your wish list among other benefits.
+          </p>
+        </div>
+        <div className="btns">
+          <button className="login_bt black">
+            <Link className="link" to="/signup">
+              CREATE ACCOUNT
+            </Link>
+          </button>
+        </div>
+      </div>
     </div>
   );
 }
