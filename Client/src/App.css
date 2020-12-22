@@ -1,22 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap");
 :root {
-    --main-font: 'Noto Sans', sans-serif;
+  --main-font: "Noto Sans", sans-serif;
+  --semi-font: "Noto Serif", serif;
 }
 
 div,
 p,
 a {
-    word-break: keep-all;
+  word-break: keep-all;
 }
 
 * {
-    font-family: var(--main-font);
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  font-family: var(--main-font);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .main {
-    max-width: 100vw;
-    overflow: hidden;
+  max-width: 100vw;
 }

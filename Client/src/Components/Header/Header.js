@@ -26,7 +26,9 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <h2>RADIUS E</h2>
+        <h2>
+          <Link to="/">RADIUS E</Link>
+        </h2>
       </div>
       <ul className={`list-category ${open && "open"}`}>
         {category.map((c) => {
