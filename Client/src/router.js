@@ -1,6 +1,12 @@
 import Signup from "./Components/Signup/Signup";
 import Signin from "./Components/Signin/Signin";
+import HomePage from "./Components/HomePage/HomePage";
 const routers = [
+  {
+    path: "/",
+    component: HomePage,
+    exact: true,
+  },
   {
     path: "/signup",
     component: Signup,
