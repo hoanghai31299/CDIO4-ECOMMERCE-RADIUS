@@ -13,6 +13,9 @@ function App() {
           <li>
             <Link to="/signup">Signup</Link>
           </li>
+          <li>
+            <Link to="/service">Service</Link>
+          </li>
         </ul>
 
         <Switch>
