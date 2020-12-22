@@ -1,3 +1,7 @@
+:host {
+    display: block;
+}
+
 .header {
     background-color: white;
     display: flex;
@@ -5,9 +9,8 @@
     justify-content: space-between;
     align-items: center;
     position: sticky;
+    position: -webkit-sticky;
     top: 0;
-    right: 0;
-    left: 0;
     z-index: 2;
 }
 
@@ -74,6 +77,12 @@ header .sub-nav a {
 }
 
 @media only screen and (max-width: 1300px) {
+    .main {
+        overflow: hidden;
+    }
+    header {
+        position: fixed;
+    }
     ul.list-category {
         position: absolute;
         right: -100%;
