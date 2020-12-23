@@ -7,6 +7,10 @@ const app = express();
 const { mongoose, connectDB } = require("./models");
 const authRoute = require("./routes/auth.route");
 const userRoute = require("./routes/user.route");
+const categoryRoute = require("./routes/category.route");
+const colorRoute = require("./routes/color.route");
+const couponRoute = require("./routes/coupon.route");
+const notificationRoute = require("./routes/notification.route");
 
 //config
 const port = process.env.PORT || 5000;
@@ -35,6 +39,10 @@ app.use((err, req, res, next) => {
 })
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
+app.use("/category", categoryRoute);
+app.use("/color", colorRoute);
+app.use("/coupon", couponRoute);
+app.use("/notification", notificationRoute);
 
 //listen
 app.listen(port, () => {

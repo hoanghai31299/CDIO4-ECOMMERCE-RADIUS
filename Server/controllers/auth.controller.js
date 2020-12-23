@@ -96,3 +96,43 @@ exports.refreshToken = async(req, res, next) => {
         next(error)
     }
 }
+exports.isSignIn = (req, res, next) => {
+    const token = req.cookies.token;
+    if (!req.cookies) {
+        return res.status(400).json({
+            message: "Unauthorized, access denied"
+        })
+    }
+    if (!token) {
+        return res.status(400).json({
+            message: "Unauthorized, access denied"
+        })
+    }
+    const user = jwt.verify(token, process.env.JWT_TOKEN_SECRET, (err, decode) => {
+        if (err) {
+            return res.status(400).json({
+                message: "Token is not valid, access denied"
+            })
+        }
+        req.user = decode.user;
+        next();
+    });
+}
+exports.isAdmin = (req, res, next) => {
+    const isAdmin = req.user.role == 2;
+    if (!isAdmin) {
+        return res.status(400).json({
+            message: "You are not Admin, access denied",
+        });
+    }
+    next();
+}
+exports.isEditor = (req, res, next) => {
+    const isEditor = req.user.role == 1;
+    if (!isEditor) {
+        return res.status(400).json({
+            message: "You are not editor, access denied",
+        });
+    }
+    next();
+}
