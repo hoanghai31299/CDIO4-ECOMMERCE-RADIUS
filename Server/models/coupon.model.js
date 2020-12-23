@@ -23,8 +23,9 @@ const couponShemma = new mongoose.Schema({
         required: [true, 'end date coupon is required']
     },
     discount: {
-        type: mongoose.Decimal128,
-        required: [true, 'discount coupon is required']
+        type: Number,
+        required: [true, 'discount coupon is required'],
+        max: 1
     },
     products: {
         type: [{

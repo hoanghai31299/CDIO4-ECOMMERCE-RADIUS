@@ -4,7 +4,8 @@ const categorySchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Category name is required"],
-        trim: true
+        trim: true,
+        unique: [true, "category name is unique"]
     },
     deleteAt: {
         type: Date

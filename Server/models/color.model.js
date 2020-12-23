@@ -9,7 +9,8 @@ const colorSchema = new mongoose.Schema({
     hex: {
         type: String,
         required: [true, "color hex is required"],
-        unique: [true, "Color hex is unique"]
+        unique: [true, "Color hex is unique"],
+        trim: true
     }
 }, { timestamps: true })
 
