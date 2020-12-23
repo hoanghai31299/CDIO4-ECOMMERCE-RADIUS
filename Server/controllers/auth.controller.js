@@ -128,7 +128,7 @@ exports.isAdmin = (req, res, next) => {
     next();
 }
 exports.isEditor = (req, res, next) => {
-    const isEditor = req.user.role == 1;
+    const isEditor = req.user.role >= 1;
     if (!isEditor) {
         return res.status(400).json({
             message: "You are not editor, access denied",
