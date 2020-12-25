@@ -2,7 +2,7 @@ const express = require("express");
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-
+const { sendMail, verifyEmailTemplate, forgotPasswordTemplate } = require("../helpers/verifyEmail");
 
 exports.signup = async(req, res, next) => {
     try {
@@ -20,16 +20,46 @@ exports.signup = async(req, res, next) => {
                 error: true,
                 message: "Email already signup"
             })
-        const newUser = new User(userParams);
-        await newUser.save();
+        const user = new User(userParams)
+        const token = await jwt.sign({ user }, process.env.JWT_VERIFY_MAIL_TOKEN, { expiresIn: "10m" });
+        let verifylink = `http:\/\/${req.headers.host}\/auth\/verify\/${token}`;
+        await sendMail({
+            from: "RADIUS-E STORE",
+            to: email,
+            subject: "VERIFY EMAIL",
+            html: verifyEmailTemplate(verifylink),
+        });
         return res.status(200).json({
             error: false,
-            message: "Signup successfull"
+            message: `Signup successfull, Email has been send to ${email}`
         })
     } catch (err) {
         next(err)
     }
 }
+
+exports.verifyEmail = async(req, res, next) => {
+    try {
+        const token = req.params.token;
+        const { user } = await jwt.verify(token, process.env.JWT_VERIFY_MAIL_TOKEN);
+        if (!user) {
+            return res.status(400).json({
+                error: true,
+                message: "token is not found"
+            })
+        }
+        const newUser = new User(user);
+        await newUser.save();
+        return res.status(200).json({
+            error: false,
+            message: "signup successful",
+            newUser
+        })
+    } catch (error) {
+        next(error)
+    }
+};
+
 exports.signin = async(req, res, next) => {
     try {
         const { email, password } = req.body;
@@ -135,4 +165,26 @@ exports.isEditor = (req, res, next) => {
         });
     }
     next();
+}
+exports.verifyToken = async(req, res, next) => {
+    try {
+        const token = req.cookies.token;
+        if (token) {
+            const user = await jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+            req.user = user;
+            next();
+        }
+        const refreshToken = req.cookies.refreshToken;
+        if (!refreshToken) {
+            return res.status(400).json({
+                message: "signin plsss"
+            })
+        }
+        const user = await jwt.verify(refreshToken, process.env.JWT_REFRESH_TOKEN_SECRET);
+        const newToken = await jwt.sign({ user }, process.env.JWT_TOKEN_SECRET, { expiresIn: "1d" });
+        res.cookie("token", newToken, { expires: new Date(Date.now() + 1000 * 60 * 60 * 24) });
+        next();
+    } catch (error) {
+        next(error)
+    }
 }
