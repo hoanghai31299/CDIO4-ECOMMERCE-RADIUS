@@ -1,20 +1,10 @@
 const multer = require("multer");
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    console.log("file1", file);
-    cb(null, "./uploads");
-  },
-  filename: function (req, file, cb) {
-    console.log("file", file);
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+//save file to memory first to process with cloudinary
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
-  console.log("file41", file);
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
-    console.log("file1", file);
     cb(null, true);
   } else {
     cb({ message: "Upsupported File Format" }, false);
@@ -22,9 +12,9 @@ const fileFilter = (req, file, cb) => {
 };
 
 const uploads = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 },
-  fileFilter: fileFilter,
+  storage,
+  limits: { fileSize: 2048 * 2048 },
+  fileFilter,
 });
 
-module.exports = uploads;
+module.exports = { uploads };
