@@ -20,17 +20,23 @@ const port = process.env.PORT || 5000;
 connectDB();
 //middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(
+  express.urlencoded({
+    extended: true,
+    limit: process.env.CLIENT_MAX_BODY_SIZE,
+  })
+);
+
 app.use(cookieParser());
 const headers = {
-    origin: "*",
-    credentials: true,
-    method: "GET,POST,PUT,PATCH,DELETE,HEAD",
+  origin: "*",
+  credentials: true,
+  method: "GET,POST,PUT,PATCH,DELETE,HEAD",
 };
 app.use(cors(headers));
 //route
 app.get("/", (req, res, next) => {
-    return res.send("hello");
+  return res.send("hello");
 });
 
 app.use("/auth", authRoute);
@@ -43,13 +49,13 @@ app.use("/product", productRoute);
 app.use("/order", orderRoute);
 
 app.use((err, req, res, next) => {
-        if (err)
-            return res.status(500).json({
-                error: true,
-                message: err.message
-            })
-    })
-    //listen
+  if (err)
+    return res.status(500).json({
+      error: true,
+      message: err.message,
+    });
+});
+//listen
 app.listen(port, () => {
-    console.log(`server is running on port ${port}`);
+  console.log(`server is running on port ${port}`);
 });
