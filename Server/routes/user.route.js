@@ -1,4 +1,4 @@
-const { getUser, updateUser, deleteUser, resetPassword, getAll, createUser, updateUserByAdmin } = require("../controllers/user.controller");
+const { getUser, updateUser, deleteUser, resetPassword, getAll, createUser, updateUserByAdmin, forgotPassword } = require("../controllers/user.controller");
 const authController = require("../controllers/auth.controller");
 const express = require("express");
 const route = express.Router();
@@ -10,5 +10,6 @@ route.post("/reset_password", authController.isSignIn, resetPassword);
 route.put("/update_by_admin/:_id", authController.isSignIn, authController.isEditor, updateUserByAdmin);
 route.post("/create", authController.isSignIn, authController.isEditor, createUser);
 route.get("/", authController.isSignIn, authController.isEditor, getAll);
+route.post("/forgot_password", forgotPassword);
 
 module.exports = route

@@ -11,6 +11,8 @@ const categoryRoute = require("./routes/category.route");
 const colorRoute = require("./routes/color.route");
 const couponRoute = require("./routes/coupon.route");
 const notificationRoute = require("./routes/notification.route");
+const productRoute = require("./routes/product.route");
+const orderRoute = require("./routes/order.route");
 
 //config
 const port = process.env.PORT || 5000;
@@ -30,21 +32,24 @@ app.use(cors(headers));
 app.get("/", (req, res, next) => {
     return res.send("hello");
 });
-app.use((err, req, res, next) => {
-    if (err)
-        return res.status(500).json({
-            error: true,
-            message: err.message
-        })
-})
+
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 app.use("/category", categoryRoute);
 app.use("/color", colorRoute);
 app.use("/coupon", couponRoute);
 app.use("/notification", notificationRoute);
+app.use("/product", productRoute);
+app.use("/order", orderRoute);
 
-//listen
+app.use((err, req, res, next) => {
+        if (err)
+            return res.status(500).json({
+                error: true,
+                message: err.message
+            })
+    })
+    //listen
 app.listen(port, () => {
     console.log(`server is running on port ${port}`);
 });

@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/user.model");
+const { sendMail, verifyEmailTemplate, forgotPasswordTemplate } = require("../helpers/verifyEmail");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -103,7 +104,16 @@ exports.resetPassword = async(req, res, next) => {
                 password: newPassword
             }
         });
-
+        if (!newUser) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            message: "reset password successful"
+        })
     } catch (error) {
         next(error)
     }
@@ -186,6 +196,33 @@ exports.getAll = async(req, res, next) => {
             message: "get all user successful",
             user
         })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.forgotPassword = async(req, res, next) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({
+                error: true,
+                message: "email is not found"
+            })
+        }
+        const token = await jwt.sign({ user }, process.env.JWT_FORGOTPASSWORD_TOKEN, { expiresIn: "10m" });
+        const forgotLink = `http:\/\/${req.headers.host}\/user\/forgotPassword\/${token}`;
+        const infor = await sendMail({
+            from: "RADIUS-E STORE",
+            to: email,
+            subject: "FORGOT PASSWORD",
+            html: forgotPasswordTemplate(forgotLink),
+        });
+        console.log(infor);
+        return res.status(200).json({
+            message: "The request has been resolved",
+            data: infor,
+        });
     } catch (error) {
         next(error)
     }
