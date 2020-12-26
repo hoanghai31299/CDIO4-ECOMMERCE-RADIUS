@@ -13,7 +13,7 @@ const navLogo = (props) => {
       <div className="navbar-brand header-logo">
         <a href={DEMO.BLANK_LINK} className="b-brand">
           <div className="b-bg">
-            <i className="feather icon-anchor" />
+            <i className="feather icon-pie-chart" />
           </div>
           <span className="b-title">RADIUS-E</span>
         </a>
