@@ -29,7 +29,7 @@ app.use(
 
 app.use(cookieParser());
 const headers = {
-  origin: "*",
+  origin: "http://localhost:3000",
   credentials: true,
   method: "GET,POST,PUT,PATCH,DELETE,HEAD",
 };
@@ -50,7 +50,7 @@ app.use("/order", orderRoute);
 
 app.use((err, req, res, next) => {
   if (err)
-    return res.status(500).json({
+    return res.status(200).json({
       error: true,
       message: err.message,
     });
