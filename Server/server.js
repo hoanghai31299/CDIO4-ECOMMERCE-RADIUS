@@ -13,6 +13,7 @@ const couponRoute = require("./routes/coupon.route");
 const notificationRoute = require("./routes/notification.route");
 const productRoute = require("./routes/product.route");
 const orderRoute = require("./routes/order.route");
+const commentRoute = require("./routes/comment.route");
 
 //config
 const port = process.env.PORT || 5000;
@@ -47,6 +48,7 @@ app.use("/coupon", couponRoute);
 app.use("/notification", notificationRoute);
 app.use("/product", productRoute);
 app.use("/order", orderRoute);
+app.use("/comment", commentRoute);
 
 app.use((err, req, res, next) => {
     if (err)
