@@ -27,10 +27,10 @@ exports.updateUser = async(req, res, next) => {
     try {
         const _id = req.params._id;
         const { name, email, phone, address } = req.body;
-        if (!_id) {
+        if (!(name, email)) {
             return res.status(400).json({
                 error: true,
-                message: "User ID is not found"
+                message: "all fell is required"
             })
         }
         const newUser = await User.findById(_id);
@@ -122,10 +122,10 @@ exports.updateUserByAdmin = async(req, res, next) => {
     try {
         const _id = req.params._id;
         const { name, email, phone, address, password, role } = req.body;
-        if (!_id) {
+        if (!(name, email, password)) {
             return res.status(400).json({
                 error: true,
-                message: "User ID is not found"
+                message: "all fell is required"
             })
         }
         if (!(name && email && address && phone && password && role)) {
@@ -157,6 +157,12 @@ exports.updateUserByAdmin = async(req, res, next) => {
 exports.createUser = async(req, res, next) => {
     try {
         const { name, email, phone, address, password } = req.body;
+        if (!(name, email, password)) {
+            return res.status(400).json({
+                error: true,
+                message: "all fell is required"
+            })
+        }
         const emailUser = await User.findOne({ email });
         if (emailUser) {
             return res.status(400).json({
@@ -223,6 +229,31 @@ exports.forgotPassword = async(req, res, next) => {
             message: "The request has been resolved",
             data: infor,
         });
+    } catch (error) {
+        next(error)
+    }
+}
+exports.addWishList = async(req, res, next) => {
+    try {
+        const _id = req.params._id;
+        const { productId } = req.body;
+        if (!productId) {
+            return res.status(400).json({
+                error: true,
+            })
+        }
+        const user = await User.findByIdAndUpdate(_id, { $push: { wishList: productId } }, { new: true });
+        if (!user) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            message: "add wish lish successful",
+            user
+        })
     } catch (error) {
         next(error)
     }

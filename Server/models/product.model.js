@@ -31,10 +31,8 @@ const productSchema = new mongoose.Schema({
         required: [true, 'color product is required']
     },
     categories: {
-        type: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Categories"
-        }],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
         required: [true, "categories product is required"]
     },
     deleteAt: {

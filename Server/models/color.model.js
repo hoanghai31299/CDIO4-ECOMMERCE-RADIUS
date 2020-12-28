@@ -11,6 +11,9 @@ const colorSchema = new mongoose.Schema({
         required: [true, "color hex is required"],
         unique: [true, "Color hex is unique"],
         trim: true
+    },
+    deleteAt: {
+        type: Date,
     }
 }, { timestamps: true })
 

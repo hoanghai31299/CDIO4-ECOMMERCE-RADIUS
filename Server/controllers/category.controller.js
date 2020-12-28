@@ -4,6 +4,12 @@ const Category = require("../models/category.model");
 exports.createCategory = async(req, res, next) => {
     try {
         const { name } = req.body;
+        if (!name) {
+            return res.status(400).json({
+                error: true,
+                message: "name color is required"
+            })
+        }
         const category = await Category.findOne({ name });
         if (category) {
             return res.status(400).json({
@@ -25,6 +31,12 @@ exports.createCategory = async(req, res, next) => {
 exports.updateCategory = async(req, res, next) => {
     try {
         const name = req.body.name;
+        if (!name) {
+            return res.status(400).json({
+                error: true,
+                message: "name is required"
+            })
+        }
         const _id = req.params.id;
         const category = await Category.findByIdAndUpdate(_id, { $set: { name } }, { new: true });
         if (!category) {

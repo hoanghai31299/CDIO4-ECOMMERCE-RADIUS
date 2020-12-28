@@ -4,6 +4,12 @@ const Coupon = require("../models/coupon.model");
 exports.create = async(req, res, next) => {
     try {
         const { title, description, code, begin, end, discount } = req.body;
+        if (!(title && description && code && begin && end, discount)) {
+            return res.status(400).json({
+                error: true,
+                message: "all fell is required"
+            })
+        }
         const couponCode = await Coupon.findOne({ code });
         if (couponCode) {
             return res.status(400).json({
@@ -32,6 +38,12 @@ exports.create = async(req, res, next) => {
 exports.update = async(req, res, next) => {
     try {
         const { title, description, code, begin, end, discount } = req.body;
+        if (!(title && description && code && begin && end, discount)) {
+            return res.status(400).json({
+                error: true,
+                message: "all fell is required"
+            })
+        }
         const _id = req.params.id;
         const coupon = await Coupon.findByIdAndUpdate(_id, {
             $set: {

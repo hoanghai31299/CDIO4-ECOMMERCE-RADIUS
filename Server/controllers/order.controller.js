@@ -6,6 +6,12 @@ const Coupon = require("../models/coupon.model");
 exports.create = async(req, res, next) => {
     try {
         const { address, name, phone, products, couponCode, userId } = req.body;
+        if (!(address, name, phone, products)) {
+            return res.status(400).json({
+                error: true,
+                message: "all fill is required"
+            })
+        }
         if (!(products && product.length > 0)) {
             return res.status(400).json({
                 error: true,
@@ -58,6 +64,12 @@ exports.create = async(req, res, next) => {
 exports.update = async(req, res, next) => {
     try {
         const { address, name, phone, products, couponCode, userId, status, shipDate } = req.body;
+        if (!(address, name, phone, products)) {
+            return res.status(400).json({
+                error: true,
+                message: "all fill is required"
+            })
+        }
         const _id = req.params.id;
         if (!(products && product.length > 0)) {
             return res.status(400).json({
