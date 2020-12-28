@@ -29,7 +29,7 @@ app.use(
 
 app.use(cookieParser());
 const headers = {
-    origin: "*",
+    origin: "http://localhost:3000",
     credentials: true,
     method: "GET,POST,PUT,PATCH,DELETE,HEAD",
 };
