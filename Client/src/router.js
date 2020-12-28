@@ -6,8 +6,14 @@ import Shipping from "./Components/Shipping/Shipping";
 import Faq from "./Components/Faq/Faq";
 import Terms from "./Components/Terms/Terms";
 import Product_guide from "./Components/Product_guide/Product_guide";
-console.log(Service);
+import ContactUs from "./Components/ContactUs/ContactUs";
+import HomePage from "./Components/HomePage/HomePage";
 const routers = [
+  {
+    path: "/",
+    component: HomePage,
+    exact: true,
+  },
   {
     path: "/signup",
     component: Signup,
@@ -47,6 +53,10 @@ const routers = [
     path: "/terms",
     component: Terms,
     exact: true,
-  },
+  },{
+    path: "/contact-us",
+    component: ContactUs,
+    exact: true,
+  }
 ];
 export default routers;

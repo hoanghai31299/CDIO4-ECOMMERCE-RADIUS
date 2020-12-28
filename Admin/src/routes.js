@@ -39,6 +39,7 @@ const OtherSamplePage = React.lazy(() => import("./Pages/Other/SamplePage"));
 const OtherDocs = React.lazy(() => import("./Pages/Other/Docs"));
 const Category = React.lazy(() => import("./Pages/Category"));
 const Colors = React.lazy(() => import("./Pages/Colors"));
+const Products = React.lazy(() => import("./Pages/Product"));
 const routes = [
   {
     path: "/dashboard/default",
@@ -57,6 +58,12 @@ const routes = [
     exact: true,
     name: "Category",
     component: Category,
+  },
+  {
+    path: "/views/products",
+    exact: true,
+    name: "Products",
+    component: Products,
   },
   {
     path: "/basic/button",
