@@ -1,13 +1,13 @@
 import React,{useState} from 'react'
 import "./Service.css";
-import AwesomeSlider from 'react-awesome-slider';
+import AwesomeSlider from "react-awesome-slider"
 import 'react-awesome-slider/dist/styles.css';
 export default function Service() {
     return (
-        <div>
+        <div className="service-wrapper">
             {/* back-ground */}
             <div className="main-bg-wrap">
-                <video className="pc-video" playsinline="" autoPlay muted loop="">
+                <video className="pc-video" playsinline="" autoPlay muted loop>
                     <source src="https://www.gentlemonster.com/video/service/main_web_0626.mp4"/>
                 </video>   
                 <div className="text-box">
@@ -146,8 +146,10 @@ export default function Service() {
                     <tr>
                         <th><img src="https://www.gentlemonster.com/img/service/pc/s3_07_2.jpg"></img></th>
                         <th>
-                            <h3>SERVICE GUILD</h3>
                             <ul>
+                                <li>
+                                    <h3>SERVICE GUILD</h3>
+                                </li>
                                 <li>
                                     <span className="subject">ADJUSTMENT SERVICES</span>
                                     <p>Products with minor blemishes due to accidental damages or daily use can be adjusted to fit you comfortably.</p>
