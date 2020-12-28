@@ -22,7 +22,7 @@ header .list-category {
 
 header .list-category>li>a {
     color: #000;
-    font-size: .8rem;
+    font-size: 0.8rem;
     text-decoration: none;
     font-weight: 700;
     letter-spacing: 1px;
@@ -43,14 +43,16 @@ header .list-category>li>a {
     left: 50%;
     transform: translateX(-50%);
     bottom: 0;
-    transition: all ease-in .2s;
+    transition: all ease-in 0.2s;
 }
 
 .list-category li:hover:after {
     width: 100%;
 }
 
-.logo h2 {
+.logo h2 a {
+    text-decoration: none;
+    color: #000;
     font-weight: 700;
 }
 
@@ -85,8 +87,9 @@ header .sub-nav a {
     }
     ul.list-category {
         position: absolute;
-        right: -100%;
-        width: 100%;
+        right: 0;
+        bottom: 0;
+        width: 0;
         top: 73px;
         background-color: white;
         height: 600px;
@@ -94,10 +97,10 @@ header .sub-nav a {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        transition: all ease-in-out .5s;
+        transition: all ease-in-out 0.5s;
     }
     ul.list-category.open {
-        right: 0;
+        width: 100%;
     }
     ul.list-category li:after {
         content: none;

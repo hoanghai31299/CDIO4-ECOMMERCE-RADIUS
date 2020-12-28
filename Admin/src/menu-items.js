@@ -37,6 +37,14 @@ export default {
           classes: "nav-item",
           icon: "feather icon-circle",
         },
+        {
+          id: "product",
+          title: "Products",
+          type: "item",
+          url: "/views/products",
+          classes: "nav-item",
+          icon: "feather icon-box",
+        },
       ],
     },
     {

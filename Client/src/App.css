@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap");
 :root {
-    --main-font: 'Noto Sans', sans-serif;
+    --main-font: "Noto Sans", sans-serif;
+    --semi-font: "Noto Serif", serif;
 }
 
 div,
