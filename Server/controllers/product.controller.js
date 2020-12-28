@@ -42,7 +42,7 @@ class APIfeatures {
 
     paginating() {
         const page = this.queryString.page * 1 || 1
-        const limit = this.queryString.limit * 1 || 2
+        const limit = this.queryString.limit * 1 || 20
         const skip = (page - 1) * limit
         this.query = this.query.skip(skip).limit(limit)
         return this
@@ -150,17 +150,28 @@ exports.deleteProduct = async(req, res, next) => {
 };
 exports.getAll = async(req, res, next) => {
     try {
-        const product = await Product.find({ deleteAt: undefined })
-            .populate({
-                path: "colors.color",
-                select: "hex name -_id",
-            })
-            .exec();
+        const features = new APIfeatures(
+                Product.find({ deteledAt: undefined })
+                .populate({
+                    path: 'colors.color',
+                })
+                .populate({
+                    path: 'categories',
+                }),
+                req.query,
+            )
+            .filtering()
+            .sorting()
+        const total = await features.query
+        const products = await features.paginating().query
         return res.status(200).json({
-            error: false,
-            message: "get all product successful",
-            product,
-        });
+            products,
+            query: {
+                total: total.length,
+                limit: req.query.limit || 20,
+                page: req.query.page || 1,
+            },
+        })
     } catch (error) {
         next(error);
     }
