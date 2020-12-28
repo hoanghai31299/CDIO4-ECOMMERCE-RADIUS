@@ -114,7 +114,7 @@ function Product() {
             updateProduct={updateProduct}
           />
         )}
-        <ModalCreate isModalVisible={modalCreate} setVisible={setModalCreate} />
+        <ModalCreate reload={fetchProducts} isModalVisible={modalCreate} setVisible={setModalCreate} />
       </>
     );
   return <Loader />;
