@@ -8,12 +8,12 @@ export default function Terms() {
                 <h1>TERMS AND CONDITION</h1>
                 <div>
                     <p>Article 1 (Purpose)</p>
-                    <p>The purpose of this Terms and Conditions is to specify the rights and obligations as well as responsibilities of cyber mall and its users when using the Internet related services (hereinafter referred to as “Services”) provided by Gentle Monster which is operated by IICOMBINED Co., Ltd.</p>
+                    <p>The purpose of this Terms and Conditions is to specify the rights and obligations as well as responsibilities of cyber mall and its users when using the Internet related services (hereinafter referred to as “Services”) provided by Radius which is operated by IICOMBINED Co., Ltd.</p>
                     <p>※ Unless otherwise specified to the contrary, these Terms and Conditions shall be applied to the electronic commerce using PC telecommunication and wireless communication.</p>
                 </div>
                 <div>
                     <p>Article 2 (Definitions)</p>
-                    <p>① “Mall” is a virtual business premises designed for users to transact the goods or services (hereinafter referred to as “Goods”) by using the information and communication equipment, such as, computer from Gentle Monster and it is also used as the business operating the cyber mall.</p>
+                    <p>① “Mall” is a virtual business premises designed for users to transact the goods or services (hereinafter referred to as “Goods”) by using the information and communication equipment, such as, computer from Radius and it is also used as the business operating the cyber mall.</p>
                     <p>② “User” is any member or non-member who has access to the services provided by Mall i4 the Terms and Conditions by linking to Mall.</p>
                     <p>③ “Member” is any person who is registered as a member of Mall by providing the personal information and is eligible to use the services provided by Mall on a continual basis.</p>
                     <p>④ “Non-member” is any person who uses the services provided by Mall without joining Mall as a member.</p>

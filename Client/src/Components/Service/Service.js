@@ -78,7 +78,7 @@ export default function Service() {
                 </div>
                 <div className="description">
                     <div className="text-content">
-                        <p>Our global flagship stores offer complimentary adjustments for the utmost experience with our Gentle Monster products for your convivence. In the case that in-store adjustments are not available, we will take in your product and ship it back to you.</p>
+                        <p>Our global flagship stores offer complimentary adjustments for the utmost experience with our Radius products for your convivence. In the case that in-store adjustments are not available, we will take in your product and ship it back to you.</p>
                     </div>
                 </div>
             </div>

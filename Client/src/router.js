@@ -8,6 +8,7 @@ import Terms from "./Components/Terms/Terms";
 import Product_guide from "./Components/Product_guide/Product_guide";
 import ContactUs from "./Components/ContactUs/ContactUs";
 import HomePage from "./Components/HomePage/HomePage";
+import Privacy_new from "./Components/Privacy_new/Privacy_new";
 const routers = [
   {
     path: "/",
@@ -53,9 +54,15 @@ const routers = [
     path: "/terms",
     component: Terms,
     exact: true,
-  },{
+  }
+  ,{
     path: "/contact-us",
     component: ContactUs,
+    exact: true,
+  }
+  ,{
+    path: "/privacy_new",
+    component: Privacy_new,
     exact: true,
   }
 ];

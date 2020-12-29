@@ -17,7 +17,7 @@ export default function Shipping() {
                 <div>
                     <p>Shipping Country And Duration</p>
                     <ul>
-                        <li>GENTLE MONSTER provides worldwide shipping.</li>
+                        <li>Radius provides worldwide shipping.</li>
                         <li>Shipping to Asia: 1~3 business days</li>
                         <li>Shipping to Oceania : 2~4 business days</li>
                         <li>Shipping to Europe : 3~5 business days</li>
