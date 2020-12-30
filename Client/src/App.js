@@ -15,7 +15,8 @@ function App() {
               <Route
                 path={route.path}
                 exact={route.exact}
-                component={route.component}></Route>
+                component={route.component}
+              ></Route>
             );
           })}
         </Switch>
