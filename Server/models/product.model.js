@@ -21,29 +21,17 @@ const productSchema = new mongoose.Schema(
       required: [true, "description product is required"],
     },
     colors: {
-<<<<<<< HEAD
       type: [
         {
           color: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Color",
           },
-          image_url: Array,
+          image_url: [String],
           quantity: Number,
         },
       ],
       required: [true, "color product is required"],
-=======
-        type: [{
-            color: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Color",
-            },
-            image_url: [String],
-            quantity: Number,
-        }, ],
-        required: [true, "color product is required"],
->>>>>>> master
     },
     categories: {
       type: mongoose.Schema.Types.ObjectId,
