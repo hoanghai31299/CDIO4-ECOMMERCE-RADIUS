@@ -3,20 +3,6 @@
     --main-font: 'Noto Sans', sans-serif;
 }
 
-div,
-p,
-a {
-    word-break: keep-all;
-}
-
-* {
-    font-family: var(--main-font);
-    font-weight: 100;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
 .container-login {
     margin-top: 60px;
     min-height: 600px;

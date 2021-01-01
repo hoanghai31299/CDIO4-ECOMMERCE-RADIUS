@@ -1,10 +1,12 @@
 import Signup from "./Components/Signup/Signup";
 import Signin from "./Components/Signin/Signin";
+import ContactUs from "./Components/ContactUs/ContactUs";
 import HomePage from "./Components/HomePage/HomePage";
 import ForgotPassword from "./Components/ForgotPassword/ForgotPassword";
 import AccountDetail from "./Components/AccountDetail/AccountDetail";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Card from "./Components/Card/Card";
+import Product from "./Components/Product/Product";
 const routers = [
   {
     path: "/",
@@ -39,6 +41,16 @@ const routers = [
   {
     path: "/card",
     component: Card,
+    exact: true,
+  },
+  {
+    path: "/contact-us",
+    component: ContactUs,
+    exact: true,
+  },
+  {
+    path: "/product",
+    component: Product,
     exact: true,
   },
 ];

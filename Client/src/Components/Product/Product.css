@@ -1,0 +1,87 @@
+* {
+  /* padding: 0;
+  margin: 0;
+  box-sizing: border-box; */
+}
+/* */
+/* --------------------------Start filler color item ----------------------------- */
+.item-color {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.list_item-color {
+  display: flex;
+  flex-direction: row;
+}
+.colorchip-item {
+  display: block;
+  position: relative;
+  margin: 0 9px 6px;
+  border-radius: 50% 50%;
+  cursor: pointer;
+  border: 1px solid black;
+}
+.colorchip-item input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+.colorchip-item label {
+  display: block;
+  position: relative;
+  z-index: 10;
+  width: 21px;
+  height: 21px;
+  border-radius: 50% 50%;
+  border: 3px solid white;
+  cursor: pointer;
+  background: orange;
+}
+/* ------------------------ end filler color item --------------------------- */
+
+/* ------------------------ start secondary-text  --------------------------- */
+.secondary-text {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/* ------------------------- end secondary-text  ----------------------------- */
+/* ------------------------- start secondary-filler  ------------------------- */
+.secondary-filler {
+  display: flex;
+  flex-direction: row;
+}
+.econdary-filler__color {
+  margin-right: 10em;
+}
+.sort_by_element {
+  display: flex;
+  flex-direction: row;
+}
+.price-hight,
+.price-low {
+  width: 14em;
+}
+.sort_by_element input {
+  width: 3em;
+}
+/* ------------------------- End secondary-filler  ------------------------- */
+/* ------------------------- Start thumbnail grid -------------------------- */
+.banner-infor__desc,
+.banner-infor__title {
+  width: 47%;
+}
+.banner-infor__title {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.banner-infor {
+  padding: 3em 0;
+  display: flex;
+  justify-content: space-between;
+}
+/* ------------------------- End thumbnail grid -------------------------- */
