@@ -6,7 +6,7 @@ const route = express.Router();
 route.post("/create", authController.isSignIn, authController.isEditor, createColor);
 route.put("/:id", authController.isSignIn, authController.isEditor, updateColor);
 route.delete("/:id", authController.isSignIn, authController.isEditor, deleteColor);
-route.get("/", authController.isSignIn, authController.isEditor, getAll);
+route.get("/", getAll);
 route.get("/:id", authController.isSignIn, authController.isEditor, getColor);
 
 module.exports = route

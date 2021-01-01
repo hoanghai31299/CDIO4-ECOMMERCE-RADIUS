@@ -13,6 +13,7 @@ const couponRoute = require("./routes/coupon.route");
 const notificationRoute = require("./routes/notification.route");
 const productRoute = require("./routes/product.route");
 const orderRoute = require("./routes/order.route");
+const commentRoute = require("./routes/comment.route");
 
 //config
 const port = process.env.PORT || 5000;
@@ -48,7 +49,9 @@ app.use("/coupon", couponRoute);
 app.use("/notification", notificationRoute);
 app.use("/product", productRoute);
 app.use("/order", orderRoute);
+app.use("/comment", commentRoute);
 
+<<<<<<< HEAD
 app.use((err, req, res, next) => {
   if (err) {
     console.log(err);
@@ -58,6 +61,15 @@ app.use((err, req, res, next) => {
     });
   }
 });
+=======
+// app.use((err, req, res, next) => {
+//     if (err)
+//         return res.status(400).json({
+//             error: true,
+//             message: err.message,
+//         });
+// });
+>>>>>>> master
 
 app.use((req, res, next) => {
   return res.json({
