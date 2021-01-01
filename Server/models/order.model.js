@@ -28,6 +28,10 @@ const orderSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Product"
             },
+            colorId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Color"
+            },
             quantity: Number
         }],
         required: true
@@ -52,8 +56,6 @@ const orderSchema = new mongoose.Schema({
     deleteAt: {
         type: Date
     }
-
-
 }, { timestamps: true });
 
 module.exports = mongoose.model("Order", orderSchema, "orders")

@@ -50,13 +50,13 @@ app.use("/product", productRoute);
 app.use("/order", orderRoute);
 app.use("/comment", commentRoute);
 
-app.use((err, req, res, next) => {
-    if (err)
-        return res.status(400).json({
-            error: true,
-            message: err.message,
-        });
-});
+// app.use((err, req, res, next) => {
+//     if (err)
+//         return res.status(400).json({
+//             error: true,
+//             message: err.message,
+//         });
+// });
 
 app.use((req, res, next) => {
         return res.json({

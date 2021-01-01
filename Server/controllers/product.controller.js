@@ -151,7 +151,7 @@ exports.deleteProduct = async(req, res, next) => {
 exports.getAll = async(req, res, next) => {
     try {
         const features = new APIfeatures(
-                Product.find({ deteledAt: undefined })
+                Product.find({ deleteAt: undefined })
                 .populate({
                     path: 'colors.color',
                 })

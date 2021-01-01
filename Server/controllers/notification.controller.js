@@ -79,8 +79,14 @@ exports.getAll = async(req, res, next) => {
 }
 exports.getNotification = async(req, res, next) => {
     try {
-        const _id = req.params.id;
-        const notification = await Notification.findById(_id);
+        const user = req.user;
+        const { _id } = user;
+        const notification = await Notification.find({
+            $or: [
+                { users: { $elemMatch: { _id } } },
+                { users: [] }
+            ]
+        });
         if (!notification) {
             return res.status(400).json({
                 error: true,

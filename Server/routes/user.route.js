@@ -8,7 +8,11 @@ const {
     updateUserByAdmin,
     forgotPassword,
     addWishList,
-    deleteWishLish
+    deleteWishLish,
+    addToCart,
+    updateCart,
+    deleteCart,
+    getAllCart
 } = require("../controllers/user.controller");
 const authController = require("../controllers/auth.controller");
 const express = require("express");
@@ -24,5 +28,8 @@ route.get("/", authController.isSignIn, authController.isEditor, getAll);
 route.post("/forgot_password", forgotPassword);
 route.post("/add_wish_list/:id", authController.isSignIn, addWishList);
 route.delete("/delete_wish_lish/:id", authController.isSignIn, deleteWishLish);
+route.post("/cart/:id", authController.isSignIn, addToCart);
+route.put("/cart/:id", authController.isSignIn, updateCart);
+route.get("/cart/:id", authController.isSignIn, getAllCart);
 
 module.exports = route

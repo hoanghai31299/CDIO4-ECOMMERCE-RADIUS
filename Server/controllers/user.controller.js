@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 const { sendMail, verifyEmailTemplate, forgotPasswordTemplate } = require("../helpers/verifyEmail");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { deleteOne } = require("../models/user.model");
 
 exports.getUser = async(req, res, next) => {
     try {
@@ -292,6 +293,74 @@ exports.getWishLish = async(req, res, next) => {
             error: false,
             message: "get wish lish successful",
             wishList: user.wishList
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.addToCart = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const { productId, colorId } = req.body;
+        const isUser = await User.findById(_id);
+        if (!isUser) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        const { cart } = await User.findById(_id, "cart");
+        const current = cart.find(item => item.productId == productId && item.colorId == colorId);
+        if (current) {
+            current.quantity = current.quantity + 1;
+        } else {
+            cart.push({ productId, colorId, quantity: 1 })
+        }
+        const user = await User.findByIdAndUpdate(_id, { $set: { cart } }, { new: true });
+        return res.status(200).json({
+            error: false,
+            message: "update cart successful",
+            user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.updateCart = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const { newCart } = req.body;
+        const isUser = await User.findById(_id);
+        if (!isUser) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        const user = await User.findByIdAndUpdate(_id, { $set: { cart: newCart } }, { new: true });
+        return res.status(200).json({
+            error: false,
+            message: "update cart successful",
+            user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.getAllCart = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const cart = await User.findById(_id);
+        if (!cart) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            message: "get all cart successful",
+            cart: cart.cart
         })
     } catch (error) {
         next(error)

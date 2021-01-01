@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "Color",
             },
-            image_url: String,
+            image_url: [String],
             quantity: Number,
         }, ],
         required: [true, "color product is required"],

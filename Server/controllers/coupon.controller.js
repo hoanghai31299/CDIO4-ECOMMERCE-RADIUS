@@ -3,8 +3,8 @@ const Coupon = require("../models/coupon.model");
 
 exports.create = async(req, res, next) => {
     try {
-        const { title, description, code, begin, end, discount } = req.body;
-        if (!(title && description && code && begin && end, discount)) {
+        const { title, description, code, begin, end, discount, min, max } = req.body;
+        if (!(title && description && code && begin && end && discount && min && max)) {
             return res.status(400).json({
                 error: true,
                 message: "all fell is required"
@@ -23,7 +23,9 @@ exports.create = async(req, res, next) => {
             code,
             begin,
             end,
-            discount
+            discount,
+            min,
+            max
         });
         await coupon.save()
         return res.status(200).json({
@@ -37,8 +39,8 @@ exports.create = async(req, res, next) => {
 }
 exports.update = async(req, res, next) => {
     try {
-        const { title, description, code, begin, end, discount } = req.body;
-        if (!(title && description && code && begin && end, discount)) {
+        const { title, description, code, begin, end, discount, min, max } = req.body;
+        if (!(title && description && code && begin && end && discount && min && max)) {
             return res.status(400).json({
                 error: true,
                 message: "all fell is required"
@@ -52,7 +54,9 @@ exports.update = async(req, res, next) => {
                 code,
                 begin,
                 end,
-                discount
+                discount,
+                min,
+                max
             }
         }, { new: true });
         if (!coupon) {
