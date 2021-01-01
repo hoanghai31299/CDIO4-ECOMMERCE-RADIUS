@@ -7,6 +7,12 @@ const { sendMail, verifyEmailTemplate, forgotPasswordTemplate } = require("../he
 exports.signup = async(req, res, next) => {
     try {
         const { name, email, phone, address, password } = req.body;
+        if (!(name && email && phone && address && password)) {
+            return res.status(400).json({
+                error: true,
+                message: "all fill is required"
+            })
+        }
         const userParams = {
             name,
             email,

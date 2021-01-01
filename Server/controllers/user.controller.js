@@ -3,6 +3,7 @@ const User = require("../models/user.model");
 const { sendMail, verifyEmailTemplate, forgotPasswordTemplate } = require("../helpers/verifyEmail");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { deleteOne } = require("../models/user.model");
 
 exports.getUser = async(req, res, next) => {
     try {
@@ -27,10 +28,10 @@ exports.updateUser = async(req, res, next) => {
     try {
         const _id = req.params._id;
         const { name, email, phone, address } = req.body;
-        if (!_id) {
+        if (!(name, email)) {
             return res.status(400).json({
                 error: true,
-                message: "User ID is not found"
+                message: "all fell is required"
             })
         }
         const newUser = await User.findById(_id);
@@ -122,10 +123,10 @@ exports.updateUserByAdmin = async(req, res, next) => {
     try {
         const _id = req.params._id;
         const { name, email, phone, address, password, role } = req.body;
-        if (!_id) {
+        if (!(name, email, password)) {
             return res.status(400).json({
                 error: true,
-                message: "User ID is not found"
+                message: "all fell is required"
             })
         }
         if (!(name && email && address && phone && password && role)) {
@@ -157,6 +158,12 @@ exports.updateUserByAdmin = async(req, res, next) => {
 exports.createUser = async(req, res, next) => {
     try {
         const { name, email, phone, address, password } = req.body;
+        if (!(name, email, password)) {
+            return res.status(400).json({
+                error: true,
+                message: "all fell is required"
+            })
+        }
         const emailUser = await User.findOne({ email });
         if (emailUser) {
             return res.status(400).json({
@@ -223,6 +230,138 @@ exports.forgotPassword = async(req, res, next) => {
             message: "The request has been resolved",
             data: infor,
         });
+    } catch (error) {
+        next(error)
+    }
+}
+exports.addWishList = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const { productId } = req.body;
+        if (!productId) {
+            return res.status(400).json({
+                error: true,
+            })
+        }
+        const user = await User.findByIdAndUpdate(_id, { $push: { wishList: productId } }, { new: true });
+        if (!user) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            message: "add wish lish successful",
+            user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.deleteWishLish = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const { productId } = req.body;
+        const user = await User.findByIdAndUpdate(_id, { $pullAll: { wishList: [productId] } }, { new: true });
+        if (!user) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            message: "delete wish lish successful",
+            user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.getWishLish = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const user = await User.findById(_id);
+        if (!user) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            message: "get wish lish successful",
+            wishList: user.wishList
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.addToCart = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const { productId, colorId } = req.body;
+        const isUser = await User.findById(_id);
+        if (!isUser) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        const { cart } = await User.findById(_id, "cart");
+        const current = cart.find(item => item.productId == productId && item.colorId == colorId);
+        if (current) {
+            current.quantity = current.quantity + 1;
+        } else {
+            cart.push({ productId, colorId, quantity: 1 })
+        }
+        const user = await User.findByIdAndUpdate(_id, { $set: { cart } }, { new: true });
+        return res.status(200).json({
+            error: false,
+            message: "update cart successful",
+            user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.updateCart = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const { newCart } = req.body;
+        const isUser = await User.findById(_id);
+        if (!isUser) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        const user = await User.findByIdAndUpdate(_id, { $set: { cart: newCart } }, { new: true });
+        return res.status(200).json({
+            error: false,
+            message: "update cart successful",
+            user
+        })
+    } catch (error) {
+        next(error)
+    }
+}
+exports.getAllCart = async(req, res, next) => {
+    try {
+        const _id = req.params.id;
+        const cart = await User.findById(_id);
+        if (!cart) {
+            return res.status(400).json({
+                error: true,
+                message: "user is not found"
+            })
+        }
+        return res.status(200).json({
+            error: false,
+            message: "get all cart successful",
+            cart: cart.cart
+        })
     } catch (error) {
         next(error)
     }

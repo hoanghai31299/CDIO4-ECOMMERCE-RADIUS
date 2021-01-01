@@ -7,6 +7,6 @@ route.post("/create", authController.isSignIn, authController.isEditor, create);
 route.put("/:id", authController.isSignIn, authController.isEditor, update);
 route.delete("/:id", authController.isSignIn, authController.isEditor, deleteNotification);
 route.get("/", authController.isSignIn, authController.isEditor, getAll);
-route.get("/:id", authController.isSignIn, authController.isEditor, getNotification);
+route.get("/:id", authController.isSignIn, getNotification);
 
 module.exports = route
