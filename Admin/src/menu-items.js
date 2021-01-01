@@ -45,6 +45,22 @@ export default {
           classes: "nav-item",
           icon: "feather icon-box",
         },
+        {
+          id: "coupon",
+          title: "Discount",
+          type: "item",
+          url: "/views/coupons",
+          classes: "nav-item",
+          icon: "feather icon-tag",
+        },
+        {
+          id: "noti",
+          title: "Notifications",
+          type: "item",
+          url: "/views/notifications",
+          classes: "nav-item",
+          icon: "feather icon-bell",
+        },
       ],
     },
     {

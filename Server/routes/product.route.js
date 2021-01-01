@@ -1,13 +1,13 @@
 const express = require("express");
 const route = express.Router();
 const {
-    create,
-    update,
-    deleteProduct,
-    getAll,
-    getProduct,
-    addColor,
-    upImage
+  create,
+  update,
+  deleteProduct,
+  getAll,
+  getProduct,
+  addColor,
+  upImage,
 } = require("../controllers/product.controller");
 const authController = require("../controllers/auth.controller");
 const { uploads } = require("../utils/multer");

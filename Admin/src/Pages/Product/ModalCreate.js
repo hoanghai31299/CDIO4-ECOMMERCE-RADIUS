@@ -2,43 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Modal, Upload, Select, message } from "antd";
 import { Form } from "react-bootstrap";
 import axios from "../../axios";
-import FormData from "form-data";
 const { Option } = Select;
-const dummyRequest = ({ file, onSuccess }) => {
-  setTimeout(() => {
-    onSuccess("ok");
-  }, 0);
-};
-function buildFormData(formData, data, parentKey) {
-  if (
-    data &&
-    typeof data === "object" &&
-    !(data instanceof Date) &&
-    !(data instanceof File)
-  ) {
-    Object.keys(data).forEach((key) => {
-      buildFormData(
-        formData,
-        data[key],
-        parentKey ? `${parentKey}[${key}]` : key
-      );
-    });
-  } else {
-    const value = data == null ? "" : data;
 
-    formData.append(parentKey, value);
-  }
-}
-function jsonToFormData(data) {
-  const formData = new FormData();
-
-  buildFormData(formData, data);
-
-  return formData;
-}
 export default function ModalCreate({ isModalVisible, setVisible, reload }) {
   const [product, setProduct] = useState({
-    category: "",
+    categories: "",
     name: "",
     price: 0,
     description: {
@@ -46,11 +14,11 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
       sku: "",
       size: "",
     },
-    color: {
+    colors: {
       color: "",
-      quantity: 100,
+      quantity: 0,
+      image_url: [],
     },
-    productImage: {},
   });
   useEffect(() => {
     const fetchData = async () => {
@@ -70,31 +38,38 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
   const [categories, setCategories] = useState([]);
   const [colors, setColors] = useState([]);
   const handleFileChange = (info) => {
-    setProduct({
-      ...product,
-      productImage: info.file,
-    });
+    const { status } = info.file;
+    console.log(info);
+    switch (status) {
+      case "error": {
+        message.error("Failed to upload file");
+        break;
+      }
+      case "done": {
+        const { colors } = product;
+        const { image_url } = colors;
+
+        const newLink = info.file.response.image_url;
+        setProduct({
+          ...product,
+          colors: { ...colors, image_url: [...image_url, newLink] },
+        });
+        break;
+      }
+
+      default:
+        console.log(status);
+    }
   };
   const handleCreateProduct = async () => {
     try {
-      console.log(product);
-      console.log(jsonToFormData(product));
-      let formData = jsonToFormData(product);
-      formData.append("productImage", product.productImage);
-      const { data } = await axios.post("/product/create", formData, {
-        headers: {
-          "content-type":
-            "multipart/form-data; boundary=----WebKitFormBoundaryqTqJIxvkWFYqvP5s",
-        },
-      });
-      console.log(data);
+      const { data } = await axios.post("/product/create", product);
       if (!data.error) {
-        reload();
+        setVisible(false);
         message.success("Create product successful");
       } else throw new Error(data.message);
     } catch (error) {
       message.error(error.message);
-      console.log(error);
     }
   };
   return (
@@ -111,7 +86,7 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
             showSearch
             style={{ width: 200 }}
             onChange={(value) => {
-              setProduct({ ...product, category: value });
+              setProduct({ ...product, categories: value });
             }}
             placeholder="Select category"
             optionFilterProp="children"
@@ -154,6 +129,7 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
             <Form.Control
               size="sm"
               type="text"
+              className="mt-2"
               placeholder="size"
               onChange={(e) => {
                 setProduct({
@@ -166,6 +142,7 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
             <Form.Control
               size="sm"
               type="text"
+              className="mt-2"
               onChange={(e) => {
                 setProduct({
                   ...product,
@@ -196,7 +173,7 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
               onChange={(value) => {
                 setProduct({
                   ...product,
-                  color: { ...product.color, color: value },
+                  colors: { ...product.colors, color: value },
                 });
               }}
               optionFilterProp="children"
@@ -219,8 +196,8 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
             </Select>
             <Upload.Dragger
               name="productImage"
-              multiple={false}
-              customRequest={dummyRequest}
+              method="POST"
+              action="http://localhost:5000/product/up_image"
               accept=".jpg"
               onChange={(info) => {
                 handleFileChange(info);
@@ -235,6 +212,19 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
                 Support for a single or bulk upload (only file jpg).
               </p>
             </Upload.Dragger>
+            <Form.Control
+              size="sm"
+              type="text"
+              className="mt-2"
+              placeholder="quantity"
+              onChange={(e) => {
+                setProduct({
+                  ...product,
+                  colors: { ...product.colors, quantity: e.target.value },
+                });
+              }}
+              value={product.colors.value}
+            />
           </Form.Group>
         </Form.Group>
       </Form>

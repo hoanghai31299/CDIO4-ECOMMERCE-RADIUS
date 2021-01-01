@@ -40,12 +40,22 @@ const OtherDocs = React.lazy(() => import("./Pages/Other/Docs"));
 const Category = React.lazy(() => import("./Pages/Category"));
 const Colors = React.lazy(() => import("./Pages/Colors"));
 const Products = React.lazy(() => import("./Pages/Product"));
+const Notifications = React.lazy(() =>
+  import("./Pages/Notification/Notification")
+);
+const Coupons = React.lazy(() => import("./Pages/Coupon"));
 const routes = [
   {
     path: "/dashboard/default",
     exact: true,
     name: "Default",
     component: DashboardDefault,
+  },
+  {
+    path: "/views/coupons",
+    exact: true,
+    name: "Coupon",
+    component: Coupons,
   },
   {
     path: "/views/colors",
@@ -64,6 +74,12 @@ const routes = [
     exact: true,
     name: "Products",
     component: Products,
+  },
+  {
+    path: "/views/notifications",
+    exact: true,
+    name: "Notification",
+    component: Notifications,
   },
   {
     path: "/basic/button",

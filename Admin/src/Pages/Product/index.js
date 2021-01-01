@@ -13,7 +13,7 @@ function Product() {
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get("/product");
-      if (!data.error) setProducts(data.product);
+      if (!data.error) setProducts(data.products);
       else throw new Error(data.message);
     } catch (error) {
       message.error(error.message);
@@ -21,10 +21,11 @@ function Product() {
   };
   useEffect(() => {
     fetchProducts();
-  });
+  }, []);
   const handleDelete = async (id) => {
     try {
       const { data } = await axios.delete(`/product/${id}`);
+      console.log(data);
       if (!data.error) {
         fetchProducts();
         message.success("Delete product successful");
@@ -114,7 +115,11 @@ function Product() {
             updateProduct={updateProduct}
           />
         )}
-        <ModalCreate reload={fetchProducts} isModalVisible={modalCreate} setVisible={setModalCreate} />
+        <ModalCreate
+          reload={fetchProducts}
+          isModalVisible={modalCreate}
+          setVisible={setModalCreate}
+        />
       </>
     );
   return <Loader />;
