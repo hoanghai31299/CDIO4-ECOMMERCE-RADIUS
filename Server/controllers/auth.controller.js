@@ -82,7 +82,7 @@ exports.signin = async(req, res, next) => {
                 message: "Email does not exist"
             })
         }
-        if (bcrypt.compareSync(user.password, password)) {
+        if (!bcrypt.compareSync(password, user.password)) {
             return res.status(400).json({
                 error: true,
                 message: "Password and email are not match"
