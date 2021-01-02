@@ -150,38 +150,12 @@ exports.deleteProduct = async (req, res, next) => {
     next(error);
   }
 };
-<<<<<<< HEAD
 exports.getAll = async (req, res, next) => {
   try {
     const features = new APIfeatures(
       Product.find({ deleteAt: undefined })
         .populate({
           path: "colors.color",
-=======
-exports.getAll = async(req, res, next) => {
-    try {
-        const features = new APIfeatures(
-                Product.find({ deleteAt: undefined })
-                .populate({
-                    path: 'colors.color',
-                })
-                .populate({
-                    path: 'categories',
-                }),
-                req.query,
-            )
-            .filtering()
-            .sorting()
-        const total = await features.query
-        const products = await features.paginating().query
-        return res.status(200).json({
-            products,
-            query: {
-                total: total.length,
-                limit: req.query.limit || 20,
-                page: req.query.page || 1,
-            },
->>>>>>> master
         })
         .populate({
           path: "categories",
