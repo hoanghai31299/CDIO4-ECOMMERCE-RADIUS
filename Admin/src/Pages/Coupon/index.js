@@ -34,8 +34,32 @@ function Coupon() {
       message.error(error.message);
     }
   };
-  const handleCreate = async () => {};
-  const handleUpdate = async () => {};
+  const handleCreate = async () => {
+    try {
+      const { data } = await axios.post("/coupon/create", created);
+      if (!data.error) {
+        message.success("Create discount successful");
+        fetchCoupons();
+        setModalCreate(false);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
+  const handleUpdate = async () => {
+    try {
+      console.log(updated);
+      const { data } = await axios.put(`/coupon/${updated._id}`, updated);
+      if (!data.error) {
+        message.success("Create discount successful");
+        fetchCoupons();
+        setModalUpdate(false);
+      } else throw new Error(data.message);
+    } catch (error) {
+      console.log(error);
+      message.error(error.message);
+    }
+  };
   const handleInputOnChange = (e) => {
     setUpdated({ ...updated, [e.target.id]: e.target.value });
   };
@@ -49,13 +73,13 @@ function Coupon() {
           <Col>
             <Card>
               <Card.Header className="d-flex justify-content-between align-items-center">
-                <Card.Title as="h5">PRODUCT</Card.Title>
+                <Card.Title as="h5">DISCOUND</Card.Title>
                 <Button
                   variant="primary"
                   onClick={() => {
                     setModalCreate(true);
                   }}>
-                  + NEW PRODUCT
+                  + NEW DISCOUNT
                 </Button>
               </Card.Header>
               <Card.Body>
@@ -135,13 +159,15 @@ function Coupon() {
                 as="textarea"
                 id="description"
                 rows={5}
-                value={created.information}
+                value={created.description}
                 onChange={handleInputCreateChange}
               />
               <Form.Label>DISCOUNT (0 - 1)</Form.Label>
               <Form.Control
-                type="text"
+                type="number"
                 id="discount"
+                min={0}
+                max={1}
                 value={created.discount}
                 onChange={handleInputCreateChange}
               />
@@ -156,7 +182,7 @@ function Coupon() {
               <RangePicker
                 className="m-3"
                 onChange={(e) => {
-                  setCreated({ ...created, min: e[0]._d, max: e[1]._d });
+                  setCreated({ ...created, begin: e[0]._d, end: e[1]._d });
                 }}
                 defaultValue={[
                   moment(new Date(), "DD/MM/YYYY"),
@@ -168,7 +194,7 @@ function Coupon() {
                 <Col className="col-sm-12 col-6">
                   <Form.Label>MIN PRICE TO GET DISCOUNT</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     id="min"
                     value={created.min}
                     onChange={handleInputCreateChange}
@@ -178,10 +204,87 @@ function Coupon() {
                 <Col className="col-sm-12 col-6">
                   <Form.Label>MAX DISCOUNT</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     id="max"
                     value={created.max}
                     onChange={handleInputCreateChange}
+                  />
+                </Col>
+              </Row>
+            </Form.Group>
+          </Form>
+        </Modal>
+        <Modal
+          title="UPDATE DISCOUNT"
+          centered
+          visible={modalUpdate}
+          onOk={handleUpdate}
+          onCancel={() => setModalUpdate(false)}>
+          <Form>
+            <Form.Group>
+              <Form.Label>ID</Form.Label>
+              <Form.Control type="text" disabled value={updated._id} />
+              <Form.Label>TITLE</Form.Label>
+              <Form.Control
+                type="text"
+                id="title"
+                value={updated.title}
+                onChange={handleInputOnChange}
+              />
+              <Form.Label>DESCRIPTION</Form.Label>
+              <Form.Control
+                as="textarea"
+                id="description"
+                rows={5}
+                value={updated.description}
+                onChange={handleInputOnChange}
+              />
+              <Form.Label>DISCOUNT (0 - 1)</Form.Label>
+              <Form.Control
+                type="number"
+                id="discount"
+                min={0}
+                max={1}
+                value={updated.discount}
+                onChange={handleInputOnChange}
+              />
+              <Form.Label>CODE</Form.Label>
+              <Form.Control
+                type="text"
+                id="code"
+                value={updated.code}
+                onChange={handleInputOnChange}
+              />
+              <Form.Label>DATE: </Form.Label>
+              <RangePicker
+                className="m-3"
+                onChange={(e) => {
+                  setUpdated({ ...updated, begin: e[0]._d, end: e[1]._d });
+                }}
+                defaultValue={[
+                  moment(new Date(updated.begin), "DD/MM/YYYY"),
+                  moment(new Date(updated.end), "DD/MM/YYYY"),
+                ]}
+                format={"DD/MM/YYYY"}
+              />
+              <Row>
+                <Col className="col-sm-12 col-6">
+                  <Form.Label>MIN PRICE TO GET DISCOUNT</Form.Label>
+                  <Form.Control
+                    type="text"
+                    id="min"
+                    value={updated.min}
+                    onChange={handleInputOnChange}
+                  />
+                </Col>
+
+                <Col className="col-sm-12 col-6">
+                  <Form.Label>MAX DISCOUNT</Form.Label>
+                  <Form.Control
+                    type="text"
+                    id="max"
+                    value={updated.max}
+                    onChange={handleInputOnChange}
                   />
                 </Col>
               </Row>

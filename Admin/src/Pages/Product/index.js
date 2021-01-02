@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Button, Table } from "react-bootstrap";
-import { message } from "antd";
+import { message, Select } from "antd";
 import ModalUpdate from "./ModalUpdate";
 import ModalCreate from "./ModalCreate";
 import axios from "../../axios";
 import Loader from "../../App/layout/Loader";
+const { Option } = Select;
 function Product() {
   const [products, setProducts] = useState(undefined);
+  const [categories, setCategories] = useState(undefined);
   const [updateModalVS, setUpdateModalVS] = useState(false);
   const [modalCreate, setModalCreate] = useState(false);
   const [updateProduct, setUpdateProduct] = useState(undefined);
@@ -21,6 +23,13 @@ function Product() {
   };
   useEffect(() => {
     fetchProducts();
+    axios
+      .get("/category")
+      .then((res) => {
+        const { data } = res;
+        setCategories(data.category);
+      })
+      .catch((err) => message.error("Failed to get category list"));
   }, []);
   const handleDelete = async (id) => {
     try {
@@ -34,6 +43,7 @@ function Product() {
       message.error(error.message);
     }
   };
+  const handleOnCategoryChange = async () => {};
   if (products)
     return (
       <>
@@ -42,6 +52,20 @@ function Product() {
             <Card>
               <Card.Header className="d-flex justify-content-between align-items-center">
                 <Card.Title as="h5">PRODUCT</Card.Title>
+                <Select
+                  defaultValue="all"
+                  style={{ width: 120 }}
+                  onChange={handleOnCategoryChange}>
+                  <Option value="all">All</Option>
+                  {categories &&
+                    categories.map((c) => {
+                      return (
+                        <Option value={c._id} key={c._id}>
+                          {c.name}
+                        </Option>
+                      );
+                    })}
+                </Select>
                 <Button
                   variant="primary"
                   onClick={() => {

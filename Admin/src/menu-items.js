@@ -22,6 +22,14 @@ export default {
       icon: "icon-navigation",
       children: [
         {
+          id: "users",
+          title: "Users",
+          type: "item",
+          url: "/views/users",
+          classes: "nav-item",
+          icon: "feather icon-user",
+        },
+        {
           id: "category",
           title: "Categories",
           type: "item",
@@ -36,6 +44,14 @@ export default {
           url: "/views/colors",
           classes: "nav-item",
           icon: "feather icon-circle",
+        },
+        {
+          id: "orders",
+          title: "Orders",
+          type: "item",
+          url: "/views/orders",
+          classes: "nav-item",
+          icon: "feather icon-dollar-sign",
         },
         {
           id: "product",

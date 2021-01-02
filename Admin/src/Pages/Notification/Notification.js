@@ -114,7 +114,7 @@ export default function Notification() {
           <Col>
             <Card>
               <Card.Header className="d-flex justify-content-between align-items-center">
-                <Card.Title as="h5">COLORS</Card.Title>
+                <Card.Title as="h5">NOTIFICATIONS</Card.Title>
                 <Button variant="primary" onClick={() => setShowCreate(true)}>
                   + NEW NOTIFICATION
                 </Button>
