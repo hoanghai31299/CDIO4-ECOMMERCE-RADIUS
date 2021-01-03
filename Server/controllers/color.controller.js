@@ -4,6 +4,12 @@ const Color = require("../models/color.model");
 exports.createColor = async(req, res, next) => {
     try {
         const { name, hex } = req.body;
+        if (!(name && hex)) {
+            return res.status(400).json({
+                error: true,
+                message: "name and hex is required"
+            })
+        }
         const colorName = await Color.findOne({ name });
         if (colorName) {
             return res.status(400).json({
@@ -32,6 +38,12 @@ exports.createColor = async(req, res, next) => {
 exports.updateColor = async(req, res, next) => {
     try {
         const { name, hex } = req.body;
+        if (!(name && hex)) {
+            return res.status(400).json({
+                error: true,
+                message: "name and hex is required"
+            })
+        }
         const _id = req.params.id;
         const color = await Color.findByIdAndUpdate(_id, { $set: { name, hex } }, { new: true });
         if (!color) {

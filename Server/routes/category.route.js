@@ -27,7 +27,6 @@ route.delete(
   authController.isEditor,
   deleteCategory
 );
-// route.get("/", authController.isSignIn, authController.isEditor, getAll);
 route.get("/", getAll);
 route.get(
   "/:id",

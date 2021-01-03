@@ -7,6 +7,7 @@ import AccountDetail from "./Components/AccountDetail/AccountDetail";
 import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Card from "./Components/Card/Card";
 import Product from "./Components/Product/Product";
+import Checkout from "./Components/Checkout/Checkout";
 const routers = [
   {
     path: "/",
@@ -51,6 +52,11 @@ const routers = [
   {
     path: "/product",
     component: Product,
+    exact: true,
+  },
+  {
+    path: "/checkout",
+    component: Checkout,
     exact: true,
   },
 ];
