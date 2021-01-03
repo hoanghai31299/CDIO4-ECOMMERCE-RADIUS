@@ -76,20 +76,32 @@ exports.signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!(email && password)) {
+<<<<<<< HEAD
       return res.status(200).json({
+=======
+      return res.status(400).json({
+>>>>>>> master
         error: true,
         message: "email or password is required",
       });
     }
     const user = await User.findOne({ email });
     if (!user) {
+<<<<<<< HEAD
       return res.status(200).json({
+=======
+      return res.status(400).json({
+>>>>>>> master
         error: true,
         message: "Email does not exist",
       });
     }
     if (!bcrypt.compareSync(password, user.password)) {
+<<<<<<< HEAD
       return res.status(200).json({
+=======
+      return res.status(400).json({
+>>>>>>> master
         error: true,
         message: "Password and email are not match",
       });
@@ -108,7 +120,11 @@ exports.signin = async (req, res, next) => {
     res.cookie("refreshToken", refreshToken, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     });
+<<<<<<< HEAD
     return res.status(200).json({
+=======
+    return res.status(400).json({
+>>>>>>> master
       error: false,
       token,
       refreshToken,
@@ -227,3 +243,41 @@ exports.verifyToken = async (req, res, next) => {
     next(error);
   }
 };
+<<<<<<< HEAD
+=======
+exports.signinByCookie = async (req, res, next) => {
+  try {
+    const { token, refreshToken } = req.cookies;
+    if (token) var user = await jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+    if (user)
+      return res.status(200).json({
+        error: false,
+        user,
+      });
+    else if (!user && refreshToken) {
+      let { user } = await jwt.verify(
+        refreshToken,
+        process.env.JWT_REFRESH_TOKEN_SECRET
+      );
+      if (user) {
+        const token = await jwt.sign({ user }, process.env.JWT_TOKEN_SECRET, {
+          expiresIn: "1d",
+        });
+        res.cookie("token", token, {
+          expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+        });
+        return res.status(200).json({
+          error: false,
+          user,
+        });
+      }
+    } else
+      return res.status(200).json({
+        error: true,
+        message: "NOT AUTHENTICATE",
+      });
+  } catch (error) {
+    next(error);
+  }
+};
+>>>>>>> master
