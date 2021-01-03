@@ -1,5 +1,5 @@
 import React, { Component, Suspense } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import Loadable from "react-loadable";
 
 import "../../node_modules/font-awesome/scss/font-awesome.scss";
@@ -36,7 +36,7 @@ class App extends Component {
               {menu}
               <Route path="/" component={AdminLayout} />
             </Switch>
-            {/* <Redirect from="/dashboard/default" to="/auth/signin" /> */}
+            <Redirect from="/dashboard/default" to="/auth/signin" />
           </Suspense>
         </ScrollToTop>
       </Aux>
