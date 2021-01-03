@@ -195,6 +195,19 @@ exports.getProduct = async(req, res, next) => {
         next(error);
     }
 };
+exports.getProductByCategory = async(req, res, next) => {
+    try {
+        const category = req.params.category;
+        const products = await Product.find({categories: category});
+        return res.status(200).json({
+            error: false,
+            message: "get product by category successful",
+            products
+        })
+    } catch (error) {
+        next(error)
+    }
+}
 exports.filter = async(req, res, next) => {
     try {
         const query = req.params;
