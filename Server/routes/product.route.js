@@ -8,6 +8,7 @@ const {
   getProduct,
   addColor,
   upImage,
+  getProductByCategory,
 } = require("../controllers/product.controller");
 const authController = require("../controllers/auth.controller");
 const { uploads } = require("../utils/multer");
@@ -21,6 +22,7 @@ route.delete(
   deleteProduct
 );
 route.get("/", getAll);
+route.get("/get_category/:category", getProductByCategory);
 route.get("/:id", authController.isSignIn, authController.isEditor, getProduct);
 route.post(
   "/add_color/:id",
