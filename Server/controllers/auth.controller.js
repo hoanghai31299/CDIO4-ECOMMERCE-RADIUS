@@ -76,32 +76,20 @@ exports.signin = async (req, res, next) => {
   try {
     const { email, password } = req.body;
     if (!(email && password)) {
-<<<<<<< HEAD
       return res.status(200).json({
-=======
-      return res.status(400).json({
->>>>>>> master
         error: true,
         message: "email or password is required",
       });
     }
     const user = await User.findOne({ email });
     if (!user) {
-<<<<<<< HEAD
       return res.status(200).json({
-=======
-      return res.status(400).json({
->>>>>>> master
         error: true,
         message: "Email does not exist",
       });
     }
     if (!bcrypt.compareSync(password, user.password)) {
-<<<<<<< HEAD
       return res.status(200).json({
-=======
-      return res.status(400).json({
->>>>>>> master
         error: true,
         message: "Password and email are not match",
       });
@@ -120,11 +108,7 @@ exports.signin = async (req, res, next) => {
     res.cookie("refreshToken", refreshToken, {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
     });
-<<<<<<< HEAD
     return res.status(200).json({
-=======
-    return res.status(400).json({
->>>>>>> master
       error: false,
       token,
       refreshToken,
@@ -243,8 +227,6 @@ exports.verifyToken = async (req, res, next) => {
     next(error);
   }
 };
-<<<<<<< HEAD
-=======
 exports.signinByCookie = async (req, res, next) => {
   try {
     const { token, refreshToken } = req.cookies;
@@ -280,4 +262,3 @@ exports.signinByCookie = async (req, res, next) => {
     next(error);
   }
 };
->>>>>>> master
