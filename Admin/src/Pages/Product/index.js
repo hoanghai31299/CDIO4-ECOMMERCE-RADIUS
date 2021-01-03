@@ -95,7 +95,7 @@ function Product() {
                           <td>
                             <img
                               height="50"
-                              src={prod.colors[0].image_url}
+                              src={prod.colors[0].image_url[0]}
                               alt=""
                             />
                           </td>

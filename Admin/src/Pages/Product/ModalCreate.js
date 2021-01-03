@@ -66,6 +66,7 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
       const { data } = await axios.post("/product/create", product);
       if (!data.error) {
         setVisible(false);
+        reload();
         message.success("Create product successful");
       } else throw new Error(data.message);
     } catch (error) {

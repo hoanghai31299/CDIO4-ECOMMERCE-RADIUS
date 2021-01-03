@@ -3,6 +3,19 @@ const Order = require("../models/order.model");
 const Product = require("../models/product.model");
 const Coupon = require("../models/coupon.model");
 
+exports.stats = async (req, res, next) => {
+  try {
+    const { start, end } = req.body;
+    const orders = await Order.find({
+      createdAt: { $gte: new Date(start), $lt: new Date(end) },
+    });
+    res.json({
+      orders,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 exports.create = async (req, res, next) => {
   try {
     const { address, name, phone, products, couponCode, userId } = req.body;
