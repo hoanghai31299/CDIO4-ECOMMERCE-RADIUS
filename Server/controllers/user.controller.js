@@ -31,8 +31,8 @@ exports.getUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const { name, email, phone, address } = req.body;
-    if (!(name, email)) {
+    const { name,  phone, address } = req.body;
+    if (!(name)) {
       return res.status(400).json({
         error: true,
         message: "all fell is required",
@@ -45,15 +45,8 @@ exports.updateUser = async (req, res, next) => {
         message: "User is not found",
       });
     }
-    if (!(name && email && address && phone)) {
-      return res.status(400).json({
-        error: true,
-        message: "All fields are required ",
-      });
-    }
     const userParams = {
       name,
-      email,
       phone,
       address,
     };
@@ -133,14 +126,8 @@ exports.resetPassword = async (req, res, next) => {
 exports.updateUserByAdmin = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const { name, email, phone, address, role } = req.body;
-    if (!(name, email)) {
-      return res.status(400).json({
-        error: true,
-        message: "all fell is required",
-      });
-    }
-    if (!(name && email && address && phone)) {
+    const { name,  phone, address, role } = req.body;
+    if (!(name  && address && phone)) {
       return res.status(400).json({
         error: true,
         message: "All fields are required ",
@@ -148,7 +135,6 @@ exports.updateUserByAdmin = async (req, res, next) => {
     }
     const userParams = {
       name,
-      email,
       phone,
       address,
       role,
