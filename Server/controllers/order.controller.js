@@ -98,7 +98,7 @@ exports.create = async (req, res, next) => {
       if (now < discountBegin || now > discountEnd) {
         return res.status(400).json({
           error: true,
-          message: "coupon is not found",
+          message: "coupon is over time",
         });
       }
       if (discount.min > total) {
