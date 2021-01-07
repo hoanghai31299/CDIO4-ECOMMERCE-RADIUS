@@ -49,6 +49,10 @@ const userSchema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'Product'
             },
+            colorId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Color"
+            },
             quantity: Number,
         }],
         default: []

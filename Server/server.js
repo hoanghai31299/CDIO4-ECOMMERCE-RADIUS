@@ -13,6 +13,7 @@ const couponRoute = require("./routes/coupon.route");
 const notificationRoute = require("./routes/notification.route");
 const productRoute = require("./routes/product.route");
 const orderRoute = require("./routes/order.route");
+const commentRoute = require("./routes/comment.route");
 
 //config
 const port = process.env.PORT || 5000;
@@ -24,6 +25,7 @@ app.use(
   express.urlencoded({
     extended: true,
     limit: process.env.CLIENT_MAX_BODY_SIZE,
+    parameterLimit: 10000,
   })
 );
 
@@ -47,13 +49,23 @@ app.use("/coupon", couponRoute);
 app.use("/notification", notificationRoute);
 app.use("/product", productRoute);
 app.use("/order", orderRoute);
+app.use("/comment", commentRoute);
 
 app.use((err, req, res, next) => {
-  if (err)
-    return res.status(200).json({
+  if (err) {
+    console.log(err);
+    return res.status(400).json({
       error: true,
       message: err.message,
     });
+  }
+});
+
+app.use((req, res, next) => {
+  return res.json({
+    error: true,
+    message: "404 not found, check your URL",
+  });
 });
 //listen
 app.listen(port, () => {

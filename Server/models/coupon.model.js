@@ -27,12 +27,13 @@ const couponShemma = new mongoose.Schema({
         required: [true, 'discount coupon is required'],
         max: 1
     },
-    products: {
-        type: [{
-            type: Schema.Types.ObjectId,
-            ref: "Product"
-        }],
-        default: []
+    min: {
+        type: Number,
+        required: [true, 'min coupon is required']
+    },
+    max: {
+        type: Number,
+        required: [true, 'max coupon is required']
     },
     deleteAt: {
         type: Date
