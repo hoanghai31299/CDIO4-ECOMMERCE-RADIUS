@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { uploadSingle, dataUri } = require("../utils/cloudinary");
 const fs = require("fs");
 const Product = require("../models/product.model");
+const User = require("../models/user.model");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -181,7 +182,8 @@ exports.getAll = async (req, res, next) => {
 exports.getProduct = async (req, res, next) => {
   try {
     const _id = req.params.id;
-    const product = await Product.findById(_id);
+    const product = await Product.findById(_id)
+              .populate({path: 'colors.colorId'})
     if (!product) {
       return res.status(200).json({
         error: true,
@@ -267,3 +269,4 @@ exports.upImage = async (req, res, next) => {
     next(error);
   }
 };
+

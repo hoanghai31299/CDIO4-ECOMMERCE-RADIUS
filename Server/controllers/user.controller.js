@@ -1,5 +1,6 @@
 const express = require("express");
 const User = require("../models/user.model");
+const Product = require("../models/product.model");
 const {
   sendMail,
   verifyEmailTemplate,
@@ -292,25 +293,6 @@ exports.deleteWishLish = async (req, res, next) => {
     next(error);
   }
 };
-exports.getWishLish = async (req, res, next) => {
-  try {
-    const _id = req.params.id;
-    const user = await User.findById(_id);
-    if (!user) {
-      return res.status(400).json({
-        error: true,
-        message: "user is not found",
-      });
-    }
-    return res.status(200).json({
-      error: false,
-      message: "get wish lish successful",
-      wishList: user.wishList,
-    });
-  } catch (error) {
-    next(error);
-  }
-};
 exports.addToCart = async (req, res, next) => {
   try {
     const _id = req.params.id;
@@ -384,6 +366,27 @@ exports.getAllCart = async (req, res, next) => {
       error: false,
       message: "get all cart successful",
       cart: cart.cart,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getWishLish = async (req, res, next) => {
+  try {
+    const _id = req.params.id;
+    const user = await User.findById(_id)
+                .populate({path: 'products'})
+    if (!user) {
+      return res.status(400).json({
+        error: true,
+        message: "user is not found",
+      });
+    }
+    const products = await Product.find({_id: {$in:user.wishList}, deleteAt: undefined});
+    return res.status(200).json({
+      error: false,
+      message: "get wish lish successful",
+      wishList: products,
     });
   } catch (error) {
     next(error);
