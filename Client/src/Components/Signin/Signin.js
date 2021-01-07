@@ -14,14 +14,15 @@ function Signin() {
   });
 
   const handleOnSubmit = (e) => {
-    console.log(info);
     axios
       .post("/auth/signin", info)
       .then((response) => {
         if (response.data.error === true) {
           setErr({ err: true, message: response.data.message });
-          console.log("qweqewrqewrqwerqwerqwerqewr", response.data.error);
-        } else history.push("/");
+        } else {
+          history.push("/");
+          history.go(0);
+        }
       })
       .catch((err) => {
         console.log(err);

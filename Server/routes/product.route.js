@@ -8,10 +8,7 @@ const {
   getProduct,
   addColor,
   upImage,
-<<<<<<< HEAD
-=======
   getProductByCategory,
->>>>>>> ea0ef975470437725c6a6fca517a3f50be57cb9c
 } = require("../controllers/product.controller");
 const authController = require("../controllers/auth.controller");
 const { uploads } = require("../utils/multer");
@@ -26,7 +23,7 @@ route.delete(
 );
 route.get("/", getAll);
 route.get("/get_category/:category", getProductByCategory);
-route.get("/:id", authController.isSignIn, authController.isEditor, getProduct);
+route.get("/:id", getProduct);
 route.post(
   "/add_color/:id",
   authController.isSignIn,

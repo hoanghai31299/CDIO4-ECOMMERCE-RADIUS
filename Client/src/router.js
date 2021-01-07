@@ -35,12 +35,12 @@ const routers = [
     exact: true,
   },
   {
-    path: "/product-detail",
+    path: "/product-detail/:idProduct",
     component: ProductDetail,
     exact: true,
   },
   {
-    path: "/card",
+    path: "/cart",
     component: Card,
     exact: true,
   },
@@ -50,7 +50,7 @@ const routers = [
     exact: true,
   },
   {
-    path: "/product",
+    path: "/product/:category",
     component: Product,
     exact: true,
   },

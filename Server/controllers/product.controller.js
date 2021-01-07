@@ -24,6 +24,11 @@ class APIfeatures {
     if (data.name) {
       data.name["$options"] = "i";
     }
+    if (data.color) {
+      data.colors = { $elemMatch: { color: data.color } };
+    }
+    delete data["color"];
+
     this.query.find(data);
 
     return this;
@@ -153,7 +158,10 @@ exports.deleteProduct = async (req, res, next) => {
 exports.getAll = async (req, res, next) => {
   try {
     const features = new APIfeatures(
-      Product.find({ deleteAt: undefined })
+      Product.find({
+        deleteAt: undefined,
+        // colors: { $elemMatch: { color: "5ff1e39e723cab08a41f8b8d" } },
+      })
         .populate({
           path: "colors.color",
         })
@@ -200,11 +208,30 @@ exports.getProduct = async (req, res, next) => {
 exports.getProductByCategory = async (req, res, next) => {
   try {
     const category = req.params.category;
-    const products = await Product.find({ categories: category });
+    const features = new APIfeatures(
+      Product.find({
+        categories: category,
+        deleteAt: undefined,
+      })
+        .populate({
+          path: "colors.color",
+        })
+        .populate({
+          path: "categories",
+        }),
+      req.query
+    )
+      .filtering()
+      .sorting();
+    const total = await features.query;
+    const products = await features.paginating().query;
     return res.status(200).json({
-      error: false,
-      message: "get product by category successful",
       products,
+      query: {
+        total: total.length,
+        limit: req.query.limit || 20,
+        page: req.query.page || 1,
+      },
     });
   } catch (error) {
     next(error);

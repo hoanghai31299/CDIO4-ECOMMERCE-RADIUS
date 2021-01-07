@@ -21,6 +21,7 @@ ul {
 }
 .my_account-list__item {
   margin-top: 1em;
+  cursor: pointer;
 }
 .myaccount-name_page {
   margin-top: 1.5em;
@@ -53,14 +54,12 @@ ul {
   display: flex;
   flex-wrap: nowrap;
 }
-.account_detail-name__first_name > input {
-  margin-right: 1em;
-}
+
 .account_detail-name > div {
   width: 100%;
 }
 .account_detail-name input {
-  width: 98%;
+  width: 100%;
 }
 .account_detail-name__last_name input {
   width: 100%;
@@ -102,7 +101,13 @@ ul {
   background-color: #fff;
   color: #000;
 }
-
+/* coupon infor */
+.coupon-infor {
+  margin-top: 2em;
+  font-size: 1.1em;
+  padding-left: 3em;
+  line-height: 1.7em;
+}
 /* >= Tablet */
 @media (max-width: 1023px) {
   .container {

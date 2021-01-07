@@ -6,17 +6,29 @@
 /* */
 /* ------------------------ start secondary-text  --------------------------- */
 .secondary-text {
-  padding: 3em;
+  /* padding: 3em; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   font-size: 1.4em;
   font-weight: 700;
 }
+.filter-wrap {
+  position: fixed;
+  width: 100%;
+
+  padding: 1.7em 20px;
+  z-index: 20;
+  display: block;
+  background-color: rgba(255, 255, 255, 0.9);
+}
 div.category,
 .filler-open,
 .filler-close {
   font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
 }
 .filler-open,
 .filler-close {
@@ -91,6 +103,7 @@ input.check-open-close:checked ~ div.secondary-filler {
   height: 0;
   overflow: hidden;
 }
+
 .colorchip-item label {
   display: block;
   position: relative;
@@ -100,7 +113,6 @@ input.check-open-close:checked ~ div.secondary-filler {
   border-radius: 50% 50%;
   border: 3px solid white;
   cursor: pointer;
-  background: orange;
 }
 .list_item-color,
 .sort_by_element {
@@ -195,9 +207,13 @@ input.check-open-close:checked ~ div.secondary-filler {
   font-size: 1.5;
   font-weight: 600;
 }
+.disabled {
+  display: none;
+}
 /* flex-wrap */
 .product-list {
   width: 100%;
+  padding: 0 20px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -206,6 +222,7 @@ input.check-open-close:checked ~ div.secondary-filler {
 }
 .product-item {
   position: relative;
+  cursor: pointer;
   width: calc(1 / 4 * 100% - (1-1 / 4) * 5px);
   justify-content: center;
   margin: 0.5em 0.5em 3em 0;
@@ -236,30 +253,24 @@ input.check-open-close:checked ~ div.secondary-filler {
 .product-color-list {
   display: flex;
 }
-.product-chip-color-item {
-  display: block;
-  position: relative;
-  margin: 0 6px 3px;
-  border-radius: 50% 50%;
-  cursor: pointer;
+.product-color-item {
+  width: 15px;
+  height: 15px;
+  padding: 0.5px;
+  margin: 0 3px;
   border: 1px solid black;
+  border-radius: 50%;
 }
-.product-chip-color-item input {
-  position: absolute;
-  width: 0;
-  height: 0;
-  display: none;
-}
-.product-chip-color-item label {
+.product-chip {
   display: block;
-  position: relative;
-  /* z-index: 10; */
-  width: 1em;
-  height: 1em;
-  border-radius: 50% 50%;
-  border: 1px solid white;
   cursor: pointer;
-  background: #000;
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
 }
-
+.product-color-item.chosen {
+  width: 17px;
+  height: 17px;
+  border: 1px solid red;
+}
 /* ------------------------- End product -------------------------- */

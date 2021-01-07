@@ -327,7 +327,7 @@ exports.getWishLish = async (req, res, next) => {
 };
 exports.addToCart = async (req, res, next) => {
   try {
-    const _id = req.params.id;
+    const _id = req.user;
     const { productId, colorId } = req.body;
     const isUser = await User.findById(_id);
     if (!isUser) {
@@ -363,6 +363,7 @@ exports.updateCart = async (req, res, next) => {
   try {
     const _id = req.params.id;
     const { newCart } = req.body;
+    if (!newCart) next(new Error("newCart is required"));
     const isUser = await User.findById(_id);
     if (!isUser) {
       return res.status(400).json({

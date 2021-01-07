@@ -120,7 +120,7 @@ exports.signin = async (req, res, next) => {
 };
 exports.signout = (req, res) => {
   res.clearCookie("token");
-  res.clearCookie("refreshtoken");
+  res.clearCookie("refreshToken");
   res.status(200).json({
     error: false,
     message: "Signout success",
@@ -157,12 +157,12 @@ exports.refreshToken = async (req, res, next) => {
 exports.isSignIn = (req, res, next) => {
   const token = req.cookies.token;
   if (!req.cookies) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: "Unauthorized, access denied",
     });
   }
   if (!token) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: "Unauthorized, access denied",
     });
   }
@@ -171,7 +171,7 @@ exports.isSignIn = (req, res, next) => {
     process.env.JWT_TOKEN_SECRET,
     (err, decode) => {
       if (err) {
-        return res.status(200).json({
+        return res.status(400).json({
           message: "Token is not valid, access denied",
         });
       }
@@ -183,7 +183,7 @@ exports.isSignIn = (req, res, next) => {
 exports.isAdmin = (req, res, next) => {
   const isAdmin = req.user.role == 2;
   if (!isAdmin) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: "You are not Admin, access denied",
     });
   }
@@ -192,7 +192,7 @@ exports.isAdmin = (req, res, next) => {
 exports.isEditor = (req, res, next) => {
   const isEditor = req.user.role >= 1;
   if (!isEditor) {
-    return res.status(200).json({
+    return res.status(400).json({
       message: "You are not editor, access denied",
     });
   }
@@ -230,27 +230,35 @@ exports.verifyToken = async (req, res, next) => {
 exports.signinByCookie = async (req, res, next) => {
   try {
     const { token, refreshToken } = req.cookies;
-    if (token) var user = await jwt.verify(token, process.env.JWT_TOKEN_SECRET);
-    if (user)
+    if (token)
+      var decoded = await jwt.verify(token, process.env.JWT_TOKEN_SECRET);
+    if (decoded) {
+      const newU = await User.findById(decoded.user._id);
       return res.status(200).json({
         error: false,
-        user,
+        user: newU,
       });
-    else if (!user && refreshToken) {
+    } else if (!decoded && refreshToken) {
       let { user } = await jwt.verify(
         refreshToken,
         process.env.JWT_REFRESH_TOKEN_SECRET
       );
       if (user) {
-        const token = await jwt.sign({ user }, process.env.JWT_TOKEN_SECRET, {
-          expiresIn: "1d",
-        });
+        console.log(user);
+        const newU = await User.findById(user._id);
+        const token = await jwt.sign(
+          { user: newU },
+          process.env.JWT_TOKEN_SECRET,
+          {
+            expiresIn: "1d",
+          }
+        );
         res.cookie("token", token, {
           expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
         });
         return res.status(200).json({
           error: false,
-          user,
+          user: newU,
         });
       }
     } else
