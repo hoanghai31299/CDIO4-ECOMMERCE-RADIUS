@@ -30,6 +30,7 @@ function App() {
               ></Route>
             );
           })}
+          <Route component={Error404} />
         </Switch>
         <Footer />
       </div>
