@@ -21,16 +21,6 @@
   flex-direction: row;
 }
 
-td {
-  /* padding-right: 16em; */
-  /* display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between; */
-}
-td:first-child {
-  /* padding-right: 10em; */
-}
 /* --------------------------------------------------- */
 .shopping-card-item table {
   /* display: flex;

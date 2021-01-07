@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import routers from "./router.js";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
+import Error404 from "./Components/Error404";
 function App() {
   return (
     <Router>
@@ -19,6 +20,7 @@ function App() {
               ></Route>
             );
           })}
+          <Route component={Error404} />
         </Switch>
         <Footer />
       </div>

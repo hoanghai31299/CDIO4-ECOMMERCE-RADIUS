@@ -67,6 +67,21 @@ export default function ModalCreate({ isModalVisible, setVisible, reload }) {
       if (!data.error) {
         setVisible(false);
         reload();
+        setProduct({
+          categories: "",
+          name: "",
+          price: 0,
+          description: {
+            main: "",
+            sku: "",
+            size: "",
+          },
+          colors: {
+            color: "",
+            quantity: 0,
+            image_url: [],
+          },
+        });
         message.success("Create product successful");
       } else throw new Error(data.message);
     } catch (error) {
