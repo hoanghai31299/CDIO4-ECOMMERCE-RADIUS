@@ -31,8 +31,7 @@ function Product() {
             </div>
             <div
               className="category"
-              onClick={() => setFilterVisible(!filterVisible)}
-            >
+              onClick={() => setFilterVisible(!filterVisible)}>
               {filterVisible ? "CLOSE" : "FILTER"}
             </div>
           </div>
