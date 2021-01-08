@@ -1,0 +1,120 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.row {
+  margin-top: 5em;
+  justify-content: center;
+}
+.shopping-card__title {
+  font-weight: 900;
+  font-size: 1.3em;
+}
+/* ------------------------------------------------- */
+.item-info img {
+  width: 8em;
+  height: 8em;
+}
+.item-info {
+  display: flex;
+  flex-direction: row;
+}
+
+/* --------------------------------------------------- */
+.shopping-card-item table {
+  /* display: flex;
+  flex-direction: row; */
+  width: 100%;
+
+  padding: 2em;
+  border-top: 1px solid #000;
+}
+.shopping-card__list > .shopping-card-item:last-child {
+  border-bottom: 1px solid #000;
+}
+/* --------------------------------------------------- */
+/* item -info  */
+
+.item-info__text {
+  width: 40%;
+  padding: 1em;
+}
+.item-amount,
+.item-total {
+  width: 30%;
+  padding: 1em;
+}
+.item-amount {
+  width: 30%;
+}
+.item-total p {
+  display: inline-block;
+  margin-left: 30%;
+}
+.item-amount,
+.item-total {
+  justify-content: center;
+}
+.item-info img {
+  margin-right: 1.5em;
+}
+.item-remove {
+  display: inline-block;
+  padding-top: 2em;
+}
+.item-name {
+  width: 100%;
+}
+.item-name,
+.item-total__price {
+  font-weight: 600;
+  font-size: 1em;
+}
+p.item-total__price {
+  margin-left: 0;
+}
+.item-quantity,
+.item-total {
+  font-weight: 700;
+}
+/* gotoCheckout */
+.checkout {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.checkout .goto_checkout {
+  display: inline-block;
+  padding: 0.7em 6em;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  margin: 2em;
+}
+.item-remove {
+  cursor: pointer;
+}
+
+/* input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.item-amount__quantity > input {
+  width: 3em;
+}
+/* incon add-sub */
+.icon-add_sub {
+  width: 1.5em;
+  padding: 0.3em;
+  object-fit: cover;
+  cursor: pointer;
+}
+.item-amount__quantity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

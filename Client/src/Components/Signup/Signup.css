@@ -1,74 +1,80 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 :root {
-    --main-font: 'Noto Sans', sans-serif;
+  --main-font: "Noto Sans", sans-serif;
 }
 
 div,
 p,
 a {
-    word-break: keep-all;
+  word-break: keep-all;
 }
 
 * {
-    font-family: var(--main-font);
-    font-weight: 100;
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  font-family: var(--main-font);
+  font-weight: 100;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 .signup-container {
-    margin-top: 60px;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin-top: 60px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.title>h4 {
-    font-size: .9rem;
-    font-weight: 700;
+.title > h4 {
+  font-size: 0.9rem;
+  font-weight: 700;
 }
 
 .signup-form {
-    padding: 20px;
+  padding: 20px;
 }
 
 .form-items {
-    width: 500px;
-    max-width: 80vw;
-    margin: 20px auto 20px auto;
+  width: 500px;
+  max-width: 80vw;
+  margin: 20px auto 20px auto;
 }
 
-.form-items>.form-label {
-    font-size: .8rem;
-    margin-bottom: 5px;
-    color: rgb(54, 54, 54);
+.form-items > .form-label {
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+  color: rgb(54, 54, 54);
 }
 
-.form-input>input {
-    background-color: rgb(255 255 255);
-    border: 1px solid rgb(0 0 0);
-    outline: none;
-    height: 2rem;
-    width: 100%;
-    padding: 0 1rem;
+.form-input > input {
+  background-color: rgb(255 255 255);
+  border: 1px solid rgb(0 0 0);
+  outline: none;
+  height: 2rem;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .btns {
-    margin-top: 20px;
-    background-color: black;
-    outline: none;
-    border: none;
-    color: white;
-    width: 200px;
-    height: 40px;
-    max-width: 100%;
-    cursor: pointer;
+  margin-top: 20px;
+  background-color: black;
+  outline: none;
+  border: none;
+  color: white;
+  width: 200px;
+  height: 40px;
+  max-width: 100%;
+  cursor: pointer;
 }
-
+.err-cfpassword {
+  color: coral;
+}
+.notification {
+  color: rgb(84, 143, 25);
+  font-weight: 600;
+}
 @media only screen and (max-width: 1000px) {
-    .btns {
-        width: 100%;
-    }
+  .btns {
+    width: 100%;
+  }
 }
