@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const { uploadSingle, dataUri } = require("../utils/cloudinary");
 const fs = require("fs");
 const Product = require("../models/product.model");
+const User = require("../models/user.model");
 
 class APIfeatures {
   constructor(query, queryString) {
@@ -24,6 +25,11 @@ class APIfeatures {
     if (data.name) {
       data.name["$options"] = "i";
     }
+    if (data.color) {
+      data.colors = { $elemMatch: { color: data.color } };
+    }
+    delete data["color"];
+
     this.query.find(data);
 
     return this;
@@ -58,11 +64,6 @@ exports.create = async (req, res, next) => {
       });
     }
 
-    // if (req.file) {
-    //     const file = dataUri(req.file).content;
-    //     const imgCloudinary = await uploadSingle(file);
-    //     colors.image_url = imgCloudinary.url;
-    // }
     const colorCollection = [colors];
     const productParams = {
       name,
@@ -153,7 +154,10 @@ exports.deleteProduct = async (req, res, next) => {
 exports.getAll = async (req, res, next) => {
   try {
     const features = new APIfeatures(
-      Product.find({ deleteAt: undefined })
+      Product.find({
+        deleteAt: undefined,
+        // colors: { $elemMatch: { color: "5ff1e39e723cab08a41f8b8d" } },
+      })
         .populate({
           path: "colors.color",
         })
@@ -181,7 +185,9 @@ exports.getAll = async (req, res, next) => {
 exports.getProduct = async (req, res, next) => {
   try {
     const _id = req.params.id;
-    const product = await Product.findById(_id);
+    const product = await Product.findById(_id).populate({
+      path: "colors.colorId",
+    });
     if (!product) {
       return res.status(200).json({
         error: true,
@@ -200,11 +206,30 @@ exports.getProduct = async (req, res, next) => {
 exports.getProductByCategory = async (req, res, next) => {
   try {
     const category = req.params.category;
-    const products = await Product.find({ categories: category });
+    const features = new APIfeatures(
+      Product.find({
+        categories: category,
+        deleteAt: undefined,
+      })
+        .populate({
+          path: "colors.color",
+        })
+        .populate({
+          path: "categories",
+        }),
+      req.query
+    )
+      .filtering()
+      .sorting();
+    const total = await features.query;
+    const products = await features.paginating().query;
     return res.status(200).json({
-      error: false,
-      message: "get product by category successful",
       products,
+      query: {
+        total: total.length,
+        limit: req.query.limit || 20,
+        page: req.query.page || 1,
+      },
     });
   } catch (error) {
     next(error);

@@ -1,0 +1,131 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* ---------------Start checkout-body ---------------*/
+.checkout-body {
+  width: 40%;
+  margin: auto;
+  margin-top: 5em;
+}
+/* taplet */
+@media (max-width: 1023px) {
+  .checkout-body {
+    width: 60%;
+  }
+}
+@media (max-width: 739px) {
+  .checkout-body {
+    width: 80%;
+  }
+}
+/* ---------------End checkout-body ---------------*/
+/* ---------------Start checkout-info ---------------*/
+.page-title,
+.page-desc {
+  margin-bottom: 2.5em;
+}
+.page-title {
+  font-weight: 700;
+}
+.checkout-info {
+  margin-bottom: 2.5em;
+}
+
+/* ---------------End checkout-info ---------------*/
+/* btn-checkout */
+.checkout-ctp {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-bottom: 3em;
+}
+.checkout-ctp > div {
+  display: inline-block;
+  padding: 0.7em 3.7em;
+  color: #fff;
+  background-color: #000;
+  cursor: pointer;
+}
+/* ---------------Start order-summary ---------------*/
+.order-summary-title {
+  font-size: 1.3em;
+  font-weight: 700;
+  margin-bottom: 2em;
+}
+/* order-summary_head */
+.order-summary_head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+/* summary-list */
+
+.summary-item__img img {
+  width: 7em;
+  object-fit: cover;
+}
+.summary-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 2em;
+}
+.summary-item_name {
+  margin-bottom: 1.5cdem;
+  font-weight: 700;
+}
+.summary-item_quantity {
+  font-weight: 700;
+}
+.summary-item {
+  border-bottom: 1px solid #000;
+  padding-bottom: 2em;
+}
+/* checkount-err */
+.checkout-err {
+  font-size: 1.7em;
+  margin-bottom: 2em;
+  color: coral;
+  width: 80%;
+  justify-content: center;
+}
+.checkout-succes {
+  font-size: 1.7em;
+
+  margin-bottom: 2em;
+  color: darkgreen;
+}
+.coupon-title {
+  font-size: 1.2;
+  font-weight: 700;
+}
+.coupon-infor {
+  padding: 0;
+  margin: 0;
+  margin-top: 1.5em;
+  line-height: 1.5em;
+}
+/* ---------------End order-summary ---------------*/
+/* ---------------Start summary-price ---------------*/
+.summary-price-subtotal,
+.summary-price-fee_shipping {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+.summary-price-fee_shipping {
+  margin-bottom: 2em;
+}
+.summary-price-element {
+  margin-bottom: 2em;
+  border-bottom: 1px solid #000;
+}
+.summary-price__total {
+  display: flex;
+  flex-direction: row;
+}
+/* ---------------End summary-price ---------------*/

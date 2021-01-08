@@ -1,117 +1,122 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap");
 :root {
-    --main-font: 'Noto Sans', sans-serif;
+  --main-font: "Noto Sans", sans-serif;
 }
 
 .container-login {
-    margin-top: 60px;
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  margin-top: 60px;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-form-container {
-    max-width: 500px;
-    width: 100%;
-    padding: 0 100px;
-    border-right: 0px;
-    border-right: 1px solid rgb(201 197 197);
+  max-width: 500px;
+  width: 100%;
+  padding: 0 100px;
+  border-right: 0px;
+  border-right: 1px solid rgb(201 197 197);
 }
 
-.input-box>input {
-    background-color: rgb(255 255 255);
-    border: 1px solid rgb(0 0 0);
-    outline: none;
-    height: 2rem;
-    width: 100%;
-    padding: 0 1rem;
-    max-width: 500px;
+.input-box > input {
+  background-color: rgb(255 255 255);
+  border: 1px solid rgb(0 0 0);
+  outline: none;
+  height: 2rem;
+  width: 100%;
+  padding: 0 1rem;
+  max-width: 500px;
 }
 
 .input-box {
-    font-size: .8rem;
-    margin-bottom: 1rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .login-title {
-    margin-bottom: 30px;
-    color: rgb(19, 18, 18);
+  margin-bottom: 30px;
+  color: rgb(19, 18, 18);
 }
 
-.login-title>span {
-    font-size: 14px;
-    margin-bottom: 15px;
-    text-transform: uppercase;
+.login-title > span {
+  font-size: 14px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
 }
 
-.login-title>p {
-    font-size: .8rem;
+.login-title > p {
+  font-size: 0.8rem;
 }
 
 .find-pw {
-    margin-bottom: 25px;
+  margin-bottom: 25px;
 }
 
 .find-pw a {
-    color: black;
-    font-size: .8rem;
+  color: black;
+  font-size: 0.8rem;
 }
 
 .login_bt {
-    background-color: black;
-    outline: none;
-    border: none;
-    color: white;
-    width: 200px;
-    height: 40px;
-    max-width: 100%;
-    cursor: pointer;
+  background-color: black;
+  outline: none;
+  border: none;
+  color: white;
+  width: 200px;
+  height: 40px;
+  max-width: 100%;
+  cursor: pointer;
 }
 
 .login_bt .link {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 .register-wrapper {
-    padding: 0 100px;
-    margin-top: 60px;
-    max-width: 500px;
-    width: 100%;
+  padding: 0 100px;
+  margin-top: 60px;
+  max-width: 500px;
+  width: 100%;
 }
 
 .register-wrapper .register-title {
-    margin-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .register-title span {
-    font-size: .9rem;
-    margin-bottom: 15px;
+  font-size: 0.9rem;
+  margin-bottom: 15px;
 }
 
 .register-title p {
-    font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 @media only screen and (max-width: 1000px) {
-    .container-login {
-        padding: 0 10%;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-    .login-form-container {
-        padding: 0;
-        padding-bottom: 60px;
-        border-right: none;
-        border-bottom: 1px solid rgb(201 197 197);
-    }
-    .register-wrapper {
-        padding: 60px 0;
-        margin: 0;
-    }
-    .login_bt {
-        width: 100%;
-    }
+  .container-login {
+    padding: 0 10%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .login-form-container {
+    padding: 0;
+    padding-bottom: 60px;
+    border-right: none;
+    border-bottom: 1px solid rgb(201 197 197);
+  }
+  .register-wrapper {
+    padding: 60px 0;
+    margin: 0;
+  }
+  .login_bt {
+    width: 100%;
+  }
+}
+/* message error */
+.message-error {
+  padding: 1em;
+  color: coral;
 }

@@ -5,12 +5,14 @@ import ModalUpdate from "./ModalUpdate";
 import ModalCreate from "./ModalCreate";
 import axios from "../../axios";
 import Loader from "../../App/layout/Loader";
+import ModalAddColor from "./ModalAddColor";
 const { Option } = Select;
 function Product() {
   const [products, setProducts] = useState(undefined);
   const [categories, setCategories] = useState(undefined);
   const [updateModalVS, setUpdateModalVS] = useState(false);
   const [modalCreate, setModalCreate] = useState(false);
+  const [modalAddColor, setModalAddColor] = useState(false);
   const [updateProduct, setUpdateProduct] = useState(undefined);
   const fetchProducts = async () => {
     try {
@@ -66,13 +68,22 @@ function Product() {
                       );
                     })}
                 </Select>
-                <Button
-                  variant="primary"
-                  onClick={() => {
-                    setModalCreate(true);
-                  }}>
-                  + NEW PRODUCT
-                </Button>
+                <Row>
+                  <Button
+                    variant="info"
+                    onClick={() => {
+                      setModalAddColor(true);
+                    }}>
+                    + ADD COLOR
+                  </Button>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      setModalCreate(true);
+                    }}>
+                    + NEW PRODUCT
+                  </Button>
+                </Row>
               </Card.Header>
               <Card.Body>
                 <Table className="text-center" responsive variant="dark" hover>
@@ -144,6 +155,14 @@ function Product() {
           isModalVisible={modalCreate}
           setVisible={setModalCreate}
         />
+        {products && (
+          <ModalAddColor
+            products={products}
+            reload={fetchProducts}
+            isModalVisible={modalAddColor}
+            setVisible={setModalAddColor}
+          />
+        )}
       </>
     );
   return <Loader />;

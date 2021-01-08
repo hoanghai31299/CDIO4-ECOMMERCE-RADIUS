@@ -1,11 +1,33 @@
 import React, { useState } from "react";
 import "./Signin.css";
-import { Link } from "react-router-dom";
+import axios from "../../axios";
+import { Link, useHistory } from "react-router-dom";
 function Signin() {
   const [info, setInfo] = useState({
     email: "",
     password: "",
   });
+  const history = useHistory();
+  const [err, setErr] = useState({
+    err: false,
+    message: "",
+  });
+
+  const handleOnSubmit = (e) => {
+    axios
+      .post("/auth/signin", info)
+      .then((response) => {
+        if (response.data.error === true) {
+          setErr({ err: true, message: response.data.message });
+        } else {
+          history.push("/");
+          history.go(0);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const hanleInputChange = (e) => {
     setInfo({ ...info, [e.target.id]: e.target.value });
   };
@@ -16,6 +38,7 @@ function Signin() {
           <span>Login</span>
           <p>Returning Customer? Sign in to your account.</p>
         </div>
+        <div className="message-error">{err.message}</div>
         <div className="login-form">
           <div class="input-box">
             <p class="input-label">Email</p>
@@ -45,7 +68,9 @@ function Signin() {
             <Link to="/find-password">Find My Password</Link>
           </div>
           <div className="btns">
-            <button className="login_bt black">LOGIN</button>
+            <button onClick={handleOnSubmit} className="login_bt black">
+              LOGIN
+            </button>
           </div>
         </div>
       </div>
