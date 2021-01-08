@@ -52,10 +52,10 @@ function Product() {
           <div className="banner-infor">
             <div className="banner-infor__title">2021 PRE-COLLECTION</div>
             <div className="banner-infor__desc">
-              Gentle Monster’s 2021 Pre-Collection campaign, ‘VOID’, captures
-              the unbound spirit of Gentle Monster’s creativity. Immerse
-              yourself in the 2021 Pre-Collection campaign filled with delicate
-              and bold designs.
+              Radius's 2021 Pre-Collection campaign, ‘VOID’, captures the
+              unbound spirit of Gentle Monster’s creativity. Immerse yourself in
+              the 2021 Pre-Collection campaign filled with delicate and bold
+              designs.
             </div>
           </div>
         </div>

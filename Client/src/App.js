@@ -5,7 +5,7 @@ import routers from "./router.js";
 import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer/Footer";
 import axios from "./axios";
-import route from "../../Server/routes/user.route";
+import Error404 from "./Components/Error404";
 function App() {
   const [user, setUser] = useState(undefined);
   useEffect(() => {

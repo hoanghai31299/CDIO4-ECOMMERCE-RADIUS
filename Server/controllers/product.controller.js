@@ -64,11 +64,6 @@ exports.create = async (req, res, next) => {
       });
     }
 
-    // if (req.file) {
-    //     const file = dataUri(req.file).content;
-    //     const imgCloudinary = await uploadSingle(file);
-    //     colors.image_url = imgCloudinary.url;
-    // }
     const colorCollection = [colors];
     const productParams = {
       name,
@@ -190,8 +185,9 @@ exports.getAll = async (req, res, next) => {
 exports.getProduct = async (req, res, next) => {
   try {
     const _id = req.params.id;
-    const product = await Product.findById(_id)
-              .populate({path: 'colors.colorId'})
+    const product = await Product.findById(_id).populate({
+      path: "colors.colorId",
+    });
     if (!product) {
       return res.status(200).json({
         error: true,
@@ -296,4 +292,3 @@ exports.upImage = async (req, res, next) => {
     next(error);
   }
 };
-

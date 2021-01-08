@@ -90,6 +90,7 @@ ul {
   height: 2.5em;
   text-align: center;
   border: 1px solid grey;
+  cursor: pointer;
 }
 .account_detail-button button:first-child {
   background-color: #000;

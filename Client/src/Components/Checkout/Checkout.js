@@ -130,6 +130,8 @@ function Checkount() {
           message: error.response.data.message,
         });
       });
+    axios.put(`/user/cart/${orderInfor._id}`, { newCart: [] });
+    alert("thanh toan thanh cong");
   };
   return (
     <div>
@@ -220,7 +222,7 @@ function Checkount() {
             <div onClick={handleSubmit}>Continue to payment</div>
           </div>
           {err.error ? (
-            <div className="checkout-err">ERR: {err.message}</div>
+            <div className="checkout-err">Err: {err.message}</div>
           ) : (
             ""
           )}

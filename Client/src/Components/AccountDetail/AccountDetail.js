@@ -10,6 +10,9 @@ function AccountDetail() {
     phone: "",
     address: "",
   });
+  const [err, setErr] = useState({
+    error: "",
+  });
   const history = useHistory();
   useEffect(() => {
     axios

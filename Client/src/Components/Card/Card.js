@@ -8,6 +8,11 @@ function Card() {
   const [_idUser, set_IdUser] = useState();
   const [cartItem, setCartItem] = useState([]);
   const [listInforCart, setListInforCart] = useState([]);
+  const [err, setErr] = useState({
+    error: false,
+    message: "",
+  });
+
   useEffect(() => {
     axios
       .get("/auth/signinW")
@@ -58,9 +63,8 @@ function Card() {
         updateCart.splice(i, i + 1);
       }
     }
+    console.log("newwwwcart", newCart);
     setCartItem(newCart);
-    console.log("newCart", newCart);
-    console.log("list cart", updateCart);
     axios
       .put(`/user/cart/${_idUser}`, { newCart: updateCart })
       .then((res) => {
@@ -69,6 +73,76 @@ function Card() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  const handleAddQuuantity = (quantity, _iProduct, stock) => {
+    const addQuantity = [...listInforCart];
+    for (let i = 0; i < addQuantity.length; i++) {
+      if (addQuantity[i].productId === _iProduct) {
+        if (addQuantity[i].stock === stock) {
+          alert("Quantity has reached maximum.");
+        } else {
+          addQuantity[i].quantity = quantity + 1;
+          axios
+            .put(`/user/cart/${_idUser}`, { newCart: addQuantity })
+            .then((res) => {
+              setListInforCart(res.data.user.cart);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+        break;
+      }
+    }
+  };
+  const handleSubtrQuantity = (quantity, _iProduct) => {
+    const subQuantity = [...listInforCart];
+    for (let i = 0; i < subQuantity.length; i++) {
+      if (subQuantity[i].productId === _iProduct) {
+        if (subQuantity[i].quantity === 1) {
+          alert("Quantity has reached the minimum level.");
+        } else {
+          subQuantity[i].quantity = quantity - 1;
+          axios
+            .put(`/user/cart/${_idUser}`, { newCart: subQuantity })
+            .then((res) => {
+              setListInforCart(res.data.user.cart);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+        break;
+      }
+    }
+  };
+  // useEffect(() => {}, [valueChang]);
+  const handleOnchange = (e, _iProduct, quantity) => {
+    e.preventDefault();
+    const changeQuantity = [...listInforCart];
+    for (let i = 0; i < changeQuantity.length; i++) {
+      if (changeQuantity[i].productId === _iProduct) {
+        if (
+          changeQuantity[i].stock < quantity ||
+          changeQuantity[i].stock === quantity ||
+          quantity === 1 ||
+          quantity < 1
+        ) {
+          alert(`Quantity from ${1} to ${changeQuantity[i].stock}`);
+        } else {
+          changeQuantity[i].quantity = e.target.value;
+          axios
+            .put(`/user/cart/${_idUser}`, { newCart: changeQuantity })
+            .then((res) => {
+              setListInforCart(res.data.user.cart);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+        break;
+      }
+    }
   };
   return (
     <div>
@@ -101,13 +175,43 @@ function Card() {
                             </div>
                           </td>
                           <td className="item-amount">
-                            <label className="item-quantity">Quantity</label>
-                            <input
-                              type="number"
-                              min="1"
-                              max={item.stock}
-                              value={item.quantity}
-                            ></input>
+                            <div className="item-amount__quantity">
+                              <label className="item-quantity">Quantity</label>
+                              <img
+                                onClick={() =>
+                                  handleAddQuuantity(
+                                    item.quantity,
+                                    item._id,
+                                    item.stock
+                                  )
+                                }
+                                className="icon-add_sub"
+                                alt="icon-add"
+                                src="https://res.cloudinary.com/hoanghai/image/upload/v1610037178/Radius-E/ProductDetail-Delete/icon-etc/plus-solid_qpf4iw.svg"
+                              ></img>
+                              <input
+                                className="cart--item__quatity"
+                                type="number"
+                                min="1"
+                                max={item.stock}
+                                value={item.quantity}
+                                onChange={(e) =>
+                                  handleOnchange(e, item._id, item.stock)
+                                }
+                              ></input>
+                              <img
+                                onClick={() =>
+                                  handleSubtrQuantity(
+                                    item.quantity,
+                                    item._id,
+                                    item.stock
+                                  )
+                                }
+                                className="icon-add_sub"
+                                alt="icon-sub"
+                                src="https://res.cloudinary.com/hoanghai/image/upload/v1610037179/Radius-E/ProductDetail-Delete/icon-etc/minus-solid_ewiped.svg"
+                              ></img>
+                            </div>
                           </td>
                           <td className="item-total">
                             <p>Total: $ </p>
@@ -121,6 +225,11 @@ function Card() {
                   ))}
                 </div>
                 <div className="checkout">
+                  {!err ? (
+                    "123"
+                  ) : (
+                    <div className="notification-err">{err.error}</div>
+                  )}
                   <Link to="/checkout">
                     <label className="goto_checkout">Go to Checkout</label>
                   </Link>

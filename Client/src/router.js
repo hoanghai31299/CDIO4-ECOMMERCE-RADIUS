@@ -14,6 +14,7 @@ import ProductDetail from "./Components/ProductDetail/ProductDetail";
 import Card from "./Components/Card/Card";
 import Product from "./Components/Product/Product";
 import Checkout from "./Components/Checkout/Checkout";
+import Privacy_new from "./Components/Privacy_new/Privacy_new";
 const routers = [
   {
     path: "/",

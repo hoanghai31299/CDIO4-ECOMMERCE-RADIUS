@@ -95,3 +95,26 @@ p.item-total__price {
 .item-remove {
   cursor: pointer;
 }
+
+/* input */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.item-amount__quantity > input {
+  width: 3em;
+}
+/* incon add-sub */
+.icon-add_sub {
+  width: 1.5em;
+  padding: 0.3em;
+  object-fit: cover;
+  cursor: pointer;
+}
+.item-amount__quantity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
