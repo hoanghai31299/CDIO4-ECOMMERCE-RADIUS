@@ -54,7 +54,7 @@ app.use("/comment", commentRoute);
 app.use((err, req, res, next) => {
   if (err) {
     console.log(err);
-    return res.status(400).json({
+    return res.status(200).json({
       error: true,
       message: err.message,
     });
