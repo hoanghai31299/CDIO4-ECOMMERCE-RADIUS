@@ -139,7 +139,7 @@ function Signup() {
               />
             </div>
           </div>
-          {notification == undefined ? (
+          {notification === undefined ? (
             ""
           ) : (
             <div className="notification">{notification.message}</div>

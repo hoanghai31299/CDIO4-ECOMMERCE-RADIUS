@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "../../axios";
 
 function ProductDetailRecommand({ idCategory, idProduct, setProduct }) {
   const [listProduct, setListProduct] = useState(undefined);
-  const history = useHistory();
-  const [listProductRCM, setListProductRCM] = useState();
   useEffect(() => {
     axios
       .get(`/product/get_category/${idCategory}`)
       .then((res) => {
         setListProduct(res.data.products);
-        console.log("listproduct.........", res.data.products);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  const handleClick = () => {};
+  }, [idCategory]);
   return (
     <>
       <div className="row">
@@ -39,7 +34,6 @@ function ProductDetailRecommand({ idCategory, idProduct, setProduct }) {
                           <img
                             onClick={() => {
                               setProduct(productRCM);
-                              history.push(`/product-detail/${productRCM._id}`);
                               window.scroll(0, 0);
                             }}
                             alt="img-rcm"

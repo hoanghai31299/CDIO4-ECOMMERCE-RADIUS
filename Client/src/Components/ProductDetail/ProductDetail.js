@@ -10,6 +10,8 @@ import ProductDetailRecommand from "./ProductDetailRecommand";
 function ProductDetail() {
   const [product, setProduct] = useState(undefined);
   const [currentColor, setCurrentColor] = useState(0);
+  const { idProduct } = useParams();
+
   useEffect(() => {
     axio
       .get(`/product/${idProduct}`)
@@ -19,8 +21,7 @@ function ProductDetail() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-  const { idProduct } = useParams();
+  }, [idProduct]);
 
   return (
     <div>
@@ -55,8 +56,8 @@ function ProductDetail() {
                 </div>
                 <img
                   className="img-gift"
-                  src="https://res.cloudinary.com/hoanghai/image/upload/v1609159778/Radius-E/ProductDetail-Delete/products-color/gm_gift_pc_eyewear_msp8fx.webp"
-                ></img>
+                  alt="prdimg"
+                  src="https://res.cloudinary.com/hoanghai/image/upload/v1609159778/Radius-E/ProductDetail-Delete/products-color/gm_gift_pc_eyewear_msp8fx.webp"></img>
               </div>
             </div>
           </div>

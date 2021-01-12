@@ -8,30 +8,33 @@ import axios from "../../axios";
 import avatar1 from "../../assets/images/user/avatar-1.jpg";
 import avatar2 from "../../assets/images/user/avatar-2.jpg";
 import avatar3 from "../../assets/images/user/avatar-3.jpg";
-const now = moment(new Date());
+import Chart from "./Chart";
+
 function Dashboard() {
   const [day, setDay] = useState(undefined);
   const [month, setMonth] = useState(undefined);
   const [year, setYear] = useState(undefined);
   const [total, setTotal] = useState(undefined);
+  const [orders, setOrders] = useState(undefined);
   const fetchAPI = async () => {
     try {
+      const now = moment(new Date());
       const dataDay = (
         await axios.post("/order/stats/monthly", {
-          start: now.startOf("day").toString(),
-          end: now.endOf("day").toString(),
+          start: now.startOf("day").toISOString(),
+          end: now.endOf("day").toISOString(),
         })
       ).data;
       const dataMonth = (
         await axios.post("/order/stats/monthly", {
-          start: now.startOf("month").toString(),
-          end: now.endOf("month").toString(),
+          start: now.startOf("month").toISOString(),
+          end: now.endOf("month").toISOString(),
         })
       ).data;
       const dataYear = (
         await axios.post("/order/stats/monthly", {
-          start: now.startOf("year").toString(),
-          end: now.endOf("year").toString(),
+          start: now.startOf("year").toISOString(),
+          end: now.endOf("year").toISOString(),
         })
       ).data;
       const dataTotal = (await axios.get("/order")).data;
@@ -39,6 +42,7 @@ function Dashboard() {
       setMonth(dataMonth.orders);
       setYear(dataYear.orders);
       setTotal(dataTotal.order);
+      setOrders(dataTotal.order);
     } catch (error) {
       message.error(error.message);
     }
@@ -46,8 +50,10 @@ function Dashboard() {
   useEffect(() => {
     fetchAPI();
   }, []);
+
   return (
     <Aux>
+      <Row>{<Chart data={orders} />}</Row>
       <Row>
         <Col md={6} xl={4}>
           <Card>

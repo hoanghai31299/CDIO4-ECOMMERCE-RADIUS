@@ -10,9 +10,6 @@ function AccountDetail() {
     phone: "",
     address: "",
   });
-  const [err, setErr] = useState({
-    error: "",
-  });
   const history = useHistory();
   useEffect(() => {
     axios
@@ -91,8 +88,7 @@ function AccountDetail() {
               className="ip-max_with"
               name="email"
               value={inforUser.email}
-              onChange={handleChange}
-            ></input>
+              onChange={handleChange}></input>
           </div>
           <div className="account_detail-name">
             <div className="account_detail-name__first_name">
@@ -103,8 +99,7 @@ function AccountDetail() {
                 id="username"
                 value={inforUser.name}
                 name="name"
-                onChange={handleChange}
-              ></input>
+                onChange={handleChange}></input>
             </div>
             {/* <div className="account_detail-name__last_name">
               <lable className="item-title">Last name</lable>
@@ -121,8 +116,7 @@ function AccountDetail() {
               className="ip-max_with"
               name="address"
               value={inforUser.address}
-              onChange={handleChange}
-            ></input>
+              onChange={handleChange}></input>
           </div>
 
           <div className="account_detail-phonenumber">

@@ -13,7 +13,9 @@ const { deleteOne } = require("../models/user.model");
 exports.getUser = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const user = await User.findById(_id);
+    const user = await await User.findById(_id)
+      .populate("cart.productId")
+      .populate("wishList");
     if (!user) {
       return res.status(400).json({
         error: true,
@@ -32,14 +34,16 @@ exports.getUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const { name,  phone, address } = req.body;
-    if (!(name)) {
+    const { name, phone, address } = req.body;
+    if (!name) {
       return res.status(400).json({
         error: true,
         message: "all fell is required",
       });
     }
-    const newUser = await User.findById(_id);
+    const newUser = await User.findById(_id)
+      .populate("cart.productId")
+      .populate("wishList");
     if (!newUser) {
       return res.status(400).json({
         error: true,
@@ -127,8 +131,8 @@ exports.resetPassword = async (req, res, next) => {
 exports.updateUserByAdmin = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const { name,  phone, address, role } = req.body;
-    if (!(name  && address && phone)) {
+    const { name, phone, address, role } = req.body;
+    if (!(name && address && phone)) {
       return res.status(400).json({
         error: true,
         message: "All fields are required ",
@@ -253,7 +257,9 @@ exports.addWishList = async (req, res, next) => {
       _id,
       { $push: { wishList: productId } },
       { new: true }
-    );
+    )
+      .populate("cart.productId")
+      .populate("wishList");
     if (!user) {
       return res.status(400).json({
         error: true,
@@ -277,7 +283,9 @@ exports.deleteWishLish = async (req, res, next) => {
       _id,
       { $pullAll: { wishList: [productId] } },
       { new: true }
-    );
+    )
+      .populate("cart.productId")
+      .populate("wishList");
     if (!user) {
       return res.status(400).json({
         error: true,
@@ -297,7 +305,9 @@ exports.addToCart = async (req, res, next) => {
   try {
     const _id = req.user;
     const { productId, colorId } = req.body;
-    const isUser = await User.findById(_id);
+    const isUser = await User.findById(_id)
+      .populate("cart.productId")
+      .populate("wishList");
     if (!isUser) {
       return res.status(400).json({
         error: true,
@@ -317,7 +327,9 @@ exports.addToCart = async (req, res, next) => {
       _id,
       { $set: { cart } },
       { new: true }
-    );
+    )
+      .populate("cart.productId")
+      .populate("wishList");
     return res.status(200).json({
       error: false,
       message: "update cart successful",
@@ -343,7 +355,9 @@ exports.updateCart = async (req, res, next) => {
       _id,
       { $set: { cart: newCart } },
       { new: true }
-    );
+    )
+      .populate("cart.productId")
+      .populate("wishList");
     return res.status(200).json({
       error: false,
       message: "update cart successful",
@@ -375,15 +389,17 @@ exports.getAllCart = async (req, res, next) => {
 exports.getWishLish = async (req, res, next) => {
   try {
     const _id = req.params.id;
-    const user = await User.findById(_id)
-                .populate({path: 'products'})
+    const user = await User.findById(_id).populate({ path: "products" });
     if (!user) {
       return res.status(400).json({
         error: true,
         message: "user is not found",
       });
     }
-    const products = await Product.find({_id: {$in:user.wishList}, deleteAt: undefined});
+    const products = await Product.find({
+      _id: { $in: user.wishList },
+      deleteAt: undefined,
+    });
     return res.status(200).json({
       error: false,
       message: "get wish lish successful",
