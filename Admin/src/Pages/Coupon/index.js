@@ -41,7 +41,7 @@ function Coupon() {
         message.success("Create discount successful");
         fetchCoupons();
         setModalCreate(false);
-      }
+      } else throw new Error(data.message);
     } catch (error) {
       message.error(error.message);
     }

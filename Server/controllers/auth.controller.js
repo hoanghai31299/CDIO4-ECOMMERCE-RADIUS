@@ -81,7 +81,9 @@ exports.signin = async (req, res, next) => {
         message: "email or password is required",
       });
     }
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email })
+      .populate("cart.productId")
+      .populate("wishList");
     if (!user) {
       return res.status(200).json({
         error: true,
@@ -94,11 +96,15 @@ exports.signin = async (req, res, next) => {
         message: "Password and email are not match",
       });
     }
-    const token = await jwt.sign({ user }, process.env.JWT_TOKEN_SECRET, {
-      expiresIn: "1d",
-    });
+    const token = await jwt.sign(
+      { user: { _id: user._id } },
+      process.env.JWT_TOKEN_SECRET,
+      {
+        expiresIn: "1d",
+      }
+    );
     const refreshToken = await jwt.sign(
-      { user },
+      { user: { _id: user._id } },
       process.env.JWT_REFRESH_TOKEN_SECRET,
       { expiresIn: "30d" }
     );
@@ -175,8 +181,10 @@ exports.isSignIn = (req, res, next) => {
           message: "Token is not valid, access denied",
         });
       }
-      req.user = decode.user;
-      next();
+      User.findById(decode.user, (err, user) => {
+        req.user = user;
+        next();
+      });
     }
   );
 };
@@ -233,7 +241,10 @@ exports.signinByCookie = async (req, res, next) => {
     if (token)
       var decoded = await jwt.verify(token, process.env.JWT_TOKEN_SECRET);
     if (decoded) {
-      const newU = await User.findById(decoded.user._id);
+      console.log(decoded);
+      const newU = await User.findById(decoded.user)
+        .populate("cart.productId")
+        .populate("wishList");
       return res.status(200).json({
         error: false,
         user: newU,
@@ -244,10 +255,11 @@ exports.signinByCookie = async (req, res, next) => {
         process.env.JWT_REFRESH_TOKEN_SECRET
       );
       if (user) {
-        console.log(user);
-        const newU = await User.findById(user._id);
+        const newU = await User.findById(user)
+          .populate("cart.productId")
+          .populate("wishList");
         const token = await jwt.sign(
-          { user: newU },
+          { user: newU._id },
           process.env.JWT_TOKEN_SECRET,
           {
             expiresIn: "1d",

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "../../../axios";
 function ProductCard({ product }) {
@@ -58,11 +58,11 @@ function ProductCard({ product }) {
           <div className="product-img">
             <img
               src={product.colors[current].image_url[0]}
-              alt="product-item"
-            ></img>
+              alt="product-item"></img>
           </div>
         </Link>
         <div className="favorite-icon">
+<<<<<<< HEAD
           {isWishList ? (
             <div
               className="favorite-icon__on"
@@ -78,6 +78,20 @@ function ProductCard({ product }) {
               <img src="https://res.cloudinary.com/hoanghai/image/upload/v1609597115/Radius-E/ProductDetail-Delete/icon-heart/heart-regular_umpjua.svg" />
             </div>
           )}
+=======
+          <div className="favorite-icon__off">
+            <img
+              alt="like-icon"
+              src="https://res.cloudinary.com/hoanghai/image/upload/v1609597115/Radius-E/ProductDetail-Delete/icon-heart/heart-regular_umpjua.svg"
+            />
+          </div>
+          <div className="favorite-icon__on">
+            <img
+              alt="like-icon"
+              src="https://res.cloudinary.com/hoanghai/image/upload/v1609597114/Radius-E/ProductDetail-Delete/icon-heart/heart-solid_ovskat.svg"
+            />
+          </div>
+>>>>>>> master
         </div>
         <div className="product-infor">
           <div className="product-name">{product.name}</div>
@@ -85,13 +99,11 @@ function ProductCard({ product }) {
             {product.colors.map((cl, i) => {
               return (
                 <div
-                  className={`product-color-item  ${current == i && "chosen"}`}
-                  onClick={() => setCurrent(i)}
-                >
+                  className={`product-color-item  ${current === i && "chosen"}`}
+                  onClick={() => setCurrent(i)}>
                   <div
                     className="product-chip"
-                    style={{ background: `#${cl.color.hex}` }}
-                  ></div>
+                    style={{ background: `#${cl.color.hex}` }}></div>
                 </div>
               );
             })}

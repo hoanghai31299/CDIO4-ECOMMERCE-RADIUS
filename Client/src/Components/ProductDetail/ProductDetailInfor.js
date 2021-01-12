@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import axios from "../../axios";
+import { UserContext } from "../../GlobalState/UserContext";
 function ProductDetailInfor({
   description,
   name,
@@ -10,6 +11,7 @@ function ProductDetailInfor({
   setColorIndex,
 }) {
   console.log(localStorage.getItem("cart"));
+  const { setUser } = useContext(UserContext);
   const onAddToBag = async () => {
     try {
       const { data } = await axios.post("/user/cart", {
@@ -19,7 +21,7 @@ function ProductDetailInfor({
       if (data.error) {
         throw new Error();
         // else {}
-      }
+      } else setUser(data.user);
     } catch (error) {
       const cart = localStorage.getItem("cart");
       let newCart;
@@ -28,8 +30,8 @@ function ProductDetailInfor({
         newCart = JSON.parse(cart);
         newCart = newCart.map((item) => {
           if (
-            item.productId == _id &&
-            item.colorId == colors[currColorIndex].color
+            item.productId === _id &&
+            item.colorId === colors[currColorIndex].color
           ) {
             item.quantity = item.quantity + 1;
             check = true;
@@ -92,6 +94,7 @@ function ProductDetailInfor({
         <div className="product_detail-etc">
           <div className="product_detail-specifications">
             <img
+              alt="abc"
               className="icon-etc"
               src="https://res.cloudinary.com/hoanghai/image/upload/v1609183315/Radius-E/ProductDetail-Delete/icon-etc/ruler-horizontal-solid_bwf49d.svg"
             />
@@ -99,6 +102,7 @@ function ProductDetailInfor({
           </div>
           <div className="product_detail--origin">
             <img
+              alt="abc"
               className="icon-etc"
               src="https://res.cloudinary.com/hoanghai/image/upload/v1609183316/Radius-E/ProductDetail-Delete/icon-etc/industry-solid_hogsny.svg"
             />
@@ -106,6 +110,7 @@ function ProductDetailInfor({
           </div>
           <div className="product_detail--shipping">
             <img
+              alt="abc"
               className="icon-etc"
               src="https://res.cloudinary.com/hoanghai/image/upload/v1609183315/Radius-E/ProductDetail-Delete/icon-etc/truck-solid_fs22j6.svg"
             />

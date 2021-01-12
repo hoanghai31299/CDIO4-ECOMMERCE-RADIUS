@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Signin.css";
 import axios from "../../axios";
 import { Link, useHistory } from "react-router-dom";
+import { UserContext } from "../../GlobalState/UserContext";
 function Signin() {
+  const { setUser } = useContext(UserContext);
   const [info, setInfo] = useState({
     email: "",
     password: "",
@@ -15,13 +17,13 @@ function Signin() {
 
   const handleOnSubmit = (e) => {
     axios
-      .post("/auth/signin", info)
+      .post("/auth/signin", info, { withCredentials: true })
       .then((response) => {
         if (response.data.error === true) {
           setErr({ err: true, message: response.data.message });
         } else {
+          setUser(response.data.user);
           history.push("/");
-          history.go(0);
         }
       })
       .catch((err) => {
