@@ -1,0 +1,60 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+/* ---------------Start track-your-order--------------- */
+
+.track-your-order {
+  width: 80%;
+  margin: auto;
+  margin-top: 10em;
+}
+.is-active {
+  border-bottom: 1px solid #000;
+}
+.header-list-item {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 3em;
+}
+.header-item {
+  justify-content: center;
+  width: 16.66%;
+  text-align: center;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+.header-item span {
+  position: relative;
+}
+.header-item span::after {
+  content: "";
+  position: absolute;
+  height: 1px;
+  width: 0;
+  background-color: black;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  transition: all ease-in 0.2s;
+}
+.header-item span:hover::after {
+  width: 100%;
+}
+
+.shopping-card-item {
+  width: 100%;
+}
+.product-list {
+  margin: 0;
+}
+.shopping-card-item table {
+  margin-top: 5em;
+  width: 80%;
+  margin: auto;
+}
+.shopping-card-item table:last-child {
+  border-bottom: 1px solid #000;
+}
+
+/* ---------------End track-your-order--------------- */

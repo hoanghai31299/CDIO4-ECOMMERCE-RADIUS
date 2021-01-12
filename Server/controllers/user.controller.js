@@ -32,8 +32,8 @@ exports.getUser = async (req, res, next) => {
 exports.updateUser = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const { name,  phone, address } = req.body;
-    if (!(name)) {
+    const { name, phone, address } = req.body;
+    if (!name) {
       return res.status(400).json({
         error: true,
         message: "all fell is required",
@@ -127,8 +127,8 @@ exports.resetPassword = async (req, res, next) => {
 exports.updateUserByAdmin = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const { name,  phone, address, role } = req.body;
-    if (!(name  && address && phone)) {
+    const { name, phone, address, role } = req.body;
+    if (!(name && address && phone)) {
       return res.status(400).json({
         error: true,
         message: "All fields are required ",
@@ -375,15 +375,17 @@ exports.getAllCart = async (req, res, next) => {
 exports.getWishLish = async (req, res, next) => {
   try {
     const _id = req.params.id;
-    const user = await User.findById(_id)
-                .populate({path: 'products'})
+    const user = await User.findById(_id).populate({ path: "products" });
     if (!user) {
       return res.status(400).json({
         error: true,
         message: "user is not found",
       });
     }
-    const products = await Product.find({_id: {$in:user.wishList}, deleteAt: undefined});
+    const products = await Product.find({
+      _id: { $in: user.wishList },
+      deleteAt: undefined,
+    });
     return res.status(200).json({
       error: false,
       message: "get wish lish successful",

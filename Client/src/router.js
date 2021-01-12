@@ -15,6 +15,8 @@ import Card from "./Components/Card/Card";
 import Product from "./Components/Product/Product";
 import Checkout from "./Components/Checkout/Checkout";
 import Privacy_new from "./Components/Privacy_new/Privacy_new";
+import TrackYourOrder from "./Components/TrackYourOrder/TrackYourOrder";
+import WishList from "./Components/WishList/WishList";
 const routers = [
   {
     path: "/",
@@ -104,6 +106,16 @@ const routers = [
   {
     path: "/privacy_new",
     component: Privacy_new,
+    exact: true,
+  },
+  {
+    path: "/track-your-order",
+    component: TrackYourOrder,
+    exact: true,
+  },
+  {
+    path: "/wishlist",
+    component: WishList,
     exact: true,
   },
 ];
