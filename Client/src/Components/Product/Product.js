@@ -31,19 +31,26 @@ function Product() {
             </div>
             <div
               className="category"
-              onClick={() => setFilterVisible(!filterVisible)}
-            >
+              onClick={() => setFilterVisible(!filterVisible)}>
               {filterVisible ? "CLOSE" : "FILTER"}
             </div>
           </div>
         </div>
-        <Filler disabled={filterVisible} />
+        <Filler
+          disabled={filterVisible}
+          setFilterVisible={setFilterVisible}
+          category={category}
+          setProducts={setProducts}
+        />
       </div>
       <div className="banner grid">
         <div className="row">
           <div className="banner-img">
             <div className="banner-img-pc">
-              <img src="https://res.cloudinary.com/hoanghai/image/upload/v1609507588/Radius-E/ProductDetail-Delete/thumbnail/sun_banner_pc_f_rrd75v.jpg" />
+              <img
+                alt="banner"
+                src="https://res.cloudinary.com/hoanghai/image/upload/v1609507588/Radius-E/ProductDetail-Delete/thumbnail/sun_banner_pc_f_rrd75v.jpg"
+              />
             </div>
             {/* <div className="banner-img-mob">
               <img src="https://res.cloudinary.com/hoanghai/image/upload/v1609507583/Radius-E/ProductDetail-Delete/thumbnail/sun_banner_mob_f_sjruf2.jpg" />
@@ -65,9 +72,13 @@ function Product() {
         <div className="gird wide">
           <div className="product-list">
             {products ? (
-              products.map((prod) => {
-                return <ProductCard product={prod} />;
-              })
+              products.length === 0 ? (
+                <div>Not Product found</div>
+              ) : (
+                products.map((prod) => {
+                  return <ProductCard product={prod} />;
+                })
+              )
             ) : (
               <div>Loading...</div>
             )}

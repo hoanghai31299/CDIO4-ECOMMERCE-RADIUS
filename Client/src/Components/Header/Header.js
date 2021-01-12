@@ -1,22 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./Header.css";
 import axios from "../../axios";
-
-function Header({ user }) {
+import { UserContext } from "../../GlobalState/UserContext";
+function Header() {
   const [open, setOpen] = useState(false);
   const [category, setCategory] = useState(undefined);
-  const [listInforCart, setListInforCart] = useState([]);
+  const { user } = useContext(UserContext);
+  const [u, setU] = useState(undefined);
+  useEffect(() => {
+    setU(user);
+  }, [user]);
   useEffect(() => {
     axios.get("/category").then(({ data }) => {
       if (!data.error) setCategory(data.category);
     });
-    axios
-      .get("/auth/signinW")
-      .then((res) => {
-        setListInforCart(res.data.user.cart);
-      })
-      .catch((err) => {});
   }, []);
   return (
     <header className="header">
@@ -25,31 +23,35 @@ function Header({ user }) {
           <Link to="/">RADIUS E</Link>
         </h2>
       </div>
-      <ul className={`list-category ${open && "open"}`}>
+      <ul className={`list-category flex ${open ? "open" : ""}`}>
         {category &&
-          category.map((c) => {
+          category.map((c, i) => {
             return (
               <li>
-                <Link to={`/product/${c._id}`}>{c.name}</Link>
+                <Link
+                  key={i}
+                  onClick={() => setOpen(false)}
+                  to={`/product/${c._id}`}>
+                  {c.name}
+                </Link>
               </li>
             );
           })}
-        {!user ? (
+        {!u ? (
           <li className="sign">
-            <Link to="/signin">Signin</Link>
+            <Link onClick={() => setOpen(false)} to="/signin">
+              Signin
+            </Link>
           </li>
         ) : (
           <li className="sign">
-            <Link to="/account-detail">{user.name}</Link>
+            <Link onClick={() => setOpen(false)} to="/account-detail">
+              {user?.name}
+            </Link>
           </li>
         )}
-        {/* <li>
-          <Link to="/signup">Signup</Link>
-        </li> */}
         <li>
-          <Link to="/cart">
-            Cart ( {listInforCart ? listInforCart.length : "0"})
-          </Link>
+          <Link to="/cart">Cart ( {`${u ? u.cart?.length : 0}`})</Link>
         </li>
       </ul>
       <div className="header-info">

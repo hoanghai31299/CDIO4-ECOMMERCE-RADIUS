@@ -8,7 +8,11 @@ function ProductDetaiImg({ color }) {
   return (
     <>
       <div className="product_detail--img l-8">
-        <img id="featured" src={color.image_url[currentImgIndex]} />
+        <img
+          alt="feature"
+          id="featured"
+          src={color.image_url[currentImgIndex]}
+        />
         <div id="product_detail--img__wrap">
           <div id="img-slider">
             {color.image_url.map((image, index) => {

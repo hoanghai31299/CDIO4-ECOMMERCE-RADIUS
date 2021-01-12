@@ -1,276 +1,354 @@
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
 }
-/* */
-/* ------------------------ start secondary-text  --------------------------- */
-.secondary-text {
-  /* padding: 3em; */
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 1.4em;
-  font-weight: 700;
-}
-.filter-wrap {
-  position: fixed;
-  width: 100%;
 
-  padding: 1.7em 20px;
-  z-index: 20;
-  display: block;
-  background-color: rgba(255, 255, 255, 0.9);
+
+/* */
+
+
+/* ------------------------ start secondary-text  --------------------------- */
+
+.secondary-text {
+    /* padding: 3em; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 1.4em;
+    font-weight: 700;
 }
+
+.filter-wrap {
+    position: fixed;
+    width: 100%;
+    padding: 1.7em 20px;
+    z-index: 20;
+    display: block;
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
 div.category,
 .filler-open,
 .filler-close {
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  -moz-user-select: none;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    -moz-user-select: none;
 }
+
 .filler-open,
 .filler-close {
-  padding: 0.5em;
-  position: absolute;
-  top: 6.2em;
-  right: 3em;
+    padding: 0.5em;
+    position: absolute;
+    top: 6.2em;
+    right: 3em;
 }
+
 .filler-close {
-  display: none;
+    display: none;
 }
+
+
 /* input */
 
-input.check-open-close:checked ~ label.filler-open {
-  display: none;
+input.check-open-close:checked~label.filler-open {
+    display: none;
 }
-input.check-open-close:checked ~ label.filler-close {
-  display: block;
+
+input.check-open-close:checked~label.filler-close {
+    display: block;
 }
-input.check-open-close:checked ~ div.secondary-filler {
-  display: none;
+
+input.check-open-close:checked~div.secondary-filler {
+    display: none;
 }
+
+
 /* button */
+
 .secondary-button {
-  margin: 0 3em;
-  display: flex;
-  justify-content: flex-end;
+    margin: 0 3em;
+    display: flex;
+    justify-content: flex-end;
 }
+
 .secondary-button_clear,
 .secondary-button_apply {
-  display: inline-block;
-  padding: 0.5em 4.5em;
-  font-size: 1.2em;
-  margin-left: 1em;
-  border: 1px solid #000;
-  cursor: pointer;
+    display: inline-block;
+    padding: 0.5em 4.5em;
+    font-size: 1.2em;
+    margin-left: 1em;
+    border: 1px solid #000;
+    cursor: pointer;
 }
+
 .secondary-button_clear {
-  color: #000;
-  background-color: #fff;
+    color: #000;
+    background-color: #fff;
 }
+
 .secondary-button_apply {
-  color: #fff;
-  background-color: #000;
+    color: #fff;
+    background-color: #000;
 }
+
+
 /* --------------------------- end secondary-text  ----------------------------- */
+
+
 /* ------------------------- Start filler color item ---------------------------- */
+
 .item-color {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
+
 .list_item-color {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
 }
+
 .colorchip-item {
-  display: block;
-  position: relative;
-  margin: 0 9px 6px;
-  border-radius: 50% 50%;
-  cursor: pointer;
-  border: 1px solid black;
+    display: block;
+    position: relative;
+    margin: 0 9px 6px;
+    border-radius: 50% 50%;
+    cursor: pointer;
+    border: 1px solid transparent;
 }
+
+.colorchip-item.select {
+    border: 1px solid black;
+}
+
 .colorchip-item input {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
 }
 
 .colorchip-item label {
-  display: block;
-  position: relative;
-  z-index: 10;
-  width: 21px;
-  height: 21px;
-  border-radius: 50% 50%;
-  border: 3px solid white;
-  cursor: pointer;
+    display: block;
+    position: relative;
+    z-index: 10;
+    width: 21px;
+    height: 21px;
+    border-radius: 50% 50%;
+    border: 1px solid rgb(204, 204, 204);
+    cursor: pointer;
 }
+
 .list_item-color,
 .sort_by_element {
-  margin-top: 2em;
+    margin-top: 2em;
 }
+
+
 /* ------------------------ end filler color item --------------------------- */
+
 
 /* ------------------------- start secondary-filler  ------------------------- */
 
 .secondary-filler {
-  display: flex;
-  flex-direction: row;
-  padding: 0 3em;
+    display: flex;
+    flex-direction: row;
+    padding: 0 3em;
 }
+
 .econdary-filler__color {
-  margin-right: 10em;
+    margin-right: 10em;
 }
+
 .sort_by_element {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
+
 .price-hight,
 .price-low {
-  width: 14em;
+    width: 14em;
 }
+
 .sort_by_element input {
-  width: 3em;
+    width: 3em;
 }
+
+
 /* ------------------------- End secondary-filler  ------------------------- */
 
+
 /* ------------------------- Start banner grid -------------------------- */
+
 .grid {
-  width: 100%;
+    width: 100%;
 }
+
 .row {
-  width: 100%;
-  margin-left: 0;
-  margin-right: 0;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
 }
+
 .banner-infor__desc,
 .banner-infor__title {
-  width: 47%;
+    width: 47%;
 }
+
 .banner-infor__title {
-  font-size: 1.3em;
-  font-weight: 600;
+    font-size: 1.3em;
+    font-weight: 600;
 }
+
 .banner-infor {
-  padding: 3em 0;
-  display: flex;
-  justify-content: space-between;
+    padding: 3em 0;
+    display: flex;
+    justify-content: space-between;
 }
+
 .banner-img {
-  justify-content: center;
+    justify-content: center;
 }
 
 .banner-img-pc img {
-  width: 100%;
-  object-fit: cover;
+    width: 100%;
+    object-fit: cover;
 }
+
 .banner-img-mob img {
-  width: 100%;
-  object-fit: cover;
-  margin-left: 50%;
-  transform: translateX(-50%);
-  display: none;
+    width: 100%;
+    object-fit: cover;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    display: none;
 }
+
+
 /* ------------------------- End banner grid -------------------------- */
+
+
 /* ------------------------- Start product -------------------------- */
+
 .product-item {
-  width: 24%;
+    width: 24%;
 }
+
 .product-img img {
-  width: 100%;
-  object-fit: cover;
+    width: 100%;
+    object-fit: cover;
 }
+
 .product-infor {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  padding: 2em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 2em;
 }
+
 .product-name,
 .product-color {
-  width: 50%;
+    width: 50%;
 }
+
 .product-price {
-  width: 100%;
+    width: 100%;
 }
+
 .product-name,
 .product-price {
-  font-size: 1.5;
-  font-weight: 600;
+    font-size: 1.5;
+    font-weight: 600;
 }
+
 .disabled {
-  display: none;
+    display: none;
 }
+
+
 /* flex-wrap */
+
 .product-list {
-  width: 100%;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  margin: auto;
-  justify-content: space-between;
+    width: 100%;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
+    justify-content: space-between;
 }
+
 .product-item {
-  position: relative;
-  cursor: pointer;
-  width: calc(1 / 4 * 100% - (1-1 / 4) * 5px);
-  justify-content: center;
-  margin: 0.5em 0.5em 3em 0;
+    position: relative;
+    cursor: pointer;
+    width: calc(1 / 4 * 100% - (1-1 / 4) * 5px);
+    justify-content: center;
+    margin: 0.5em 0.5em 3em 0;
 }
+
 .product-item:nth-child(4n) {
-  margin-right: 0;
+    margin-right: 0;
 }
+
 .product-list::after {
-  content: "";
-  flex: auto;
+    content: "";
+    flex: auto;
 }
+
 .product-item:nth-child(-n + 4) {
-  margin-top: 0;
+    margin-top: 0;
 }
+
+
 /* Product favorite */
+
 .favorite-icon__on img,
 .favorite-icon__off img {
-  width: 2em;
-  position: absolute;
-  top: 6%;
-  right: 10%;
-  /* z-index: 10; */
+    width: 2em;
+    position: absolute;
+    top: 6%;
+    right: 10%;
+    /* z-index: 10; */
 }
+
 .favorite-icon__on img {
-  display: none;
+    display: none;
 }
+
+
 /* Product color item */
+
 .product-color-list {
-  display: flex;
+    display: flex;
 }
+
 .product-color-item {
-  width: 15px;
-  height: 15px;
-  padding: 0.5px;
-  margin: 0 3px;
-  border: 1px solid black;
-  border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    padding: 0.5px;
+    margin: 0 3px;
+    border: 1px solid black;
+    border-radius: 50%;
 }
+
 .product-chip {
-  display: block;
-  cursor: pointer;
-  height: 100%;
-  width: 100%;
-  border-radius: 50%;
+    display: block;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
 }
+
 .product-color-item.chosen {
-  width: 17px;
-  height: 17px;
-  border: 1px solid red;
+    width: 17px;
+    height: 17px;
+    border: 1px solid red;
 }
+
+
 /* ------------------------- End product -------------------------- */
