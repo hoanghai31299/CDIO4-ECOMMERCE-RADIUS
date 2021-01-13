@@ -31,13 +31,14 @@ function Header() {
                 <Link
                   key={i}
                   onClick={() => setOpen(false)}
-                  to={`/product/${c._id}`}>
+                  to={`/product/${c._id}`}
+                >
                   {c.name}
                 </Link>
               </li>
             );
           })}
-        {!u ? (
+        {!u.cart ? (
           <li className="sign">
             <Link onClick={() => setOpen(false)} to="/signin">
               Signin
@@ -51,7 +52,15 @@ function Header() {
           </li>
         )}
         <li>
-          <Link to="/cart">Cart ( {`${u ? u.cart?.length : 0}`})</Link>
+          <Link to="/cart">Cart ( {`${u.cart ? u.cart.length : 0}`})</Link>
+        </li>
+        <li className="icon-wishlist">
+          <Link to="/wishlist">
+            <img
+              alt="icon-wishlist"
+              src="https://res.cloudinary.com/hoanghai/image/upload/v1609597115/Radius-E/ProductDetail-Delete/icon-heart/heart-regular_umpjua.svg"
+            ></img>
+          </Link>
         </li>
       </ul>
       <div className="header-info">

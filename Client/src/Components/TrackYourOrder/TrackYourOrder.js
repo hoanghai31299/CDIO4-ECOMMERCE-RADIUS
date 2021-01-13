@@ -29,7 +29,7 @@ function TrackYourOrder() {
         <div className="wrap-product">
           <div className="product-list">
             <div className="shopping-card-item">
-              <table>
+              <table className="table-track-your-order">
                 <tr>
                   <td className="item-info">
                     <img

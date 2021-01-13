@@ -42,7 +42,7 @@ route.post(
 route.get("/", authController.isSignIn, authController.isEditor, getAll);
 route.post("/forgot_password", forgotPassword);
 route.post("/add_wish_list/:id", authController.isSignIn, addWishList);
-route.delete("/delete_wish_list/:id", authController.isSignIn, deleteWishLish);
+route.put("/delete_wish_list/:id", authController.isSignIn, deleteWishLish);
 route.get("/get_wish_list/:id", authController.isSignIn, getWishLish);
 route.post("/cart", authController.isSignIn, addToCart);
 route.put("/cart/:id", authController.isSignIn, updateCart);

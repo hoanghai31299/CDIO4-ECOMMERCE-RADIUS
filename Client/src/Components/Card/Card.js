@@ -13,6 +13,7 @@ function Card() {
   }, [user]);
   const handleRemoveCart = async (id) => {
     const updateCart = cart.filter((item) => item._id !== id);
+    setUser({ ...user, cart: updateCart });
     axios
       .put(`/user/cart/${user._id}`, {
         newCart: updateCart.map((item) => ({
@@ -23,7 +24,6 @@ function Card() {
       })
       .then((res) => {
         console.log(res);
-        setUser(res.data.user);
       })
       .catch((err) => {
         console.log(err);
@@ -102,7 +102,8 @@ function Card() {
                                 <br />
                                 <span
                                   className="item-remove"
-                                  onClick={() => handleRemoveCart(_id)}>
+                                  onClick={() => handleRemoveCart(_id)}
+                                >
                                   Remove
                                 </span>
                               </div>
@@ -121,11 +122,13 @@ function Card() {
                                   }
                                   className="icon-add_sub"
                                   alt="icon-add"
-                                  src="https://res.cloudinary.com/hoanghai/image/upload/v1610037178/Radius-E/ProductDetail-Delete/icon-etc/plus-solid_qpf4iw.svg"></img>
+                                  src="https://res.cloudinary.com/hoanghai/image/upload/v1610037178/Radius-E/ProductDetail-Delete/icon-etc/plus-solid_qpf4iw.svg"
+                                ></img>
                                 <input
                                   className="cart--item__quatity"
                                   type="number"
-                                  value={quantity}></input>
+                                  value={quantity}
+                                ></input>
                                 <img
                                   onClick={() =>
                                     handleSubtrQuantity(
@@ -135,7 +138,8 @@ function Card() {
                                   }
                                   className="icon-add_sub"
                                   alt="icon-sub"
-                                  src="https://res.cloudinary.com/hoanghai/image/upload/v1610037179/Radius-E/ProductDetail-Delete/icon-etc/minus-solid_ewiped.svg"></img>
+                                  src="https://res.cloudinary.com/hoanghai/image/upload/v1610037179/Radius-E/ProductDetail-Delete/icon-etc/minus-solid_ewiped.svg"
+                                ></img>
                               </div>
                             </td>
                             <td className="item-total">

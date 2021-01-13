@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Product.css";
 import "../StyleSheet/GridLayout.css";
 import Filler from "./Filler/Filler";
 import axios from "../../axios";
 import ProductCard from "./ProductCard/ProductCard";
 import { useParams } from "react-router-dom";
+import { UserContext } from "../../GlobalState/UserContext";
 function Product() {
   const { category } = useParams();
+  const { user } = useContext(UserContext);
   const [filterVisible, setFilterVisible] = useState(false);
   const [products, setProducts] = useState(undefined);
   useEffect(() => {
@@ -31,7 +33,8 @@ function Product() {
             </div>
             <div
               className="category"
-              onClick={() => setFilterVisible(!filterVisible)}>
+              onClick={() => setFilterVisible(!filterVisible)}
+            >
               {filterVisible ? "CLOSE" : "FILTER"}
             </div>
           </div>
@@ -76,7 +79,14 @@ function Product() {
                 <div>Not Product found</div>
               ) : (
                 products.map((prod) => {
-                  return <ProductCard product={prod} />;
+                  return (
+                    <ProductCard
+                      isLike={
+                        !!user.wishList?.find((pr) => pr._id === prod._id)
+                      }
+                      product={prod}
+                    />
+                  );
                 })
               )
             ) : (

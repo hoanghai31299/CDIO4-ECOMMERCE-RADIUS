@@ -5,13 +5,15 @@
 /* ---------------Start track-your-order--------------- */
 
 .track-your-order {
-  width: 80%;
+  width: 85%;
   margin: auto;
   margin-top: 10em;
 }
+
 .is-active {
   border-bottom: 1px solid #000;
 }
+
 .header-list-item {
   display: flex;
   flex-direction: row;
@@ -50,11 +52,13 @@
 }
 .shopping-card-item table {
   margin-top: 5em;
-  width: 80%;
+  width: 100%;
   margin: auto;
 }
 .shopping-card-item table:last-child {
   border-bottom: 1px solid #000;
 }
-
+table.table-track-your-order {
+  width: 60%;
+}
 /* ---------------End track-your-order--------------- */

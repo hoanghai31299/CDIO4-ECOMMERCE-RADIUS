@@ -62,7 +62,9 @@ function AccountDetail() {
             </li>
             <div className="myaccount-name_page">Account Details</div>
             <li className="my_account-list__item item">
-              <a className="item-link">Order History</a>
+              <Link to="/track-your-order">
+                <a className="item-link">Order History</a>
+              </Link>
             </li>
             <li className="my_account-list__item item">
               <a className="item-link">Account Details</a>
@@ -88,7 +90,8 @@ function AccountDetail() {
               className="ip-max_with"
               name="email"
               value={inforUser.email}
-              onChange={handleChange}></input>
+              onChange={handleChange}
+            ></input>
           </div>
           <div className="account_detail-name">
             <div className="account_detail-name__first_name">
@@ -99,7 +102,8 @@ function AccountDetail() {
                 id="username"
                 value={inforUser.name}
                 name="name"
-                onChange={handleChange}></input>
+                onChange={handleChange}
+              ></input>
             </div>
             {/* <div className="account_detail-name__last_name">
               <lable className="item-title">Last name</lable>
@@ -116,7 +120,8 @@ function AccountDetail() {
               className="ip-max_with"
               name="address"
               value={inforUser.address}
-              onChange={handleChange}></input>
+              onChange={handleChange}
+            ></input>
           </div>
 
           <div className="account_detail-phonenumber">
