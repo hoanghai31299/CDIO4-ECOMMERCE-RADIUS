@@ -10,6 +10,13 @@ exports.create = async(req, res, next) => {
                 message: "all fill is required"
             })
         }
+        const commentOld = await Comment.findOne({user_id, product_id});
+        if(commentOld){
+            return res.status(200).json({
+                error: true,
+                message: "you already commented"
+            })
+        }
         const comment = new Comment({ user_id, rate, content, product_id });
         await comment.save()
         return res.status(200).json({
@@ -74,7 +81,9 @@ exports.deleteComment = async(req, res, next) => {
 exports.getAllByProduct = async(req, res, next) => {
     try {
         const product_id = req.params.product_id;
-        const comment = await Comment.find({ product_id });
+        const comment = await Comment.find({ product_id })
+                        .populate({path:"user_id"})
+                        .populate({path:"product_id"})
         return res.status(200).json({
             error: false,
             message: "get all comment successful",
