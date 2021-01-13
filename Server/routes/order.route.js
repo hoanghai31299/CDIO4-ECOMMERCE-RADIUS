@@ -7,6 +7,7 @@ const {
   getAll,
   getOrder,
   stats,
+  getOrderByUser,
 } = require("../controllers/order.controller");
 const authController = require("../controllers/auth.controller");
 
@@ -21,4 +22,5 @@ route.delete(
 route.get("/", authController.isSignIn, authController.isAdmin, getAll);
 route.get("/:id", authController.isSignIn, authController.isAdmin, getOrder);
 route.post("/stats/monthly", stats);
+route.get("/by_user/:id", authController.isSignIn, getOrderByUser);
 module.exports = route;
