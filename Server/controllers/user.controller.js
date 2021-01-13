@@ -159,12 +159,6 @@ exports.updateUserByAdmin = async (req, res, next) => {
 exports.createUser = async (req, res, next) => {
   try {
     const { name, email, phone, address, password, role } = req.body;
-    if (!(name, email, password, address, role)) {
-      return res.status(400).json({
-        error: true,
-        message: "all fell is required",
-      });
-    }
     const emailUser = await User.findOne({ email });
     if (emailUser) {
       return res.status(400).json({
@@ -293,6 +287,25 @@ exports.deleteWishLish = async (req, res, next) => {
     next(error);
   }
 };
+exports.deleteAllWishList = async (req, res, next) => {
+  try {
+    const _id = req.params.id;
+    const user = await User.findByIdAndUpdate(_id,{$set:{wishList: []}}, {new: true});
+    if(!user){
+      return res.status(200).json({
+        error: true,
+        message: "User is not found"
+      })
+    }
+    return res.status(200).json({
+      error: false,
+      message: "delete all wish list successful",
+      user
+    })
+  } catch (error) {
+    next(error)
+  }
+}
 exports.addToCart = async (req, res, next) => {
   try {
     const _id = req.params.id;

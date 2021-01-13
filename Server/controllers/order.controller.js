@@ -19,7 +19,7 @@ exports.stats = async (req, res, next) => {
 exports.create = async (req, res, next) => {
   try {
     const { address, name, phone, products, couponCode, userId } = req.body;
-    if (!(address, name, phone, products)) {
+    if (!(address, name, phone, products, userId)) {
       return res.status(400).json({
         error: true,
         message: "all fill is required",
@@ -343,3 +343,19 @@ exports.getOrder = async (req, res, next) => {
     next(error);
   }
 };
+exports.getOrderByUser = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const orders = await Order.find({userId})
+                  .populate({path: "products.productId"})
+                  .populate({path: "products.colorId"})
+                  .populate({path: "userId"})
+    return res.status(200).json({
+      error: false,
+      message: "get order by user successful",
+      orders
+    })
+  } catch (error) {
+    next(error)
+  }
+}
