@@ -162,3 +162,56 @@
     padding: 0 1em;
   }
 }
+/* --------------- Start CommentProduct ---------------*/
+.productcomment-wrap {
+  margin-top: 5em;
+}
+.img-star > img {
+  width: 1em;
+  object-fit: cover;
+}
+.rate-star {
+  display: flex;
+  flex-direction: row;
+  padding: 0 0 0 3em;
+}
+.rate-star input {
+  width: 1.3em;
+}
+.rate-star > label {
+  padding-left: 1em;
+  margin: auto 0;
+  justify-content: start;
+}
+.rate-text {
+  width: 6em;
+}
+/* Productcomment Title  and Desc */
+.productcomment-title,
+.productcomment-desc {
+  text-align: center;
+}
+.productcomment-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+/* Input text and Submit */
+.productcomment-comment {
+  display: flex;
+  flex-direction: column;
+}
+.productcomment-comment > input {
+  width: 40%;
+}
+.productcomment-textarea {
+  margin-bottom: 1em;
+}
+.productcomment-submit {
+  width: 40%;
+  padding: 1em 3em;
+  border: 1px solid #000;
+  color: #fff;
+  background-color: #000;
+  text-align: center;
+}
+/* --------------- End CommentProduct ---------------*/

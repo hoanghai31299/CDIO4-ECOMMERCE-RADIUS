@@ -72,7 +72,7 @@ function Product() {
       </div>
 
       <div className="product">
-        <div className="gird wide">
+        <div className="gird">
           <div className="product-list">
             {products ? (
               products.length === 0 ? (

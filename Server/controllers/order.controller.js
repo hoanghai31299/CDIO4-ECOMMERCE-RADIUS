@@ -346,16 +346,16 @@ exports.getOrder = async (req, res, next) => {
 exports.getOrderByUser = async (req, res, next) => {
   try {
     const userId = req.params.id;
-    const orders = await Order.find({userId})
-                  .populate({path: "products.productId"})
-                  .populate({path: "products.colorId"})
-                  .populate({path: "userId"})
+    const orders = await Order.find({ userId })
+      .populate("products.productId")
+      .populate({ path: "products.colorId" })
+      .populate({ path: "userId" });
     return res.status(200).json({
       error: false,
       message: "get order by user successful",
-      orders
-    })
+      orders,
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};

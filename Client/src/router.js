@@ -17,6 +17,7 @@ import Checkout from "./Components/Checkout/Checkout";
 import Privacy_new from "./Components/Privacy_new/Privacy_new";
 import TrackYourOrder from "./Components/TrackYourOrder/TrackYourOrder";
 import WishList from "./Components/WishList/WishList";
+import Notification from "./Components/Notification/Notification";
 const routers = [
   {
     path: "/",

@@ -61,8 +61,9 @@ function Checkount() {
         quantity: item.quantity,
       };
     });
+    console.log("12312312321312312", newCart);
     axios
-      .post(`/order/creat`, {
+      .post(`/order/create`, {
         address: user.address,
         name: user.name,
         phone: user.phone,
@@ -71,21 +72,20 @@ function Checkount() {
         userId: user._id,
       })
       .then((res) => {
-        console.log(res);
+        if (!res.data.error) {
+          alert("Radius-E:Checkout success !!!");
+          setUser({ ...user, cart: [] });
+          axios
+            .put(`/user/cart/${user._id}`, { newCart: [] })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else alert("Radius-E:Checkout fail !!!");
       })
-      .catch((err) => {
-        console.log(err);
-      });
-    axios
-      .put(`/user/cart/${user._id}`, { newCart: [] })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    setUser({ ...user, cart: [] });
-    alert("Radius-E:Checkout success");
+      .catch((err) => {});
   };
 
   return (

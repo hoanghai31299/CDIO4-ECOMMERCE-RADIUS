@@ -127,3 +127,9 @@ header .sub-nav a {
   width: 1em;
   object-fit: cover;
 }
+.icon-notification {
+  display: inline-block;
+  width: 1em;
+  object-fit: cover;
+  position: relative;
+}
