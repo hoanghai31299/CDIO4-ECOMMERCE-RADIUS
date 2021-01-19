@@ -3,9 +3,14 @@ import { Line } from "react-chartjs-2";
 import { Col, Card, Button } from "react-bootstrap";
 export default function Chart({ data }) {
   const [option, setOption] = useState("day");
-  const transformData = (data, option = "year") => {
+  const transformData = (data, option = "day") => {
     const previousYear = (currentYear) => {
       return +currentYear - 1 + "";
+    };
+    const getQuantityProduct = (order) => {
+      return order.products.reduce((quantity, items) => {
+        return quantity + items.quantity;
+      }, 0);
     };
     const previousMonth = (currentMonth) => {
       if (currentMonth.slice(5, 7) === "01") {
@@ -37,37 +42,39 @@ export default function Chart({ data }) {
     };
     const dates = [];
     const nowTime = new Date().toISOString().slice(...options[option].slice);
-    dates.push([nowTime, 0, 0]);
+    dates.push([nowTime, 0, 0, 0]);
     for (let i = 1; i < options[option].loop; i++) {
-      dates.push([options[option].previous(dates[i - 1][0]), 0, 0]);
+      dates.push([options[option].previous(dates[i - 1][0]), 0, 0, 0]);
     }
     dates.reverse();
-    // console.log("dates", dates);
     const value = data.reduce((obj, order) => {
       let key = order.createdAt.slice(...options[option].slice);
       if (obj[key]) {
         obj[key][0] += 1;
         obj[key][1] += order.lastTotal;
+        obj[key][2] += getQuantityProduct(order);
       } else {
-        obj[key] = [1, order.lastTotal];
+        obj[key] = [1, order.lastTotal, getQuantityProduct(order)];
       }
       return obj;
     }, {});
-    // console.log(value);
+
     for (let date of dates) {
       if (value[date[0]]) {
-        // console.log(value[date[0]]);
+        console.log(date[0][2], date);
         date[1] = value[date[0]][0];
         date[2] = value[date[0]][1];
+        date[3] = value[date[0]][2];
       }
     }
     const labels = dates.map(([label, value1, value2]) => label);
     const amountOrders = dates.map(([label, value1, value2]) => value1);
     const saleValues = dates.map(([label, value1, value2]) => value2);
-    return parseData(labels, amountOrders, saleValues);
+    const product = dates.map(([label, value1, value2, value3]) => value3);
+    return parseData(labels, amountOrders, saleValues, product);
   };
 
-  const parseData = (labels, amountOrders, saleValues) => {
+  const parseData = (labels, amountOrders, saleValues, product) => {
     return {
       labels: labels,
       datasets: [
@@ -101,6 +108,29 @@ export default function Chart({ data }) {
           fill: false,
           backgroundColor: "rgb(29,230,185)",
           borderColor: "rgb(29,230,185)",
+          yAxisID: "y-axis-1",
+          lineTension: 0.1,
+          borderCapStyle: "butt",
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: "miter",
+          pointBorderColor: "rgba(75,192,192,1)",
+          pointBackgroundColor: "#fff",
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: "rgba(75,192,192,1)",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+        },
+        {
+          label: "Sale Product",
+          type: "line",
+          data: product,
+          fill: false,
+          backgroundColor: "rgb(2,62,138)",
+          borderColor: "rgb(2,62,138)",
           yAxisID: "y-axis-1",
           lineTension: 0.1,
           borderCapStyle: "butt",

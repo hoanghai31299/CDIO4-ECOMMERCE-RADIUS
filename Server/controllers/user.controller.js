@@ -17,7 +17,7 @@ exports.getUser = async (req, res, next) => {
       .populate("cart.productId")
       .populate("wishList");
     if (!user) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "User is not found",
       });
@@ -36,7 +36,7 @@ exports.updateUser = async (req, res, next) => {
     const _id = req.params._id;
     const { name, phone, address } = req.body;
     if (!name) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "all fell is required",
       });
@@ -45,7 +45,7 @@ exports.updateUser = async (req, res, next) => {
       .populate("cart.productId")
       .populate("wishList");
     if (!newUser) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "User is not found",
       });
@@ -75,7 +75,7 @@ exports.deleteUser = async (req, res, next) => {
   try {
     const _id = req.params._id;
     if (!_id) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "User Id is required",
       });
@@ -93,14 +93,14 @@ exports.resetPassword = async (req, res, next) => {
   try {
     const { newPassword, token } = req.body;
     if (!(token && newPassword)) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: " All fields are required ",
       });
     }
     const user = await jwt.verify(token, process.env.JWT_RESET_PASSWORD_TOKEN);
     if (!user) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "token is invalid",
       });
@@ -115,7 +115,7 @@ exports.resetPassword = async (req, res, next) => {
       }
     );
     if (!newUser) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "user is not found",
       });
@@ -131,9 +131,9 @@ exports.resetPassword = async (req, res, next) => {
 exports.updateUserByAdmin = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const { name, phone, address, role } = req.body;
-    if (!(name && address && phone)) {
-      return res.status(400).json({
+    const { name, phone, address, email, role } = req.body;
+    if (!(name && address && phone && email)) {
+      return res.status(200).json({
         error: true,
         message: "All fields are required ",
       });
@@ -141,6 +141,7 @@ exports.updateUserByAdmin = async (req, res, next) => {
     const userParams = {
       name,
       phone,
+      email,
       address,
       role,
     };
@@ -163,15 +164,21 @@ exports.updateUserByAdmin = async (req, res, next) => {
 exports.createUser = async (req, res, next) => {
   try {
     const { name, email, phone, address, password, role } = req.body;
+    if (!(name && email && password && address && role !== undefined)) {
+      return res.status(200).json({
+        error: true,
+        message: "all fell is required",
+      });
+    }
     const emailUser = await User.findOne({ email });
     if (emailUser) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "email is already use",
       });
     }
     if (!(name && email && address && phone && password)) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "All fields are required ",
       });
@@ -212,7 +219,7 @@ exports.forgotPassword = async (req, res, next) => {
     const { email } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "email is not found",
       });
@@ -243,7 +250,7 @@ exports.addWishList = async (req, res, next) => {
     const _id = req.params.id;
     const { productId } = req.body;
     if (!productId) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
       });
     }
@@ -255,7 +262,7 @@ exports.addWishList = async (req, res, next) => {
       .populate("cart.productId")
       .populate("wishList");
     if (!user) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "user is not found",
       });
@@ -281,7 +288,7 @@ exports.deleteWishLish = async (req, res, next) => {
       .populate("cart.productId")
       .populate("wishList");
     if (!user) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "user is not found",
       });
@@ -298,22 +305,26 @@ exports.deleteWishLish = async (req, res, next) => {
 exports.deleteAllWishList = async (req, res, next) => {
   try {
     const _id = req.params.id;
-    const user = await User.findByIdAndUpdate(_id,{$set:{wishList: []}}, {new: true});
-    if(!user){
+    const user = await User.findByIdAndUpdate(
+      _id,
+      { $set: { wishList: [] } },
+      { new: true }
+    );
+    if (!user) {
       return res.status(200).json({
         error: true,
-        message: "User is not found"
-      })
+        message: "User is not found",
+      });
     }
     return res.status(200).json({
       error: false,
       message: "delete all wish list successful",
-      user
-    })
+      user,
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 exports.addToCart = async (req, res, next) => {
   try {
     const _id = req.user;
@@ -322,7 +333,7 @@ exports.addToCart = async (req, res, next) => {
       .populate("cart.productId")
       .populate("wishList");
     if (!isUser) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "user is not found",
       });
@@ -359,7 +370,7 @@ exports.updateCart = async (req, res, next) => {
     if (!newCart) next(new Error("newCart is required"));
     const isUser = await User.findById(_id);
     if (!isUser) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "user is not found",
       });
@@ -385,7 +396,7 @@ exports.getAllCart = async (req, res, next) => {
     const _id = req.params.id;
     const cart = await User.findById(_id);
     if (!cart) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "user is not found",
       });
@@ -404,7 +415,7 @@ exports.getWishLish = async (req, res, next) => {
     const _id = req.params.id;
     const user = await User.findById(_id).populate({ path: "products" });
     if (!user) {
-      return res.status(400).json({
+      return res.status(200).json({
         error: true,
         message: "user is not found",
       });

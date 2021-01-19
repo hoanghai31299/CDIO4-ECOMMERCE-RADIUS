@@ -2,6 +2,10 @@
       Icon layouts css start
 ==========================  **/
 
+.custom .ant-card-body {
+    padding: 0 !important;
+}
+
 .i-main {
     .i-block {
         display: inline-flex;
@@ -13,26 +17,24 @@
         border: 1px solid #f1f1f1;
         position: relative;
         cursor: pointer;
-
         i {
             font-size: 30px;
         }
-
         label {
             margin-bottom: 0;
             display: none;
         }
-
         span.ic-badge {
             position: absolute;
             bottom: 0;
             right: 0;
         }
-
         .flag-icon-background {
             width: 40px;
             height: 40px;
         }
     }
 }
+
+
 /**====== Icon layouts css end ======**/

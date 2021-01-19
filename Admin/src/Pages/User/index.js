@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import Loader from "../../App/layout/Loader";
 import { Form, Row, Col, Card, Button, Table } from "react-bootstrap";
-import { message, Modal, Select } from "antd";
+import { message, Modal, Popconfirm, Select } from "antd";
 const getRole = (num) => {
   return num === 0 ? "Users" : num === 1 ? "Editor" : "Admin";
 };
@@ -43,7 +43,7 @@ function Users() {
         message.success("Create user successful");
         fetchUser();
         setModalCreate(false);
-      }
+      } else throw new Error(data.message);
     } catch (error) {
       message.error(error.message);
     }
@@ -122,12 +122,15 @@ function Users() {
                               }}>
                               <i className="feather icon-edit" /> UPDATE
                             </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => handleDelete(u._id)}
-                              variant="danger">
-                              <i className="feather icon-trash" /> DELETE
-                            </Button>
+                            <Popconfirm
+                              title="Are you sure?"
+                              okText="Delete"
+                              cancelText="Cancel"
+                              onConfirm={() => handleDelete(u._id)}>
+                              <Button size="sm" variant="danger">
+                                <i className="feather icon-trash" /> DELETE
+                              </Button>
+                            </Popconfirm>
                           </td>
                         </tr>
                       );

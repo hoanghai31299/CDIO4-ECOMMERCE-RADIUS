@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 import Loader from "../../App/layout/Loader";
 import { Form, Row, Col, Card, Button, Table } from "react-bootstrap";
-import { message, Modal, DatePicker } from "antd";
+import { message, Modal, DatePicker, Popconfirm } from "antd";
 import * as moment from "moment";
 const { RangePicker } = DatePicker;
 function Coupon() {
@@ -123,12 +123,15 @@ function Coupon() {
                               }}>
                               <i className="feather icon-edit" /> UPDATE
                             </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => handleDelete(cou._id)}
-                              variant="danger">
-                              <i className="feather icon-trash" /> DELETE
-                            </Button>
+                            <Popconfirm
+                              title="Are you sure?"
+                              okText="Delete"
+                              cancelText="Cancel"
+                              onConfirm={() => handleDelete(cou._id)}>
+                              <Button size="sm" variant="danger">
+                                <i className="feather icon-trash" /> DELETE
+                              </Button>
+                            </Popconfirm>
                           </td>
                         </tr>
                       );

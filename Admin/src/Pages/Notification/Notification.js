@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import { Form, Row, Col, Card, Table, Button } from "react-bootstrap";
 import axios from "../../axios";
@@ -148,14 +148,17 @@ export default function Notification() {
                               onClick={() => handleShowUpdate(n)}>
                               UPDATE
                             </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => {
+                            <Popconfirm
+                              title="Are you sure?"
+                              okText="Delete"
+                              cancelText="Cancel"
+                              onConfirm={() => {
                                 handleDelete(n._id);
-                              }}
-                              variant="danger">
-                              DELETE
-                            </Button>
+                              }}>
+                              <Button size="sm" variant="danger">
+                                DELETE
+                              </Button>
+                            </Popconfirm>
                           </td>
                         </tr>
                       );
