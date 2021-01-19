@@ -302,6 +302,29 @@ exports.deleteWishLish = async (req, res, next) => {
     next(error);
   }
 };
+exports.deleteAllWishList = async (req, res, next) => {
+  try {
+    const _id = req.params.id;
+    const user = await User.findByIdAndUpdate(
+      _id,
+      { $set: { wishList: [] } },
+      { new: true }
+    );
+    if (!user) {
+      return res.status(200).json({
+        error: true,
+        message: "User is not found",
+      });
+    }
+    return res.status(200).json({
+      error: false,
+      message: "delete all wish list successful",
+      user,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 exports.addToCart = async (req, res, next) => {
   try {
     const _id = req.user;
