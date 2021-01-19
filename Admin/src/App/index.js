@@ -1,4 +1,4 @@
-import React, { Component, Suspense } from "react";
+import React, { Suspense, useMemo, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Loadable from "react-loadable";
 
@@ -8,29 +8,32 @@ import Loader from "./layout/Loader";
 import Aux from "../hoc/_Aux";
 import ScrollToTop from "./layout/ScrollToTop";
 import routes from "../route";
+import UserContext from "../Pages/UserContext";
 
 const AdminLayout = Loadable({
   loader: () => import("./layout/AdminLayout"),
   loading: Loader,
 });
 
-class App extends Component {
-  render() {
-    const menu = routes.map((route, index) => {
-      return route.component ? (
-        <Route
-          key={index}
-          path={route.path}
-          exact={route.exact}
-          name={route.name}
-          render={(props) => <route.component {...props} />}
-        />
-      ) : null;
-    });
+function App() {
+  const [admin, setAdmin] = useState(undefined);
+  const providerUser = useMemo(() => ({ admin, setAdmin }), [admin, setAdmin]);
+  const menu = routes.map((route, index) => {
+    return route.component ? (
+      <Route
+        key={index}
+        path={route.path}
+        exact={route.exact}
+        name={route.name}
+        render={(props) => <route.component {...props} />}
+      />
+    ) : null;
+  });
 
-    return (
-      <Aux>
-        <ScrollToTop>
+  return (
+    <Aux>
+      <ScrollToTop>
+        <UserContext.Provider value={providerUser}>
           <Suspense fallback={<Loader />}>
             <Switch>
               {menu}
@@ -38,10 +41,10 @@ class App extends Component {
             </Switch>
             <Redirect from="/dashboard/default" to="/auth/signin" />
           </Suspense>
-        </ScrollToTop>
-      </Aux>
-    );
-  }
+        </UserContext.Provider>
+      </ScrollToTop>
+    </Aux>
+  );
 }
 
 export default App;

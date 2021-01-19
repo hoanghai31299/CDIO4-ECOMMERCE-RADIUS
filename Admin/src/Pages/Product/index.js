@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { Row, Col, Card, Button, Table } from "react-bootstrap";
-import { message, Select } from "antd";
-import ModalUpdate from "./ModalUpdate";
+import { message, Popconfirm, Select } from "antd";
 import ModalCreate from "./ModalCreate";
 import axios from "../../axios";
 import Loader from "../../App/layout/Loader";
 import ModalAddColor from "./ModalAddColor";
+import { useHistory } from "react-router-dom";
 const { Option } = Select;
 function Product() {
   const [products, setProducts] = useState(undefined);
   const [categories, setCategories] = useState(undefined);
-  const [updateModalVS, setUpdateModalVS] = useState(false);
   const [modalCreate, setModalCreate] = useState(false);
   const [modalAddColor, setModalAddColor] = useState(false);
-  const [updateProduct, setUpdateProduct] = useState(undefined);
+  const history = useHistory();
   const fetchProducts = async () => {
     try {
       const { data } = await axios.get("/product");
@@ -45,7 +44,17 @@ function Product() {
       message.error(error.message);
     }
   };
-  const handleOnCategoryChange = async () => {};
+  const handleOnCategoryChange = async (value) => {
+    try {
+      const { data } = await axios.get(
+        `/product${value ? "?categories=" + value : ""}`
+      );
+      if (!data.error) setProducts(data.products);
+      else throw new Error(data.message);
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
   if (products)
     return (
       <>
@@ -55,10 +64,10 @@ function Product() {
               <Card.Header className="d-flex justify-content-between align-items-center">
                 <Card.Title as="h5">PRODUCT</Card.Title>
                 <Select
-                  defaultValue="all"
+                  defaultValue=""
                   style={{ width: 120 }}
                   onChange={handleOnCategoryChange}>
-                  <Option value="all">All</Option>
+                  <Option value="">All</Option>
                   {categories &&
                     categories.map((c) => {
                       return (
@@ -122,17 +131,21 @@ function Product() {
                               size="sm"
                               variant="light"
                               onClick={() => {
-                                setUpdateProduct(prod);
-                                setUpdateModalVS(true);
+                                // setUpdateProduct(prod);
+                                // setUpdateModalVS(true);
+                                history.push(`/update/product/${prod._id}`);
                               }}>
                               <i className="feather icon-edit" /> UPDATE
                             </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => handleDelete(prod._id)}
-                              variant="danger">
-                              <i className="feather icon-trash" /> DELETE
-                            </Button>
+                            <Popconfirm
+                              title="Are you sure?"
+                              okText="Delete"
+                              cancelText="Cancel"
+                              onConfirm={() => handleDelete(prod._id)}>
+                              <Button size="sm" variant="danger">
+                                <i className="feather icon-trash" /> DELETE
+                              </Button>
+                            </Popconfirm>
                           </td>
                         </tr>
                       );
@@ -143,13 +156,6 @@ function Product() {
             </Card>
           </Col>
         </Row>
-        {updateProduct && (
-          <ModalUpdate
-            isModalVisible={updateModalVS}
-            setVisible={setUpdateModalVS}
-            updateProduct={updateProduct}
-          />
-        )}
         <ModalCreate
           reload={fetchProducts}
           isModalVisible={modalCreate}

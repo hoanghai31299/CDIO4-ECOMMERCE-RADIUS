@@ -163,12 +163,12 @@ exports.refreshToken = async (req, res, next) => {
 exports.isSignIn = (req, res, next) => {
   const token = req.cookies.token;
   if (!req.cookies) {
-    return res.status(400).json({
+    return res.status(200).json({
       message: "Unauthorized, access denied",
     });
   }
   if (!token) {
-    return res.status(400).json({
+    return res.status(200).json({
       message: "Unauthorized, access denied",
     });
   }
@@ -177,11 +177,12 @@ exports.isSignIn = (req, res, next) => {
     process.env.JWT_TOKEN_SECRET,
     (err, decode) => {
       if (err) {
-        return res.status(400).json({
+        return res.status(200).json({
+          error: true,
           message: "Token is not valid, access denied",
         });
       }
-      User.findById(decode.user, (err, user) => {
+      User.findById(decode.user._id, (err, user) => {
         req.user = user;
         next();
       });
@@ -191,7 +192,8 @@ exports.isSignIn = (req, res, next) => {
 exports.isAdmin = (req, res, next) => {
   const isAdmin = req.user.role == 2;
   if (!isAdmin) {
-    return res.status(400).json({
+    return res.status(200).json({
+      error: true,
       message: "You are not Admin, access denied",
     });
   }
@@ -200,7 +202,8 @@ exports.isAdmin = (req, res, next) => {
 exports.isEditor = (req, res, next) => {
   const isEditor = req.user.role >= 1;
   if (!isEditor) {
-    return res.status(400).json({
+    return res.status(200).json({
+      error: true,
       message: "You are not editor, access denied",
     });
   }
@@ -217,6 +220,7 @@ exports.verifyToken = async (req, res, next) => {
     const refreshToken = req.cookies.refreshToken;
     if (!refreshToken) {
       return res.status(200).json({
+        error: true,
         message: "signin plsss",
       });
     }
@@ -241,7 +245,6 @@ exports.signinByCookie = async (req, res, next) => {
     if (token)
       var decoded = await jwt.verify(token, process.env.JWT_TOKEN_SECRET);
     if (decoded) {
-      console.log(decoded);
       const newU = await User.findById(decoded.user)
         .populate("cart.productId")
         .populate("wishList");
