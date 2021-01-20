@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { NavLink, Redirect } from "react-router-dom";
 
 import "./../../../assets/scss/style.scss";
@@ -6,20 +6,30 @@ import Aux from "../../../hoc/_Aux";
 import Breadcrumb from "../../../App/layout/AdminLayout/Breadcrumb";
 import axios from "../../../axios";
 import { message } from "antd";
+import UserContext from "../../UserContext";
 const SignUp1 = () => {
   const [user, setUser] = useState({});
+  const { setAdmin } = useContext(UserContext);
   const [redirect, setRedirect] = useState(false);
   useEffect(() => {
     axios
       .get("/auth/signinW")
       .then((res) => {
         const { data } = res;
-        if (!data.error) setRedirect(true);
+        if (!data.error) {
+          if (res.data.user.role === 0) {
+            message.error("You dont have permisstion to this action!");
+            return;
+          }
+          message.success("Login successful");
+          setAdmin(res.data.user);
+          setRedirect(true);
+        }
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [setAdmin]);
   const handleOnChange = (e) => {
     setUser({ ...user, [e.target.id]: e.target.value });
   };
@@ -27,9 +37,13 @@ const SignUp1 = () => {
     axios
       .post("/auth/signin", user)
       .then((res) => {
-        console.log(res);
         if (!res.data.error) {
+          if (res.data.user.role === 0) {
+            message.error("You dont have permisstion to this action!");
+            return;
+          }
           message.success("Login successful");
+          setAdmin(res.data.user);
           setRedirect(true);
         } else {
           message.error(res.data.message);

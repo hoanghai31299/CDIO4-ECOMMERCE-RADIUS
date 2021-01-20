@@ -76,7 +76,12 @@ function Product() {
           <div className="product-list">
             {products ? (
               products.length === 0 ? (
-                <div>Not Product found</div>
+                <div className="product-not-found">
+                  <img
+                    alt="product-not-found"
+                    src="https://res.cloudinary.com/hoanghai/image/upload/v1611124687/Radius-E/ProductDetail-Delete/icon-etc/no-products-found_x3d35a.png"
+                  ></img>
+                </div>
               ) : (
                 products.map((prod) => {
                   return (
@@ -90,7 +95,7 @@ function Product() {
                 })
               )
             ) : (
-              <div>Loading...</div>
+              <div class="loader"></div>
             )}
           </div>
         </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Card, Table, Button, Form } from "react-bootstrap";
-import { Modal, message } from "antd";
+import { Modal, message, Popconfirm } from "antd";
 import * as moment from "moment";
 import axios from "../../axios";
 import Loader from "../../App/layout/Loader";
@@ -116,12 +116,15 @@ const Category = () => {
                               onClick={handleShowUpdate(i)}>
                               UPDATE
                             </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => handleDelete(ctg._id)}
-                              variant="danger">
-                              DELETE
-                            </Button>
+                            <Popconfirm
+                              title="Are you sure?"
+                              okText="Delete"
+                              cancelText="Cancel"
+                              onConfirm={() => handleDelete(ctg._id)}>
+                              <Button size="sm" variant="danger">
+                                DELETE
+                              </Button>
+                            </Popconfirm>
                           </td>
                         </tr>
                       );

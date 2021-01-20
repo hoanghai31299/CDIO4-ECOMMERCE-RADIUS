@@ -1,71 +1,137 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Card, Button } from "react-bootstrap";
-import { message, Table, Space } from "antd";
+import { Row, Col, Card } from "react-bootstrap";
+import { message, Button, Table, Space, Tag, Popconfirm } from "antd";
 import axios from "../../axios";
 import * as moment from "moment";
 import Loader from "../../App/layout/Loader";
-const columns = [
+const status = [
   {
-    title: "Address",
-    dataIndex: "address",
-    key: "address",
+    title: "Need Confirm",
+    color: "red",
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: "Confirmed",
+    color: "lightgreen",
   },
   {
-    title: "Phone",
-    dataIndex: "phone",
-    key: "phone",
+    title: "Delivering",
+    color: "green",
   },
   {
-    title: "Total",
-    dataIndex: "total",
-    key: "total",
-    render: (text) => text + "$",
-  },
-  {
-    title: "Last Total",
-    dataIndex: "lastTotal",
-    key: "lastTotal",
-    render: (text) => text + "$",
-  },
-  {
-    title: "Order Date",
-    dataIndex: "createdAt",
-    key: "createdAt",
-    render: (text) => moment(new Date(text)).format("DD/MM/YYYY hh:ss"),
-  },
-  {
-    title: "Update Date",
-    dataIndex: "updatedAt",
-    key: "updatedAt",
-    render: (text) => moment(new Date(text)).format("DD/MM/YYYY hh:ss"),
-  },
-  {
-    title: "Action",
-    dataIndex: "_id",
-    key: "_id",
-    render: (text) => (
-      <Space size="middle">
-        <Button size="sm" variant="light">
-          Update
-        </Button>
-        <Button size="sm" variant="danger">
-          Delete
-        </Button>
-      </Space>
-    ),
+    title: "Deliveried",
+    color: "lightblue",
   },
 ];
+
 function Order() {
   const [orders, setOrders] = useState(undefined);
-  // const [updated, setUpdated] = useState({})
-  // const [created, setCreated] = useState({});
-  // const [modalCreate, setModalCreate] = useState(false);
-  // const [modalUpdate, setModalUpdate] = useState(false);
+  const columns = [
+    {
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
+    },
+
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      key: "status",
+      render: (st) => (
+        <Tag color={status[st].color} key={"12"}>
+          {status[st].title.toUpperCase()}
+        </Tag>
+      ),
+    },
+    {
+      title: "Phone",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
+      render: (text) => text + "$",
+    },
+    {
+      title: "Last Total",
+      dataIndex: "lastTotal",
+      key: "lastTotal",
+      render: (text) => text + "$",
+    },
+    {
+      title: "Order Date",
+      dataIndex: "createdAt",
+      key: "createdAt",
+      render: (text) => moment(new Date(text)).format("DD/MM/YYYY hh:ss"),
+    },
+    {
+      title: "Update Date",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render: (text) => moment(new Date(text)).format("DD/MM/YYYY hh:ss"),
+    },
+
+    {
+      title: "Action",
+      dataIndex: "_id",
+      key: "_id",
+      fixed: "right",
+      render: (text, order) => (
+        <Space size="middle">
+          {order.status < 3 ? (
+            <Button
+              onClick={() => handleUpdateOrder(order)}
+              type="default"
+              style={{
+                borderColor: status[order.status + 1].color,
+              }}>
+              {status[order.status + 1].title}
+            </Button>
+          ) : (
+            <Button type="dashed">Done</Button>
+          )}
+          <Popconfirm
+            title="Are you sure?"
+            okText="OK"
+            onConfirm={() => handleDelete(order._id)}
+            cancelText="Cancel">
+            <Button size="sm" variant="danger">
+              Delete
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+  const handleDelete = (id) => {
+    axios
+      .delete(`/order/${id}`)
+      .then((res) => {
+        if (!res.data.error) {
+          fetchOrders();
+          message.success("Deleted");
+        } else throw new Error("fail to delete the order");
+      })
+      .catch((err) => message.error(err.message));
+  };
+  const handleUpdateOrder = (order, status) => {
+    if (status === 3) return;
+    axios
+      .put(`/order/${order._id}`, { ...order, status: order.status + 1 })
+      .then((res) => {
+        if (!res.data.error) {
+          fetchOrders();
+          message.success("Updated");
+        } else throw new Error("fail to update order");
+      })
+      .catch((err) => message.error(err.message));
+  };
   const fetchOrders = async () => {
     try {
       const { data } = await axios.get("/order");
@@ -91,6 +157,7 @@ function Order() {
                 <Table
                   className="text-center"
                   dataSource={orders}
+                  loading={!orders}
                   columns={columns}
                   scroll={{ x: "calc(700px + 50%)", y: 240 }}
                 />

@@ -9,6 +9,7 @@ const {
   addColor,
   upImage,
   getProductByCategory,
+  setColors,
 } = require("../controllers/product.controller");
 const authController = require("../controllers/auth.controller");
 const { uploads } = require("../utils/multer");
@@ -31,5 +32,11 @@ route.post(
   addColor
 );
 route.post("/up_image", uploads.single("productImage"), upImage);
+route.put(
+  "/update_color/:id",
+  authController.isSignIn,
+  authController.isEditor,
+  setColors
+);
 
 module.exports = route;

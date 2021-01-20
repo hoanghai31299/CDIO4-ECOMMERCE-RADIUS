@@ -7,7 +7,8 @@ exports.stats = async (req, res, next) => {
   try {
     const { start, end } = req.body;
     const orders = await Order.find({
-      createdAt: { $gte: new Date(start), $lt: new Date(end) },
+      deleteAt: undefined,
+      createdAt: { $gte: new Date(start), $lte: new Date(end) },
     });
     res.json({
       orders,
@@ -223,7 +224,7 @@ exports.update = async (req, res, next) => {
       userId,
       total,
       lastTotal,
-      status,
+      status: +status,
       shipDate,
     };
     if (couponCode) {
@@ -260,7 +261,7 @@ exports.update = async (req, res, next) => {
 
     const order = await Order.findByIdAndUpdate(
       _id,
-      { $set: { newOrder } },
+      { $set: newOrder },
       { new: true }
     );
 

@@ -92,7 +92,6 @@ exports.update = async (req, res, next) => {
         message: "all fell is required",
       });
     }
-    const { main, size, sku } = description;
     const _id = req.params.id;
     // if (req.file) {
     //     const file = dataUri(req.file).content;
@@ -103,19 +102,21 @@ exports.update = async (req, res, next) => {
     const productParams = {
       name,
       price,
-      description: {
-        main,
-        size,
-        sku,
-      },
+      description,
       colors,
       categories,
     };
     const product = await Product.findByIdAndUpdate(
       _id,
-      { $set: { productParams } },
+      { $set: productParams },
       { new: true }
-    );
+    )
+      .populate({
+        path: "colors.color",
+      })
+      .populate({
+        path: "categories",
+      });
     if (!product) {
       return res.status(200).json({
         error: true,
@@ -186,7 +187,7 @@ exports.getProduct = async (req, res, next) => {
   try {
     const _id = req.params.id;
     const product = await Product.findById(_id).populate({
-      path: "colors.colorId",
+      path: "colors.color",
     });
     if (!product) {
       return res.status(200).json({
@@ -287,6 +288,24 @@ exports.upImage = async (req, res, next) => {
       error: false,
       message: "up image successful",
       image_url,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.setColors = async (req, res, next) => {
+  try {
+    const { colors } = req.body;
+    const { id } = req.params;
+    if (colors.length === 0 || !id)
+      return next(new Error("colors is required"));
+    const product = await Product.findById(id);
+    product.colors = colors;
+    product.save();
+    return res.status(200).json({
+      error: false,
+      message: `update color product ${product.name} successful`,
+      product,
     });
   } catch (error) {
     next(error);
