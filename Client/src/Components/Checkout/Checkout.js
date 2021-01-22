@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import "./Checkout.css";
 import axios from "../../axios";
 import { UserContext } from "../../GlobalState/UserContext";
@@ -8,16 +7,11 @@ function Checkount() {
   const { user, setUser } = useContext(UserContext);
   const [cart, setCart] = useState(undefined);
   const [code, setCode] = useState();
+
   const [inforCoupon, setInforCoupon] = useState();
   const [subPrice, setSubPrice] = useState();
   const [discount, setDiscount] = useState();
-  const [listCoupon, setListCoupon] = useState();
-  let history = useHistory();
-  useEffect(() => {
-    axios.get(`/coupon`).then((res) => {
-      setListCoupon(res.data.coupon);
-    });
-  }, []);
+
   useEffect(() => {
     setCart(user.cart);
   }, [user]);
@@ -37,25 +31,20 @@ function Checkount() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
   const handleTotalPrice = (e) => {
-    if (!listCoupon === undefined) {
-      const infCP = listCoupon.find((coupon) => {
-        return coupon.code == e.target.value;
-      });
-      setCode(infCP._id);
-      setInforCoupon(infCP);
-      if (infCP) {
-        if (subPrice > infCP.min) {
-          setDiscount(subPrice * infCP.discount);
-          if (subPrice > infCP.max) {
-            setDiscount(infCP.max);
+    axios.get(`/coupon/${e.target.value}`).then((res) => {
+      setInforCoupon(res.data.coupon);
+      if (res.data.error === false) {
+        setCode(res.data.coupon.code);
+        if (subPrice > res.data.coupon.min) {
+          setDiscount(subPrice * res.data.coupon.discount);
+          if (subPrice > res.data.coupon.max) {
+            setDiscount(res.data.coupon.max);
           }
         }
       } else {
         setDiscount(0);
       }
-    } else {
-      setDiscount(0);
-    }
+    });
   };
   const handleSubmit = () => {
     const newCart = cart.map((item) => {
@@ -78,7 +67,6 @@ function Checkount() {
       .then((res) => {
         if (!res.data.error) {
           alert("Radius-E:Checkout success !!!");
-          history.push("/track-your-order");
           setUser({ ...user, cart: [] });
           axios
             .put(`/user/cart/${user._id}`, { newCart: [] })
