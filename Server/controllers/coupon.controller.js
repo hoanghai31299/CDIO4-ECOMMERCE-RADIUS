@@ -135,7 +135,7 @@ exports.getAll = async (req, res, next) => {
 exports.getCoupon = async (req, res, next) => {
   try {
     const _id = req.params.id;
-    const coupon = await Coupon.findById(_id);
+    const coupon = await Coupon.findOne({ code: _id });
     if (!coupon) {
       return res.status(200).json({
         error: true,

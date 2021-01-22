@@ -13,7 +13,7 @@ function ProductComment({ idProduct }) {
   const { user, setUser } = useContext(UserContext);
   const [idUser, setIdUser] = useState();
   const [comment, setComment] = useState({
-    rate: "1",
+    rate: "5",
   });
   const handleAverageRate = (arrStar) => {
     const sumStar = arrStar.reduce((total, value) => {

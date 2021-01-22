@@ -18,6 +18,6 @@ route.delete(
   deleteCoupon
 );
 route.get("/", authController.isSignIn, authController.isEditor, getAll);
-route.get("/:id", authController.isSignIn, authController.isEditor, getCoupon);
+route.get("/:id", authController.isSignIn, getCoupon);
 
 module.exports = route;
