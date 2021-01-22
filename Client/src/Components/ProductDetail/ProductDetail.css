@@ -162,3 +162,133 @@
     padding: 0 1em;
   }
 }
+/* --------------- Start CommentProduct ---------------*/
+.productcomment-wrap {
+  margin-top: 5em;
+  width: 100%;
+}
+.img-star > img {
+  width: 1em;
+  object-fit: cover;
+}
+.rate-star {
+  display: flex;
+  flex-direction: row;
+  padding: 0 0 0 3em;
+}
+.rate-star input {
+  width: 1.3em;
+}
+.rate-star > label {
+  padding-left: 1em;
+  margin: auto 0;
+  justify-content: start;
+}
+.rate-text {
+  width: 6em;
+}
+/* Productcomment Title  and Desc */
+.productcomment-title,
+.productcomment-desc {
+  text-align: center;
+}
+.productcomment-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+/* Input text and Submit */
+.productcomment-comment {
+  display: flex;
+  flex-direction: column;
+}
+.productcomment-comment > input {
+  width: 40%;
+}
+.productcomment-textarea {
+  margin-bottom: 1em;
+}
+.productcomment-submit {
+  width: 40%;
+  padding: 1em 3em;
+  border: 1px solid #000;
+  color: #fff;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+}
+/* --------------- End CommentProduct ---------------*/
+/* -------------- Start ProductShowComment ------------ */
+
+.wrap-show-comment {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.show-list-coment {
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+.show-content-ratings {
+  display: flex;
+  flex-direction: column;
+}
+.content-ratings-star {
+  display: flex;
+  flex-direction: row;
+}
+
+.wrap-show-comment-user {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  padding-bottom: 1em;
+  margin: auto;
+  border-bottom: 1px solid #000;
+  margin-top: 2em;
+}
+.show-content-ratingos {
+  margin-bottom: 3 mokem;
+}
+.comment-avatar-user > img {
+  width: 4.5em;
+  object-fit: cover;
+  margin-right: 1em;
+}
+.content-ratings-star > img {
+  width: 4.5em;
+  object-fit: cover;
+  margin: 0 1em;
+}
+.content-ratings-star {
+  justify-content: center;
+}
+.content-ratings-title {
+  text-align: center;
+  font-size: 2em;
+  font-weight: 800;
+  margin-bottom: 1em;
+}
+.comment-name-user {
+  font-size: 1.3em;
+  font-weight: 800;
+}
+.number-rate-start {
+  display: flex;
+  flex-direction: row;
+}
+.number-rate-start > img {
+  width: 1em;
+  margin: 0 0.3em;
+}
+.comment-name-user,
+.number-rate-start,
+.comment-user {
+  margin-bottom: 0.5em;
+}
+textarea.productcomment-textarea {
+  padding: 1em;
+}
+.productcomment-rate {
+  margin: 1em;
+}
+/* -------------- End ProductShowComment ------------ */

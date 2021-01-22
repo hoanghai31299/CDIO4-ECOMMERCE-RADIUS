@@ -280,6 +280,7 @@ exports.deleteWishLish = async (req, res, next) => {
   try {
     const _id = req.params.id;
     const { productId } = req.body;
+    console.log("hello", productId);
     const user = await User.findByIdAndUpdate(
       _id,
       { $pullAll: { wishList: [productId] } },

@@ -6,6 +6,8 @@ import axio from "../../axios";
 import ProductDetailImg from "./ProductDetailImg";
 import ProductDetailInfor from "./ProductDetailInfor";
 import ProductDetailRecommand from "./ProductDetailRecommand";
+import ProductComment from "./ProductComment";
+import ProductShowComment from "./ProductShowComment";
 
 function ProductDetail() {
   const [product, setProduct] = useState(undefined);
@@ -18,9 +20,7 @@ function ProductDetail() {
       .then((res) => {
         setProduct(res.data.product);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [idProduct]);
 
   return (
@@ -43,6 +43,7 @@ function ProductDetail() {
               </>
             )}
           </div>
+          <ProductComment idProduct={idProduct} />
           <div className="row">
             <div className="product_detail--box">
               <div className="l-12">
@@ -57,7 +58,8 @@ function ProductDetail() {
                 <img
                   className="img-gift"
                   alt="prdimg"
-                  src="https://res.cloudinary.com/hoanghai/image/upload/v1609159778/Radius-E/ProductDetail-Delete/products-color/gm_gift_pc_eyewear_msp8fx.webp"></img>
+                  src="https://res.cloudinary.com/hoanghai/image/upload/v1609159778/Radius-E/ProductDetail-Delete/products-color/gm_gift_pc_eyewear_msp8fx.webp"
+                ></img>
               </div>
             </div>
           </div>

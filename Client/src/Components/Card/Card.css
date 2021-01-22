@@ -28,10 +28,10 @@
   width: 100%;
 
   padding: 2em;
-  border-top: 1px solid #000;
+  /* border-top: 1px solid #000; */
 }
-.shopping-card__list > .shopping-card-item:last-child {
-  border-bottom: 1px solid #000;
+.shopping-card-item:first-child {
+  border-top: 1px solid #000;
 }
 /* --------------------------------------------------- */
 /* item -info  */

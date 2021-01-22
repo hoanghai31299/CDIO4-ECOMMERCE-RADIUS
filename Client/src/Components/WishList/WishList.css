@@ -1,0 +1,50 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+/* --------------- Star WishLis --------------- */
+.wishlist > .wrap-product {
+  margin-bottom: 2em;
+}
+.wishlist {
+  width: 45%;
+  margin: auto;
+  margin-top: 5em;
+}
+.wishlist-title {
+  width: 75%;
+  margin: auto;
+  margin-bottom: 1em;
+}
+/* --------------- Start Footer-WishLis --------------- */
+.footer-wishlist {
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+.footer-ctn-shopping,
+.footer-ctn-emty {
+  margin-left: 0.5em;
+  position: relative;
+  cursor: pointer;
+}
+.footer-ctn-shopping > span::after,
+.footer-ctn-emty > span::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 1px;
+  background-color: #000;
+  transition: all ease-in 0.3s;
+}
+.footer-ctn-shopping > span:hover:after,
+.footer-ctn-emty > span:hover:after {
+  width: 100%;
+}
+/* --------------- End  Footer-WishLis --------------- */
+/* --------------- End WishLis --------------- */

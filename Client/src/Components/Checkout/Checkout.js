@@ -1,138 +1,97 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./Checkout.css";
 import axios from "../../axios";
+import { UserContext } from "../../GlobalState/UserContext";
+
 function Checkount() {
-  const [orderInfor, setOrderInfor] = useState({
-    _id: "",
-    name: "",
-    email: "",
-    phone: "",
-    address: "",
-    products: [],
-  });
-  const [err, setErr] = useState({
-    error: "",
-    message: "",
-  });
-  const [checkSuccess, setCheckSuccess] = useState({
-    message: "",
-  });
+  const { user, setUser } = useContext(UserContext);
+  const [cart, setCart] = useState(undefined);
+  const [code, setCode] = useState();
+  console.log("Userrrr", user);
   const [inforCoupon, setInforCoupon] = useState();
   const [subPrice, setSubPrice] = useState();
   const [discount, setDiscount] = useState();
-  const [listProduct, setListProduct] = useState([]);
-  const [cartItem, setCartItem] = useState([]);
   const [listCoupon, setListCoupon] = useState();
-  const [inforUser, setInforUser] = useState({
-    id_: "",
-    email: "",
-    name: "",
-    phone: "",
-    address: "",
-    couponCode: "",
-  });
+
   useEffect(() => {
-    axios
-      .get(`/auth/signinW/`)
-      .then((res) => {
-        setListProduct(res.data.user.cart);
-        setInforUser({ ...inforUser, ...res.data.user });
-        const cart = res.data.user.cart;
-        const products = cart.map((item) => {
-          var rObj = {};
-          rObj.productId = item.productId;
-          rObj.colorId = item.colorId;
-          rObj.quantity = item.quantity;
-          return rObj;
-        });
-        setOrderInfor({
-          ...orderInfor,
-          _id: res.data.user._id,
-          name: res.data.user.name,
-          email: res.data.user.email,
-          phone: res.data.user.phone,
-          address: res.data.user.address,
-          products: products,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
     axios.get(`/coupon`).then((res) => {
       setListCoupon(res.data.coupon);
     });
   }, []);
   useEffect(() => {
-    fetchProduct();
-  }, [listProduct]);
+    setCart(user.cart);
+  }, [user]);
+  useEffect(() => {
+    handleSubTotal();
+  }, [cart]);
 
-  const fetchProduct = async () => {
-    let items = [];
-    for (let i = 0; i < listProduct.length; i++) {
-      try {
-        const prod = listProduct[i];
-        const { data } = await axios.get(
-          `/product/${listProduct[i].productId}`
-        );
-        if (data === undefined) continue;
-        if (!data.error) {
-          const { product } = data;
-          const color = product.colors.find(
-            (ite) => ite.color === listProduct[i].colorId
-          );
-          items.push({
-            ...color,
-            quantity: listProduct[i].quantity,
-            name: product.name,
-            price: product.price,
-            stock: product.quantity,
-          });
-        } else throw new Error(data.message);
-      } catch (error) {
-        continue;
-      }
-    }
-    setCartItem(items);
+  const handleSubTotal = () => {
     setSubPrice(
-      items.reduce((price, total) => {
-        return price + total.price * total.quantity;
-      }, 0)
+      cart &&
+        cart.reduce((price, total) => {
+          return price + total.productId.price * total.quantity;
+        }, 0)
     );
   };
   const handleOnchange = (e) => {
-    setInforUser({ ...inforUser, [e.target.name]: e.target.value });
+    setUser({ ...user, [e.target.name]: e.target.value });
   };
   const handleTotalPrice = (e) => {
-    const infCP = listCoupon.find((coupon) => {
-      return coupon.code == e.target.value;
-    });
-    setInforCoupon(infCP);
-    console.log("thong tin giam gia", infCP);
-    if (inforCoupon) {
-      console.log("aaaaaaaa", inforCoupon);
-      if (subPrice > inforCoupon.min) {
-        setDiscount(subPrice * inforCoupon.discount);
-        if (discount > inforCoupon.max) {
-          setDiscount(inforCoupon.max);
+    if (!listCoupon === undefined) {
+      const infCP = listCoupon.find((coupon) => {
+        return coupon.code == e.target.value;
+      });
+      setCode(infCP._id);
+      setInforCoupon(infCP);
+      if (infCP) {
+        if (subPrice > infCP.min) {
+          setDiscount(subPrice * infCP.discount);
+          if (subPrice > infCP.max) {
+            setDiscount(infCP.max);
+          }
         }
+      } else {
+        setDiscount(0);
       }
+    } else {
+      setDiscount(0);
     }
   };
   const handleSubmit = () => {
+    const newCart = cart.map((item) => {
+      return {
+        productId: item.productId._id,
+        colorId: item.colorId,
+        quantity: item.quantity,
+      };
+    });
+
     axios
-      .post("/order/create", orderInfor)
-      .then((res) => {
-        setCheckSuccess({ message: res.data.message });
+      .post(`/order/create`, {
+        address: user.address,
+        name: user.name,
+        phone: user.phone,
+        products: newCart,
+        couponCode: code,
+        userId: user._id,
       })
-      .catch((error) => {
-        setErr({
-          error: error.response.data.error,
-          message: error.response.data.message,
-        });
-      });
-    axios.put(`/user/cart/${orderInfor._id}`, { newCart: [] });
-    alert("thanh toan thanh cong");
+      .then((res) => {
+        if (!res.data.error) {
+          alert("Radius-E:Checkout success !!!");
+          setUser({ ...user, cart: [] });
+          axios
+            .put(`/user/cart/${user._id}`, { newCart: [] })
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        } else alert("Radius-E:Checkout fail !!!");
+      })
+      .catch((err) => {});
   };
+
   return (
     <div>
       <div className="checkout">
@@ -149,7 +108,7 @@ function Checkount() {
               <input
                 type="email"
                 name="email"
-                value={inforUser.email}
+                value={user.email}
                 onChange={handleOnchange}
               />
             </div>
@@ -159,7 +118,7 @@ function Checkount() {
               <input
                 type="text"
                 name="name"
-                value={inforUser.name}
+                value={user.name}
                 onChange={handleOnchange}
               />
             </div>
@@ -170,7 +129,7 @@ function Checkount() {
               <input
                 type="text"
                 name="phone"
-                value={inforUser.phone}
+                value={user.phone}
                 onChange={handleOnchange}
               />
             </div>
@@ -180,14 +139,14 @@ function Checkount() {
               <input
                 type="text"
                 name="address"
-                value={inforUser.address}
+                value={user.address}
                 onChange={handleOnchange}
               />
             </div>
             <div className="checkout-address">
               <lable
                 className="checkout-item-title"
-                value={inforUser.couponCode}
+                // value={inforUser.couponCode}
                 onChange={handleOnchange}
               >
                 Coupon code
@@ -221,7 +180,7 @@ function Checkount() {
           <div className="checkout-ctp">
             <div onClick={handleSubmit}>Continue to payment</div>
           </div>
-          {err.error ? (
+          {/* {err.error ? (
             <div className="checkout-err">Err: {err.message}</div>
           ) : (
             ""
@@ -230,7 +189,7 @@ function Checkount() {
             <div className="checkout-succes">Checkout success</div>
           ) : (
             ""
-          )}
+          )} */}
           <div className="order-summary">
             <div className="order-summary-title">ORDER SUMMARY</div>
             <div className="order-summary_head">
@@ -238,24 +197,33 @@ function Checkount() {
               <div className="summary_head-price">Price</div>
             </div>
             <div className="summary-list">
-              {cartItem.map((item) => {
-                return (
-                  <div className="summary-item">
-                    <div className="summary-item__img">
-                      <img src={item.image_url[0]} />
-                    </div>
-                    <div className="summary-item__infor">
-                      <div className="summary-item_name">{item.name}</div>
-                      <div className="summary-item_quantity">
-                        Quantity: {item.quantity}
+              {cart &&
+                cart.map(({ _id, productId, quantity, name, colorId }) => {
+                  return (
+                    <div key={_id} className="summary-item">
+                      <div className="summary-item__img">
+                        <img
+                          alt="img-item"
+                          src={
+                            productId.colors.find((cl) => cl.color === colorId)
+                              .image_url[0]
+                          }
+                        />
+                      </div>
+                      <div className="summary-item__infor">
+                        <div className="summary-item_name">
+                          {productId.name}
+                        </div>
+                        <div className="summary-item_quantity">
+                          Quantity: {quantity}
+                        </div>
+                      </div>
+                      <div className="summary-item_price">
+                        $ {productId.price * quantity}.00
                       </div>
                     </div>
-                    <div className="summary-item_price">
-                      $ {item.price * item.quantity}.00
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
             <div className="summary-price">
               <div className="summary-price-element">
