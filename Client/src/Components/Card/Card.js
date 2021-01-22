@@ -14,20 +14,13 @@ function Card() {
   const handleRemoveCart = async (id) => {
     const updateCart = cart.filter((item) => item._id !== id);
     setUser({ ...user, cart: updateCart });
-    axios
-      .put(`/user/cart/${user._id}`, {
-        newCart: updateCart.map((item) => ({
-          productId: item.productId._id,
-          colorId: item.colorId,
-          quantity: item.quantity,
-        })),
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.put(`/user/cart/${user._id}`, {
+      newCart: updateCart.map((item) => ({
+        productId: item.productId._id,
+        colorId: item.colorId,
+        quantity: item.quantity,
+      })),
+    });
   };
   const handleAddQuuantity = (id, quantity) => {
     const updateCart = [...cart];
@@ -153,11 +146,20 @@ function Card() {
                       </div>
                     ))}
                 </div>
-                <div className="checkout">
-                  <Link to="/checkout">
-                    <label className="goto_checkout">Go to Checkout</label>
-                  </Link>
-                </div>
+                {cart && cart.length === 0 ? (
+                  <div className="product-not-found c-12">
+                    <img
+                      alt="product-not-found"
+                      src="https://res.cloudinary.com/hoanghai/image/upload/v1611124687/Radius-E/ProductDetail-Delete/icon-etc/no-products-found_x3d35a.png"
+                    ></img>
+                  </div>
+                ) : (
+                  <div className="checkout">
+                    <Link to="/checkout">
+                      <label className="goto_checkout">Go to Checkout</label>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -7,7 +7,6 @@ import ProductDetailImg from "./ProductDetailImg";
 import ProductDetailInfor from "./ProductDetailInfor";
 import ProductDetailRecommand from "./ProductDetailRecommand";
 import ProductComment from "./ProductComment";
-import ProductShowComment from "./ProductShowComment";
 
 function ProductDetail() {
   const [product, setProduct] = useState(undefined);

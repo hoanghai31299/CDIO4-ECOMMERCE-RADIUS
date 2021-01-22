@@ -39,7 +39,10 @@ function Header() {
               <li>
                 <Link
                   key={i}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    setIsNotification(false);
+                  }}
                   to={`/product/${c._id}`}
                 >
                   {c.name}
@@ -49,22 +52,48 @@ function Header() {
           })}
         {!u?.cart ? (
           <li className="sign">
-            <Link onClick={() => setOpen(false)} to="/signin">
+            <Link
+              onClick={() => {
+                setOpen(false);
+                setIsNotification(false);
+              }}
+              to="/signin"
+            >
               Signin
             </Link>
           </li>
         ) : (
           <li className="sign">
-            <Link onClick={() => setOpen(false)} to="/account-detail">
+            <Link
+              onClick={() => {
+                setOpen(false);
+                setIsNotification(false);
+              }}
+              to="/account-detail"
+            >
               {user?.name}
             </Link>
           </li>
         )}
         <li>
-          <Link to="/cart">Cart ( {`${u?.cart ? u.cart.length : 0}`})</Link>
+          <Link
+            onClick={() => {
+              setOpen(false);
+              setIsNotification(false);
+            }}
+            to="/cart"
+          >
+            Cart ( {`${u?.cart ? u.cart.length : 0}`})
+          </Link>
         </li>
         <li className="icon-wishlist">
-          <Link to="/wishlist">
+          <Link
+            onClick={() => {
+              setOpen(false);
+              setIsNotification(false);
+            }}
+            to="/wishlist"
+          >
             <img
               alt="icon-wishlist"
               src="https://res.cloudinary.com/hoanghai/image/upload/v1609597115/Radius-E/ProductDetail-Delete/icon-heart/heart-regular_umpjua.svg"

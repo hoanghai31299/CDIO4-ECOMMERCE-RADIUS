@@ -67,54 +67,65 @@ function TrackYourOrder() {
           </ul>
         </div>
         <div className="wrap-product">
-          <div className="product-list-track">
-            {trackOrder &&
-              trackOrder.map(
-                ({
-                  _id,
-                  createdAt,
-                  lastTotal,
-                  quantity,
-                  name,
-                  price,
-                  img_url,
-                }) => {
-                  return (
-                    <div key={_id} className="shopping-card-item-checkout">
-                      <table className="table-track-your-order">
-                        <tr>
-                          <td className="item-info">
-                            <img src={img_url} alt="cartitem" />
-                            <div className="item-info__text">
-                              <span className="item-name">{name}</span> <br />
-                              <span className="item-price">USD {price}.00</span>
-                              <br />
-                            </div>
-                          </td>
-                          <td className="item-amount">
-                            <div className="item-amount__quantity">
-                              <p>Quantity</p>
-                              <label className="item-quantity">
-                                {quantity}
-                              </label>
-                            </div>
-                          </td>
-                          <td className="item-total">
-                            <p>Total: $ </p>
-                            <p className="item-total__price">
-                              {quantity * price}.00
-                            </p>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Create day: {createdAt}</td>
-                        </tr>
-                      </table>
-                    </div>
-                  );
-                }
-              )}
-          </div>
+          {trackOrder && trackOrder.length === 0 ? (
+            <div className="product-not-found c-12">
+              <img
+                alt="product-not-found"
+                src="https://res.cloudinary.com/hoanghai/image/upload/v1611124687/Radius-E/ProductDetail-Delete/icon-etc/no-products-found_x3d35a.png"
+              ></img>
+            </div>
+          ) : (
+            <div className="product-list-track">
+              {trackOrder &&
+                trackOrder.map(
+                  ({
+                    _id,
+                    createdAt,
+                    lastTotal,
+                    quantity,
+                    name,
+                    price,
+                    img_url,
+                  }) => {
+                    return (
+                      <div key={_id} className="shopping-card-item-checkout">
+                        <table className="table-track-your-order">
+                          <tr>
+                            <td className="item-info">
+                              <img src={img_url} alt="cartitem" />
+                              <div className="item-info__text">
+                                <span className="item-name">{name}</span> <br />
+                                <span className="item-price">
+                                  USD {price}.00
+                                </span>
+                                <br />
+                              </div>
+                            </td>
+                            <td className="item-amount">
+                              <div className="item-amount__quantity">
+                                <p>Quantity</p>
+                                <label className="item-quantity">
+                                  {quantity}
+                                </label>
+                              </div>
+                            </td>
+                            <td className="item-total">
+                              <p>Total: $ </p>
+                              <p className="item-total__price">
+                                {quantity * price}.00
+                              </p>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>Create day: {createdAt}</td>
+                          </tr>
+                        </table>
+                      </div>
+                    );
+                  }
+                )}
+            </div>
+          )}
         </div>
       </div>
     </>

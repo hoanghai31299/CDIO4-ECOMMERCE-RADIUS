@@ -12,7 +12,9 @@ function ProductComment({ idProduct }) {
   const [averageRate, setAverageRate] = useState();
   const { user, setUser } = useContext(UserContext);
   const [idUser, setIdUser] = useState();
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState({
+    rate: "1",
+  });
   const handleAverageRate = (arrStar) => {
     const sumStar = arrStar.reduce((total, value) => {
       return total + value.rate;
@@ -33,15 +35,14 @@ function ProductComment({ idProduct }) {
     }
     return numberArr;
   };
-
   const handleGetDataComment = (e) => {
-    e.preventDefault();
-    console.log();
+    // e.preventDefault();
     setComment({
       ...comment,
       [e.target.name]: e.target.value,
     });
   };
+
   const handleSubmit = () => {
     axios
       .post(`/comment/create`, comment)
@@ -49,9 +50,7 @@ function ProductComment({ idProduct }) {
         setComment({});
         window.location.reload(true);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   };
   useEffect(() => {
     axios.get(`/comment/${idProduct}`).then((res) => {
@@ -66,7 +65,7 @@ function ProductComment({ idProduct }) {
       product_id: idProduct,
     });
   }, [user]);
-  useEffect(() => {}, [comment]);
+
   const linkStar =
     "https://res.cloudinary.com/hoanghai/image/upload/v1610695063/Radius-E/ProductDetail-Delete/icon-etc/star-solid_goqqte.svg";
   return (
@@ -125,8 +124,9 @@ function ProductComment({ idProduct }) {
                 type="radio"
                 name="rate"
                 value="1"
+                checked={comment.rate === "1"}
                 className="star"
-                onClick={handleGetDataComment}
+                onChange={handleGetDataComment}
               ></input>
               <label className="rate-text">Poor</label>
               <label className="img-star">
@@ -138,8 +138,9 @@ function ProductComment({ idProduct }) {
                 type="radio"
                 name="rate"
                 value="2"
+                checked={comment.rate === "2"}
                 className="star"
-                onClick={handleGetDataComment}
+                onChange={handleGetDataComment}
               ></input>
               <label className="rate-text">Fair</label>
               <label className="img-star">
@@ -153,7 +154,8 @@ function ProductComment({ idProduct }) {
                 name="rate"
                 value="3"
                 className="star"
-                onClick={handleGetDataComment}
+                checked={comment.rate === "3"}
+                onChange={handleGetDataComment}
               ></input>
               <label className="rate-text">Average</label>
               <label className="img-star">
@@ -168,7 +170,8 @@ function ProductComment({ idProduct }) {
                 name="rate"
                 value="4"
                 className="star"
-                onClick={handleGetDataComment}
+                checked={comment.rate === "4"}
+                onChange={handleGetDataComment}
               ></input>
               <label className="rate-text">Good</label>
               <label className="img-star">
@@ -184,7 +187,8 @@ function ProductComment({ idProduct }) {
                 name="rate"
                 value="5"
                 className="star"
-                onClick={handleGetDataComment}
+                checked={comment.rate === "5"}
+                onChange={handleGetDataComment}
               ></input>
               <label className="rate-text">Execellent</label>
               <label className="img-star">
