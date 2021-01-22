@@ -90,7 +90,7 @@ exports.getNotification = async (req, res, next) => {
     const user = req.user;
     const { _id } = user;
     const notification = await Notification.find({
-      $or: [{ users: _id }, { users: [] }],
+      $or: [{ users: _id }, { users: [] }],deleteAt: undefined
     });
     if (!notification) {
       return res.status(400).json({
