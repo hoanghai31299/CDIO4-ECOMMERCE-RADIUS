@@ -31,38 +31,46 @@ function WishList() {
       <div className="wishlist">
         <div className="wishlist-title">WISHLIST</div>
         <div className="wrap-product">
-          <div className="product-wish-list">
-            {wishList &&
-              wishList.map(({ _id, name, price, colors }) => {
-                return (
-                  <div key={_id} className="shopping-card-item">
-                    <table>
-                      <tr>
-                        <td className="item-info">
-                          <img src={colors[0].image_url[0]} alt="cartitem" />
-                          <div className="item-info__text">
-                            <span className="item-name">{name}</span> <br />
-                            <span className="item-price">USD {price}</span>
-                            <br />
-                            <span
-                              className="item-remove"
-                              onClick={() => handleRemoveWishList(_id)}
-                            >
-                              Remove
-                            </span>
-                          </div>
-                        </td>
-
-                        <td className="item-total">
-                          <p>Total: $ </p>
-                          <p className="item-total__price">{price}.00</p>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                );
-              })}
-          </div>
+          {wishList && wishList.length === 0 ? (
+            <div className="product-not-found c-12">
+              <img
+                alt="product-not-found"
+                src="https://res.cloudinary.com/hoanghai/image/upload/v1611124687/Radius-E/ProductDetail-Delete/icon-etc/no-products-found_x3d35a.png"
+              ></img>
+            </div>
+          ) : (
+            <div className="product-wish-list">
+              {wishList &&
+                wishList.map(({ _id, name, price, colors }) => {
+                  return (
+                    <div key={_id} className="shopping-card-item">
+                      <table>
+                        <tr>
+                          <td className="item-info">
+                            <img src={colors[0].image_url[0]} alt="cartitem" />
+                            <div className="item-info__text">
+                              <span className="item-name">{name}</span> <br />
+                              <span className="item-price">USD {price}</span>
+                              <br />
+                              <span
+                                className="item-remove"
+                                onClick={() => handleRemoveWishList(_id)}
+                              >
+                                Remove
+                              </span>
+                            </div>
+                          </td>
+                          <td className="item-total">
+                            <p>Total: $ </p>
+                            <p className="item-total__price">{price}.00</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
         </div>
         <div className="footer-wishlist">
           <div className="footer-ctn-shopping">
@@ -70,9 +78,9 @@ function WishList() {
               <span>Continute Shopping</span>
             </Link>
           </div>
-          <div className="footer-ctn-emty">
+          {/* <div className="footer-ctn-emty">
             <span>Emty Wishlist</span>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

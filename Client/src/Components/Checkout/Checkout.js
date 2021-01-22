@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import "./Checkout.css";
 import axios from "../../axios";
 import { UserContext } from "../../GlobalState/UserContext";
@@ -7,12 +8,11 @@ function Checkount() {
   const { user, setUser } = useContext(UserContext);
   const [cart, setCart] = useState(undefined);
   const [code, setCode] = useState();
-  console.log("Userrrr", user);
   const [inforCoupon, setInforCoupon] = useState();
   const [subPrice, setSubPrice] = useState();
   const [discount, setDiscount] = useState();
   const [listCoupon, setListCoupon] = useState();
-
+  let history = useHistory();
   useEffect(() => {
     axios.get(`/coupon`).then((res) => {
       setListCoupon(res.data.coupon);
@@ -78,6 +78,7 @@ function Checkount() {
       .then((res) => {
         if (!res.data.error) {
           alert("Radius-E:Checkout success !!!");
+          history.push("/track-your-order");
           setUser({ ...user, cart: [] });
           axios
             .put(`/user/cart/${user._id}`, { newCart: [] })

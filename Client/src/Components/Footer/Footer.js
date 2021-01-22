@@ -23,13 +23,13 @@ function Footer() {
               <Link to="/contact-us">contact us</Link>
             </li>
             <li className="footer-items">
-              <Link to="/contact-us">shipping</Link>
+              <Link to="/shipping">shipping</Link>
             </li>
             <li className="footer-items">
-              <Link to="/contact-us">returns</Link>
+              <Link to="/return">returns</Link>
             </li>
             <li className="footer-items">
-              <Link to="/contact-us">track your orders</Link>
+              <Link to="/track-your-order">track your orders</Link>
             </li>
             <li className="footer-items">
               <Link to="/contact-us">repair service guide</Link>
@@ -59,8 +59,14 @@ function Footer() {
             </span>
           </div>
           <ul className={`footer-list ${list[2] && "open"} `}>
-            <li className="footer-items">terms & conditions</li>
-            <li className="footer-items">privacy policy</li>
+            <li className="footer-items">
+              <li className="term">
+                <Link to="/terms">Terms & conditions</Link>
+              </li>
+            </li>
+            <li className="footer-items">
+              <Link to="/privacy_new">Privacy policy</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-section">
@@ -71,10 +77,18 @@ function Footer() {
             </span>
           </div>
           <ul className={`footer-list ${list[3] && "open"} `}>
-            <li className="footer-items">instagram</li>
-            <li className="footer-items">facebook</li>
-            <li className="footer-items">youtube</li>
-            <li className="footer-items">twitter</li>
+            <li className="footer-items">
+              <Link to="/privacy_new">instagram</Link>
+            </li>
+            <li className="footer-items">
+              <Link to="/privacy_new">facebook</Link>
+            </li>
+            <li className="footer-items">
+              <Link to="/privacy_new">youtube</Link>
+            </li>
+            <li className="footer-items">
+              <Link to="/privacy_new">twitter</Link>
+            </li>
           </ul>
         </div>
       </div>

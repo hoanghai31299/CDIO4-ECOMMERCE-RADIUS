@@ -31,20 +31,13 @@ function AccountDetail() {
     });
   };
   const handleSummit = () => {
-    axios
-      .put(`/user/${inforUser._id}`, {
-        _id: inforUser._id,
-        name: inforUser.name,
-        email: inforUser.email,
-        phone: inforUser.phone,
-        address: inforUser.address,
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    axios.put(`/user/${inforUser._id}`, {
+      _id: inforUser._id,
+      name: inforUser.name,
+      email: inforUser.email,
+      phone: inforUser.phone,
+      address: inforUser.address,
+    });
   };
   const handleLogout = () => {
     axios
@@ -70,9 +63,7 @@ function AccountDetail() {
                 <a className="item-link">Order History</a>
               </Link>
             </div>
-            <div className="my_account-list__item item">
-              <a className="item-link">Account Details</a>
-            </div>
+            <div className="my_account-list__item item"></div>
             <div className="my_account-list__item item">
               <Link to="/">
                 <a className="item-link" onClick={handleLogout}>
