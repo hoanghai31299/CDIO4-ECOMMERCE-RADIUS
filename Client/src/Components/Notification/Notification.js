@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../GlobalState/UserContext";
+import Loading from "../Loading/Loading";
 import axios from "../../axios";
 import "./Notification.css";
 function Notification() {
+  const [loading, setLoading] = useState();
   const { user, setUser } = useContext(UserContext);
   const [idUser, setIdUser] = useState();
   const [notification, setNotification] = useState();
@@ -10,9 +12,10 @@ function Notification() {
     setIdUser(user._id);
   }, [user]);
   useEffect(() => {
+    setLoading(true);
     axios.get(`/notification/${idUser}`).then((res) => {
       setNotification(res.data.notification);
-      console.log(res.data.notification);
+      setLoading(false);
     });
   }, []);
   return (
@@ -20,6 +23,13 @@ function Notification() {
       <div className="wrap-notification">
         <div className="notification-list">
           <div className="notification-title">Notification</div>
+          {loading ? (
+            <div className="notification-loading">
+              <Loading />
+            </div>
+          ) : (
+            <div></div>
+          )}
           {notification &&
             notification.map(({ title, information }) => {
               return (

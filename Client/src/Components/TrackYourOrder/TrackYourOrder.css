@@ -47,9 +47,11 @@
 .shopping-card-item {
   width: 100%;
 }
+
 .product-list {
   margin: 0;
 }
+
 .shopping-card-item table {
   margin-top: 5em;
   width: 100%;
@@ -59,6 +61,11 @@
   border-bottom: 1px solid #000;
 }
 table.table-track-your-order {
-  width: 60%;
+  width: 75%;
 }
 /* ---------------End track-your-order--------------- */
+.shopping-card-item-checkout table {
+  border-bottom: 1px solid #000;
+  margin: auto;
+  margin: 3em auto;
+}

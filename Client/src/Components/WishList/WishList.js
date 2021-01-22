@@ -31,7 +31,7 @@ function WishList() {
       <div className="wishlist">
         <div className="wishlist-title">WISHLIST</div>
         <div className="wrap-product">
-          <div className="product-list">
+          <div className="product-wish-list">
             {wishList &&
               wishList.map(({ _id, name, price, colors }) => {
                 return (

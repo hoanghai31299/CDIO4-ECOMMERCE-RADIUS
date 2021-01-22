@@ -20,9 +20,7 @@ function ProductDetail() {
       .then((res) => {
         setProduct(res.data.product);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => {});
   }, [idProduct]);
 
   return (
@@ -45,8 +43,7 @@ function ProductDetail() {
               </>
             )}
           </div>
-          <ProductShowComment />
-          <ProductComment />
+          <ProductComment idProduct={idProduct} />
           <div className="row">
             <div className="product_detail--box">
               <div className="l-12">

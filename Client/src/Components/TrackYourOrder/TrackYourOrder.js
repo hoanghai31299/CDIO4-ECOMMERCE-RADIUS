@@ -13,7 +13,6 @@ function TrackYourOrder() {
       .get(`/order/by_user/${user._id}`)
       .then((res) => {
         setOrder(res.data.orders);
-        console.log("123", res.data.orders);
       })
       .catch((err) => {
         console.log(err);
@@ -68,7 +67,7 @@ function TrackYourOrder() {
           </ul>
         </div>
         <div className="wrap-product">
-          <div className="product-list">
+          <div className="product-list-track">
             {trackOrder &&
               trackOrder.map(
                 ({
@@ -81,7 +80,7 @@ function TrackYourOrder() {
                   img_url,
                 }) => {
                   return (
-                    <div key={_id} className="shopping-card-item">
+                    <div key={_id} className="shopping-card-item-checkout">
                       <table className="table-track-your-order">
                         <tr>
                           <td className="item-info">
@@ -94,10 +93,10 @@ function TrackYourOrder() {
                           </td>
                           <td className="item-amount">
                             <div className="item-amount__quantity">
+                              <p>Quantity</p>
                               <label className="item-quantity">
                                 {quantity}
                               </label>
-                              <p>12</p>
                             </div>
                           </td>
                           <td className="item-total">

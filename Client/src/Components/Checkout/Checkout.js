@@ -37,17 +37,21 @@ function Checkount() {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
   const handleTotalPrice = (e) => {
-    const infCP = listCoupon.find((coupon) => {
-      return coupon.code == e.target.value;
-    });
-    setCode(infCP._id);
-    setInforCoupon(infCP);
-    if (infCP) {
-      if (subPrice > infCP.min) {
-        setDiscount(subPrice * infCP.discount);
-        if (subPrice > infCP.max) {
-          setDiscount(infCP.max);
+    if (!listCoupon === undefined) {
+      const infCP = listCoupon.find((coupon) => {
+        return coupon.code == e.target.value;
+      });
+      setCode(infCP._id);
+      setInforCoupon(infCP);
+      if (infCP) {
+        if (subPrice > infCP.min) {
+          setDiscount(subPrice * infCP.discount);
+          if (subPrice > infCP.max) {
+            setDiscount(infCP.max);
+          }
         }
+      } else {
+        setDiscount(0);
       }
     } else {
       setDiscount(0);
@@ -61,7 +65,7 @@ function Checkount() {
         quantity: item.quantity,
       };
     });
-    console.log("12312312321312312", newCart);
+
     axios
       .post(`/order/create`, {
         address: user.address,

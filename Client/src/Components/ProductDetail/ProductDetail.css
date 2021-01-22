@@ -214,6 +214,7 @@
   color: #fff;
   background-color: #000;
   text-align: center;
+  cursor: pointer;
 }
 /* --------------- End CommentProduct ---------------*/
 /* -------------- Start ProductShowComment ------------ */
@@ -222,6 +223,10 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+.show-list-coment {
+  max-height: 50vh;
+  overflow-y: scroll;
 }
 .show-content-ratings {
   display: flex;
@@ -239,6 +244,7 @@
   padding-bottom: 1em;
   margin: auto;
   border-bottom: 1px solid #000;
+  margin-top: 2em;
 }
 .show-content-ratingos {
   margin-bottom: 3 mokem;
@@ -278,5 +284,11 @@
 .number-rate-start,
 .comment-user {
   margin-bottom: 0.5em;
+}
+textarea.productcomment-textarea {
+  padding: 1em;
+}
+.productcomment-rate {
+  margin: 1em;
 }
 /* -------------- End ProductShowComment ------------ */

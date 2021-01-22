@@ -4,19 +4,24 @@ import "../StyleSheet/GridLayout.css";
 import Filler from "./Filler/Filler";
 import axios from "../../axios";
 import ProductCard from "./ProductCard/ProductCard";
+import Loading from "../../Components/Loading/Loading.js";
 import { useParams } from "react-router-dom";
 import { UserContext } from "../../GlobalState/UserContext";
 function Product() {
+  const [loading, setLoading] = useState();
   const { category } = useParams();
   const { user } = useContext(UserContext);
   const [filterVisible, setFilterVisible] = useState(false);
   const [products, setProducts] = useState(undefined);
   useEffect(() => {
+    window.scroll(0, 0);
+    setLoading(true);
     axios
       .get(`/product/get_category/${category}`)
       .then((res) => {
         const { data } = res;
         if (!data.error) setProducts(data.products);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -55,9 +60,6 @@ function Product() {
                 src="https://res.cloudinary.com/hoanghai/image/upload/v1609507588/Radius-E/ProductDetail-Delete/thumbnail/sun_banner_pc_f_rrd75v.jpg"
               />
             </div>
-            {/* <div className="banner-img-mob">
-              <img src="https://res.cloudinary.com/hoanghai/image/upload/v1609507583/Radius-E/ProductDetail-Delete/thumbnail/sun_banner_mob_f_sjruf2.jpg" />
-            </div> */}
           </div>
           <div className="banner-infor">
             <div className="banner-infor__title">2021 PRE-COLLECTION</div>
@@ -74,9 +76,11 @@ function Product() {
       <div className="product">
         <div className="gird">
           <div className="product-list">
-            {products ? (
+            {loading ? (
+              <Loading />
+            ) : products ? (
               products.length === 0 ? (
-                <div className="product-not-found">
+                <div className="product-not-found c-12">
                   <img
                     alt="product-not-found"
                     src="https://res.cloudinary.com/hoanghai/image/upload/v1611124687/Radius-E/ProductDetail-Delete/icon-etc/no-products-found_x3d35a.png"
@@ -95,7 +99,7 @@ function Product() {
                 })
               )
             ) : (
-              <div class="loader"></div>
+              <div class="loader "></div>
             )}
           </div>
         </div>
