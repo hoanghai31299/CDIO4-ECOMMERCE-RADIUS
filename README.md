@@ -29,3 +29,9 @@ https://www.postman.com/downloads/
 [MIT](https://choosealicense.com/licenses/mit/)
 
 # MEMBER GROUP
+
+## Đào Hoàng Hải
+## Tưởng Văn Linh
+## Trương Văn Thiết
+## Vi Thành Sơn
+## Cao Quang Uy Vũ
